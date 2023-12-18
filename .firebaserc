@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "portfolio-14ea7": {
+      "hosting": {
+        "ngportfolio": [
+          "drennendoomsngportfolio"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "portfolio-14ea7"
+  }
+}

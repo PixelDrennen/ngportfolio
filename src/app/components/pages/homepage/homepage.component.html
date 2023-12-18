@@ -1,0 +1,48 @@
+<img href="https://docs.google.com/d2ff0c7d-6793-4d88-8cf3-b8a4f30acdef">
+<div class="homepage">
+	<p id="navbar" style="margin-bottom: 50px;"><span class="navItem">Blog</span> <b><span
+				class="navItem">Home</span></b> <span class="navItem">Work</span> <span class="navItem">Snippets</span>
+		<span class="navItem">Contact Me</span>
+	</p>
+
+	<h1>Drennen Dooms</h1>
+	<span>Professional Designer and Developer</span>
+
+	<div class="justify-content-between d-flex" style="width:80%">
+		<div>
+			<p>Programming is my passion blahblahblah
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+				dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+				Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</p>
+			<hr id="heavydivider" />
+		</div>
+		<img id="profileimg" src="assets/me_squared.png">
+	</div>
+
+
+
+	<div style="width:80%;margin-top:50px;" class="justify-content-between">
+		<span class="morebtn" style="float:right;text-decoration: underline;"><i>More</i></span>
+		<h3>Featured</h3>
+	</div>
+	<div class="featuredContainer">
+		<div class="box" *ngFor="let n of firestore.items">
+			<h5>{{ n.name }}</h5>
+			<img [src]="'assets/' + n.img">
+			<span>{{ n.description }}</span>
+		</div>
+	</div>
+	<!-- <hr /> -->
+	<div style="width:50%;" class="justify-content-between">
+		<span class="morebtn" style="float:right;text-decoration: underline;"><i>More</i></span>
+		<h4>Recent</h4>
+	</div>
+	<div class="recentContainer">
+		<div class="box-sm" *ngFor="let n of numbers2">
+			<h5>How I learned Godot in 3 months</h5>
+			<img src="assets/prtcl.png" width="50px" height="50px">
+		</div>
+	</div>
+</div>
