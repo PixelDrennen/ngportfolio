@@ -1,0 +1,19 @@
+#navbar {
+	// width:auto;
+	// text-align: right;
+	width:50%;
+	display:block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top:50px;
+}
+
+.navItem {
+	margin-right: 15px;
+	position: static;
+
+}
+.navItem:hover {
+	cursor: pointer;
+	text-shadow: 1px 0 0 currentColor;
+}
