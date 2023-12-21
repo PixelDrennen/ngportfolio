@@ -10,6 +10,6 @@ export class AppComponent {
   title = 'Drennen Dooms';
   
   constructor(router:Router){
-    router.navigate(['homepage']);
+    router.navigate(['work']);
   }
 }
