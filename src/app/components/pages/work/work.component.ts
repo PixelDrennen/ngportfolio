@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
+import { WorkDoc, Item, FirestoreService } from 'src/app/services/firebase/firestore.service';
 
 @Component({
   selector: 'app-work',
@@ -22,9 +23,11 @@ import { Component } from '@angular/core';
 export class WorkComponent {
   leftcontainer: any[];
   rightcontainer: any[];
-  selected: boolean = true;
-  constructor() {
-    this.leftcontainer = Array(2).fill(10);
+  selected: boolean = false;
+  selectedItem?: Item;
+
+  constructor(public firestore: FirestoreService) {
+    this.leftcontainer = Array(0).fill(10);
     this.rightcontainer = Array(4).fill(10);
 
     const workboxes = document.querySelectorAll('.workbox');
@@ -40,7 +43,38 @@ export class WorkComponent {
 
 
 
-  public select() {
-    this.selected = !this.selected;
+  public select(item?: Item) {
+
+    // something is already selected
+    if (this.selected) {
+      // we clicked the same item currently selected, so deselect especially when item is undefined
+      if (this.selectedItem == item || item == undefined) {
+        this.selectedItem = undefined;
+        this.selected = false;
+      }
+      // the clicked item is different than our current item, so switch to that one
+      else {
+        this.selectedItem = item;
+        this.firestore.getWorkDoc(item.workdoc);
+
+        this.selected = false;
+        setTimeout(() => {
+          this.selected = true;
+        }, 100)
+      }
+    }
+    // nothing selected, select if exists
+    else {
+      if (item != undefined) {
+        this.firestore.getWorkDoc(item.workdoc);
+        setTimeout(() => {
+          this.selected = true;
+          this.selectedItem = item;
+        }, 100)
+      }
+      else this.selected = false;
+    }
+
+
   }
 }
