@@ -1,6 +1,16 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component } from '@angular/core';
-import { WorkDoc, Item, FirestoreService } from 'src/app/services/firebase/firestore.service';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
+import {
+  WorkDoc,
+  Item,
+  FirestoreService,
+} from 'src/app/services/firebase/firestore.service';
 
 @Component({
   selector: 'app-work',
@@ -10,15 +20,13 @@ import { WorkDoc, Item, FirestoreService } from 'src/app/services/firebase/fires
     trigger('flyInOut', [
       state('in', style({ opacity: 1, transform: 'translate(0,0);' })),
       transition('void => *', [
-
-        animate(200, style({ opacity: 1, transform: 'translate(0,0)' }))
+        animate(200, style({ opacity: 1, transform: 'translate(0,0)' })),
       ]),
       transition('* => void', [
-        animate(200, style({ opacity: 0, transform: 'translate(50%,0)' }))
-      ])
-    ])
-
-  ]
+        animate(200, style({ opacity: 0, transform: 'translate(50%,0)' })),
+      ]),
+    ]),
+  ],
 })
 export class WorkComponent {
   leftcontainer: any[];
@@ -42,9 +50,16 @@ export class WorkComponent {
   }
 
 
+  onKeyUp(event: any) {
+    // console.log("key pressed");
+    // if (event.key == 'Escape') {
+      if (this.selected) {
+        this.select(undefined);
+      }
+    // }
+  }
 
   public select(item?: Item) {
-
     // something is already selected
     if (this.selected) {
       // we clicked the same item currently selected, so deselect especially when item is undefined
@@ -60,7 +75,8 @@ export class WorkComponent {
         this.selected = false;
         setTimeout(() => {
           this.selected = true;
-        }, 100)
+          this.onSelected();
+        }, 100);
       }
     }
     // nothing selected, select if exists
@@ -70,11 +86,15 @@ export class WorkComponent {
         setTimeout(() => {
           this.selected = true;
           this.selectedItem = item;
-        }, 100)
-      }
-      else this.selected = false;
+          this.onSelected();
+        }, 100);
+      } else this.selected = false;
     }
 
-
+  }
+  private onSelected(){
+    setTimeout(() => {
+      (document.querySelector(".summarybox") as HTMLElement).focus();
+    }, 500);
   }
 }

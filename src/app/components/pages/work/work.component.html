@@ -1,22 +1,45 @@
 <div class="work">
-
-	<h4>My Works</h4>
-	<p>In the past 5 years, I've worked on a multitude of projects that taught me many skills in new media.
-		Here are my works in VR, web, and teaching from the last few years.</p>
-		
-		
-
-	<div class="workcontainer">
-		<div class="container-left" style="margin-right:15px;">
-			<div class="workbox" *ngFor="let n of firestore.items; let i = index"
-				style="margin-left:0;margin-right:0;" (click)="select(n)">
-				<img [src]="n.img">
-				<h3 class="header">{{n.name}}</h3>
-				<div class="workbox-border" *ngIf="selected && i == 0"></div>
-			</div>
-		</div>
-		
-		<div class="my-container-right" style="margin:0;">
+  <h4>My Works</h4>
+  <p>
+    In the past 5 years, I've worked on a multitude of projects that taught me
+    many skills in new media. Here are my works in VR, web, and teaching from
+    the last few years.
+  </p>
+  <div  tabindex="0" (keyup.escape)="onKeyUp($event)"
+  [@flyInOut]="selected ? 'in' : '*'"
+  class="summarybox"
+  *ngIf="selected && firestore.selectedWorkDoc != undefined"
+>
+  <div class="backdrop"></div>
+  <div class="closebtn">
+	<span class="material-symbols-outlined" (click)="select(selectedItem)">
+	  close
+	</span>
+  </div>
+  <div class="summarycontent">
+	<h3>{{ firestore.selectedWorkDoc?.title }}</h3>
+	<p>Subtitle</p>
+  </div>
+</div>
+  <div class="workcontainer">
+	
+    <div class="full-container" style="margin-right: 15px">
+      <div
+        class="workbox"
+        *ngFor="let n of firestore.items; let i = index"
+        (click)="select(n)"
+        [style]="
+          'background-image:url(' +
+          n.img +
+          '); background-position:center;background-size:cover;'
+        "
+      >
+        <h3 class="header">{{ n.name }}</h3>
+        <div class="workbox-border" *ngIf="selected && selectedItem == n"></div>
+      </div>
+    </div>
+   
+    <!-- <div class="my-container-right" style="margin:0;">
 			<div style="column-count: 2;width:auto;margin-right:0;margin-left: 0;">
 				<div class="workbox" *ngFor="let n of rightcontainer; let i = index"
 					style="margin-left:0;margin-right:0;" (click)="select(n)">
@@ -36,10 +59,8 @@
 					<p>Subtitle</p>
 				</div>
 			</div>
-		</div>
-	</div>
+		</div> -->
+  </div>
 
-
-
-	<!-- <div class="blurcontainer"></div> -->
+  <!-- <div class="blurcontainer"></div> -->
 </div>

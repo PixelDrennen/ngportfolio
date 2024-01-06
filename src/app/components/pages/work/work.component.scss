@@ -1,9 +1,11 @@
 $border: 5px;
 $borderRadius:10px;
-$workboxWidth:400px;
+$workboxWidth:10em;
 
 .work {
 	z-index: -1;
+	height:100%;
+	width:100%;
 }
 
 .container-left {
@@ -24,6 +26,11 @@ $workboxWidth:400px;
 	column-gap: 0;
 	margin: 0;
 }
+.full-container {
+	width:100%;
+	z-index: 0;
+	height:100%;
+}
 
 .workcontainer {
 	display: flex;
@@ -31,10 +38,9 @@ $workboxWidth:400px;
 	align-items: center;
 	justify-content: center;
 	position: relative;
-	// z-index: -1;
+	z-index: 0;
 	margin-left: auto;
 	margin-right: auto;
-	
 }
 
 .closebtn span {
@@ -50,13 +56,16 @@ $workboxWidth:400px;
 }
 
 .summarybox {
-	position: absolute;
+	position: fixed;
 	background-color: rgba(255, 255, 255, 0.8);
 	border: rgba(255, 255, 255, 0.5) solid 1px;
 	border-radius: 15px;
-	width: 100%;
-	top: 0;
+	// width: 100%;
+	top: 10px;
 	bottom: 10px;
+	left:10px;
+	right:10px;
+	min-height:50vh;
 	z-index: 1 !important;
 	padding: 50px;
 	border: black solid 2px;
@@ -107,6 +116,8 @@ $workboxWidth:400px;
 	margin-bottom: 10px;
 	overflow: hidden;
 	z-index: 0;
+	float:left;
+	margin-right: 10px;
 }
 
 .workbox:hover {
@@ -120,19 +131,20 @@ $workboxWidth:400px;
 .workbox h3 {
 	text-align: center;
 	margin-top: -10px;
-	font-size: xx-large;
-	z-index: 1;
-	position: absolute;
+	font-size: x-large;
+	z-index: 0;
+	// position: absolute;
 	font-weight: bold;
 	background-color: rgba(0, 0, 0, .2);
 	color: white;
-	width: $workboxWidth;
+	width: 100%;
 	transition: background-color 0.3s ease;
 }
 
 
 
 .workbox img {
-	// z-index: -1;
+	z-index: -1;
 	height:150%;
+	// position:fixed;
 }
