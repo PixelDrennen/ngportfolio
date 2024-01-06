@@ -20,10 +20,10 @@ import {
     trigger('flyInOut', [
       state('in', style({ opacity: 1, transform: 'translate(0,0);' })),
       transition('void => *', [
-        animate(200, style({ opacity: 1, transform: 'translate(0,0)' })),
+        animate(300, style({ opacity: 1, transform: 'translate(0,0)' })),
       ]),
       transition('* => void', [
-        animate(200, style({ opacity: 0, transform: 'translate(50%,0)' })),
+        animate(300, style({ opacity: 0, transform: 'translate(-50%,0)' })),
       ]),
     ]),
   ],
@@ -49,14 +49,36 @@ export class WorkComponent {
     }
   }
 
-
   onKeyUp(event: any) {
     // console.log("key pressed");
     // if (event.key == 'Escape') {
-      if (this.selected) {
-        this.select(undefined);
-      }
+    if (this.selected) {
+      this.select(undefined);
+    }
     // }
+  }
+
+  public SplitBodyInTwo(body?: string) {
+    if (body != undefined) {
+      let indexAtNextspace = 0;
+      
+      let len = body.length;
+      let halfLen = Math.floor(len / 2);
+
+      for(let i = halfLen; i < len; i++){
+        if(body[i] == '.') {
+          halfLen = i;
+          break;
+        }
+      }
+
+
+      let first = body.slice(0, halfLen + 1);
+      let second = body.slice(halfLen + 1, len);
+
+      let both = [first, second];
+      return both;
+    } else return ['undefined','undefined'];
   }
 
   public select(item?: Item) {
@@ -90,11 +112,10 @@ export class WorkComponent {
         }, 100);
       } else this.selected = false;
     }
-
   }
-  private onSelected(){
+  private onSelected() {
     setTimeout(() => {
-      (document.querySelector(".summarybox") as HTMLElement).focus();
+      (document.querySelector('.summarybox') as HTMLElement).focus();
     }, 500);
   }
 }

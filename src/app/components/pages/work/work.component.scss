@@ -1,150 +1,238 @@
 $border: 5px;
-$borderRadius:10px;
-$workboxWidth:10em;
+$borderRadius: 10px;
+$workboxWidth: 10em;
+
+$primaryColor: rgba(253, 8, 74, 1);
 
 .work {
-	z-index: -1;
-	height:100%;
-	width:100%;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .container-left {
-	margin-right: 10px;
-	padding: 0;
-	width: $workboxWidth;
+  margin-right: 10px;
+  padding: 0;
+  width: $workboxWidth;
 }
 
 .my-container-right {
-	// z-index: -1;
-	position: relative;
-	display: flex;
-	column-count: 2 !important;
-	/* Chrome, Safari, Opera */
-	-webkit-column-count: 2 !important;
-	/* Firefox */
-	-moz-column-count: 2 !important;
-	column-gap: 0;
-	margin: 0;
+  // z-index: -1;
+  position: relative;
+  display: flex;
+  column-count: 2 !important;
+  /* Chrome, Safari, Opera */
+  -webkit-column-count: 2 !important;
+  /* Firefox */
+  -moz-column-count: 2 !important;
+  column-gap: 0;
+  margin: 0;
 }
 .full-container {
-	width:100%;
-	z-index: 0;
-	height:100%;
+  width: 100%;
+  z-index: 0;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 710px) {
 }
 
 .workcontainer {
-	display: flex;
-	flex-shrink: 1;
-	align-items: center;
-	justify-content: center;
-	position: relative;
-	z-index: 0;
-	margin-left: auto;
-	margin-right: auto;
+  display: flex;
+  // flex-shrink: 1;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .closebtn span {
-	position: absolute;
-	left: 0;
-	top: 0;
-	font-size: 36px;
-	font-weight: 300;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 36px;
+  font-weight: 300;
 }
 
 .closebtn :hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .summarybox {
-	position: fixed;
-	background-color: rgba(255, 255, 255, 0.8);
-	border: rgba(255, 255, 255, 0.5) solid 1px;
-	border-radius: 15px;
-	// width: 100%;
-	top: 10px;
-	bottom: 10px;
-	left:10px;
-	right:10px;
-	min-height:50vh;
-	z-index: 1 !important;
-	padding: 50px;
-	border: black solid 2px;
-	border-top-left-radius: 0;
-	backdrop-filter: blur(3px);
-	overflow: hidden;
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: rgba(255, 255, 255, 0.5) solid 1px;
+  border-radius: 15px;
+  // width: 100%;
+  top: 10px;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  min-height: 50vh;
+  z-index: 1 !important;
+  padding: 50px;
+  border: black solid 2px;
+  border-top-left-radius: 0;
+  backdrop-filter: blur(50px);
+  overflow: hidden;
+  opacity: 0;
+  transition: {
+    backdrop-filter: blur(0px) ease 1s;
+  }
+}
+.summarybox .summarycontent{
+	
+}
+
+.summarybox #divider {
+  color: $primaryColor;
+  background-color: $primaryColor;
+  border-color: $primaryColor;
+}
+.summarybox .break {
+  flex-basis: 100%;
+  height: 0;
+}
+.summarybox .summaryheader {
+  display: flex;
+}
+.summarybox .collabContainer {
+  display: block;
+  align-items: center;
+  border-left:solid 1px rgba(0,0,0,.1);
+  padding-left:50px;
+  margin-left:50px;
+  margin-right:0;
+  margin-left:auto;
+  text-align: center;
+  
+}
+.summarybox .collabs {
+  display: flex;
+  clear: both;
+}
+
+.summarybox .collab {
+  width: 5em !important;
+  height: 5em;
+  border: solid 1px transparent;
+  border-radius: 100%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+.summarybody{
+	display:flex;
+	overflow: auto;
+	max-height: 450px;
+	
+	// flex-direction: row;
+	// flex-grow: 0;
+	// flex-shrink: 1;
+}
+.summarybody img{
+	// float: left;
+	clear:both;
+	width:300px !important;
+	height:auto !important;
 	opacity: 0;
+// width:60% !important;
+// height:100%;
+margin:5px;
 }
-
-
+.summarybody p{
+margin:15px;
+// width:30%;
+// float:left;
+}
 .backdrop {
-	background: rgba(160, 254, 251, 0.5);
-	background: linear-gradient(142deg, rgba(160, 254, 251, 0.3) 0%, rgba(73, 79, 193, 0.15) 36%, rgba(253, 8, 74, 0.15) 100%);
-	position: absolute;
-	left: 0; right: 0; bottom: 0; top: 0;
-	filter: blur(3px);
-	z-index: -1;
+  background: rgba(160, 254, 251, 0.5);
+  background: linear-gradient(
+    142deg,
+    rgba(160, 254, 251, 0.3) 0%,
+    rgba(73, 79, 193, 0.15) 36%,
+    rgba(253, 8, 74, 0.15) 100%
+  );
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  filter: blur(3px);
+  z-index: -1;
 }
-
 
 .workbox-border {
-
-	width: $workboxWidth;
-	height: $workboxWidth;
-	margin: auto;
-	position: absolute;
-	// background: transparent;
-	// background-clip: padding-box;
-	border: solid rgba(253, 8, 74, 1) $border;
-	border-radius: $borderRadius;
-	background-color: rgb(47, 47, 47, .8) !important;
-	backdrop-filter:blur(3px);
-	z-index: 0;
+  width: $workboxWidth;
+  height: $workboxWidth;
+  margin: auto;
+  position: absolute;
+  // background: transparent;
+  // background-clip: padding-box;
+  border: solid rgba(253, 8, 74, 1) $border;
+  border-radius: $borderRadius;
+  background-color: rgb(47, 47, 47, 0.8) !important;
+  backdrop-filter: blur(3px);
+  z-index: 0;
 }
 
 .workbox {
-	background-color: transparent;
-	width: $workboxWidth !important;
-	height: $workboxWidth;
-	text-align: center;
-	box-sizing: border-box;
-	border: solid 1px transparent;
-	border-radius: $borderRadius;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 0;
-	margin-bottom: 10px;
-	overflow: hidden;
-	z-index: 0;
-	float:left;
-	margin-right: 10px;
+  background-color: transparent;
+  width: $workboxWidth;
+  height: $workboxWidth;
+  text-align: center;
+  box-sizing: border-box;
+  border: solid 1px transparent;
+  border-radius: $borderRadius;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  margin-bottom: 10px;
+  overflow: hidden;
+  z-index: 0;
+  float: left;
+  margin-right: 10px;
+}
+@media (max-width: 710px) {
+  .workbox {
+    width: 20em;
+    float: none;
+    clear: both;
+    // margin:0;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 .workbox:hover {
-	cursor: pointer;
+  cursor: pointer;
+  border: solid 5px $primaryColor;
 }
 
 .workbox:hover .header {
-	background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .workbox h3 {
-	text-align: center;
-	margin-top: -10px;
-	font-size: x-large;
-	z-index: 0;
-	// position: absolute;
-	font-weight: bold;
-	background-color: rgba(0, 0, 0, .2);
-	color: white;
-	width: 100%;
-	transition: background-color 0.3s ease;
+  text-align: center;
+  margin-top: -10px;
+  font-size: x-large;
+  z-index: 0;
+  // position: absolute;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  width: 100%;
+  transition: background-color 0.3s ease;
 }
 
-
-
 .workbox img {
-	z-index: -1;
-	height:150%;
-	// position:fixed;
+  z-index: -1;
+  height: 150%;
+  // position:fixed;
 }

@@ -5,25 +5,81 @@
     many skills in new media. Here are my works in VR, web, and teaching from
     the last few years.
   </p>
-  <div  tabindex="0" (keyup.escape)="onKeyUp($event)"
-  [@flyInOut]="selected ? 'in' : '*'"
-  class="summarybox"
-  *ngIf="selected && firestore.selectedWorkDoc != undefined"
->
-  <div class="backdrop"></div>
-  <div class="closebtn">
-	<span class="material-symbols-outlined" (click)="select(selectedItem)">
-	  close
-	</span>
+  <div
+    tabindex="0"
+    (keyup.escape)="onKeyUp($event)"
+    [@flyInOut]="selected ? 'in' : '*'"
+    class="summarybox"
+    *ngIf="selected && firestore.selectedWorkDoc != undefined"
+  >
+    <div class="backdrop"></div>
+    <div class="closebtn">
+      <span
+        style="margin: 5px"
+        class="material-symbols-outlined"
+        (click)="select(selectedItem)"
+      >
+        arrow_back
+      </span>
+    </div>
+    <div class="summarycontent">
+      <div class="summaryheader">
+        <div class="headgroup">
+          <h3>{{ firestore.selectedWorkDoc?.title }}</h3>
+          <p>{{ firestore.selectedWorkDoc?.subtitle }}</p>
+        </div>
+        <div class="collabContainer">
+          <h4>Collaborators</h4>
+          <div class="break"></div>
+          <div class="collabs">
+            <div
+              class="collab"
+              [style]="
+                'background-image:url(' +
+                'https://luddyapp.sitehost.iu.edu/data/wp-content/uploads/Zebulun-Wood.png' +
+                '); background-position:center;background-size:cover;'
+              "
+            ></div>
+            <div
+              class="collab"
+              [style]="
+                'background-image:url(' +
+                'https://dentistry.iu.edu/about/news-events/school-news/news2023/dutra-group.jpg' +
+                '); background-position:center;background-size:cover;'
+              "
+            ></div>
+          </div>
+        </div>
+      </div>
+      <hr id="divider" />
+      <h4>Introduction</h4>
+      <div class="summarybody">
+        <div class="row">
+          <div class="featureImage" [style]="
+          'background-image:url(' +
+          firestore.selectedWorkDoc?.featureImage +
+          '); background-position:center;background-size:cover;'
+        ">
+            <img [src]="firestore.selectedWorkDoc?.featureImage" />
+          </div>
+          <p>{{ SplitBodyInTwo(firestore.selectedWorkDoc?.body)[0] }}</p>
+        </div>
+		<div class="break"></div>
+        <div class="row">
+          <div class="featureImage" [style]="
+          'background-image:url(' +
+          firestore.selectedWorkDoc?.featureImage +
+          '); background-position:center;background-size:cover;'
+        ">
+            <img [src]="firestore.selectedWorkDoc?.featureImage" />
+          </div>
+          <p>{{ SplitBodyInTwo(firestore.selectedWorkDoc?.body)[1] }}</p>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="summarycontent">
-	<h3>{{ firestore.selectedWorkDoc?.title }}</h3>
-	<p>Subtitle</p>
-  </div>
-</div>
   <div class="workcontainer">
-	
-    <div class="full-container" style="margin-right: 15px">
+    <div class="full-container">
       <div
         class="workbox"
         *ngFor="let n of firestore.items; let i = index"
@@ -38,7 +94,7 @@
         <div class="workbox-border" *ngIf="selected && selectedItem == n"></div>
       </div>
     </div>
-   
+
     <!-- <div class="my-container-right" style="margin:0;">
 			<div style="column-count: 2;width:auto;margin-right:0;margin-left: 0;">
 				<div class="workbox" *ngFor="let n of rightcontainer; let i = index"

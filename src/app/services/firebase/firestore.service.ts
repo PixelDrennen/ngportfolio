@@ -15,9 +15,11 @@ export interface Item {
 export interface WorkDoc {
   id: string,
   title: string,
+  subtitle: string,
   body: string,
   footer: string,
-  images: any
+  images: any,
+  featureImage:any
 }
 
 @Injectable({
