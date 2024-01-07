@@ -17,9 +17,20 @@ export interface WorkDoc {
   title: string,
   subtitle: string,
   body: string,
+  featureBody: string,
   footer: string,
   images: any,
-  featureImage:any
+  featureImage:any,
+  contentRows:ContentRow[]
+}
+
+export interface ContentRow {
+  id:string,
+  content:ContentBlock[]
+}
+export interface ContentBlock{
+  type:string,
+  value:string
 }
 
 @Injectable({
@@ -67,6 +78,8 @@ export class FirestoreService {
       if (_workdoc) {
         _workdoc.id = doc.id;
         cDoc = _workdoc;
+        console.log(_workdoc.contentRows);
+
       } 
     });
     

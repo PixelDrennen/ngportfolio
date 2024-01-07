@@ -14,13 +14,15 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { WorkComponent } from './components/pages/work/work.component';
+import { ContentComponent } from './components/shared/content/content.component';
 // import { HttpClientModule }
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HomepageComponent,
-    WorkComponent
+    WorkComponent,
+    ContentComponent
   ],
   imports: [
     BrowserModule,

@@ -54,27 +54,32 @@
       <hr id="divider" />
       <h4>Introduction</h4>
       <div class="summarybody">
-        <div class="row">
-          <div class="featureImage" [style]="
-          'background-image:url(' +
-          firestore.selectedWorkDoc?.featureImage +
-          '); background-position:center;background-size:cover;'
-        ">
-            <img [src]="firestore.selectedWorkDoc?.featureImage" />
-          </div>
-          <p>{{ SplitBodyInTwo(firestore.selectedWorkDoc?.body)[0] }}</p>
+        <div class="myrow">
+          <!-- <div
+            class="featureImage"
+            [style]="
+              'background-image:url(' +
+              firestore.selectedWorkDoc.featureImage +
+              '); background-position:center;background-size:cover;'
+            "
+          >
+		</div> -->
+		<img class="featureImage" [src]="firestore.selectedWorkDoc.featureImage" />
+          <p class="summarycollumn">
+            {{ firestore.selectedWorkDoc.featureBody }}
+          </p>
         </div>
-		<div class="break"></div>
-        <div class="row">
-          <div class="featureImage" [style]="
-          'background-image:url(' +
-          firestore.selectedWorkDoc?.featureImage +
-          '); background-position:center;background-size:cover;'
-        ">
-            <img [src]="firestore.selectedWorkDoc?.featureImage" />
-          </div>
-          <p>{{ SplitBodyInTwo(firestore.selectedWorkDoc?.body)[1] }}</p>
-        </div>
+		<div class="myrow">
+			<img [src]="firestore.selectedWorkDoc.featureImage" />
+			<p class="summarycollumn">
+				{{ firestore.selectedWorkDoc.body }}
+			  </p>
+		</div>
+		<!-- <div class="row"> -->
+		<!-- </div> -->
+        <!-- <p class="summarycollumn">
+          {{ SplitBodyInTwo(firestore.selectedWorkDoc.body)[1] }}
+        </p> -->
       </div>
     </div>
   </div>

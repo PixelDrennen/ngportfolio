@@ -60,6 +60,9 @@ export class WorkComponent {
 
   public SplitBodyInTwo(body?: string) {
     if (body != undefined) {
+
+      if(body.length < 400) return [body, ""];
+
       let indexAtNextspace = 0;
       
       let len = body.length;
