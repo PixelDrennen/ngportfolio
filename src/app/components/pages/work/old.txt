@@ -25,8 +25,8 @@
     <div class="summarycontent">
       <div class="summaryheader">
         <div class="headgroup">
-          <h3>{{ firestore.selectedWorkDoc.title }}</h3>
-          <p>{{ firestore.selectedWorkDoc.subtitle }}</p>
+          <h3>{{ firestore.selectedWorkDoc?.title }}</h3>
+          <p>{{ firestore.selectedWorkDoc?.subtitle }}</p>
         </div>
         <div class="collabContainer">
           <h4>Collaborators</h4>
@@ -55,20 +55,31 @@
       <h4>Introduction</h4>
       <div class="summarybody">
         <div class="myrow">
-          <img
+          <!-- <div
             class="featureImage"
-            [src]="firestore.selectedWorkDoc.featureImage"
-          />
+            [style]="
+              'background-image:url(' +
+              firestore.selectedWorkDoc.featureImage +
+              '); background-position:center;background-size:cover;'
+            "
+          >
+		</div> -->
+		<img class="featureImage" [src]="firestore.selectedWorkDoc.featureImage" />
           <p class="summarycollumn">
             {{ firestore.selectedWorkDoc.featureBody }}
           </p>
         </div>
-        <div class="myrow">
-          <img [src]="firestore.selectedWorkDoc.featureImage" />
-          <p class="summarycollumn">
-            {{ firestore.selectedWorkDoc.body }}
-          </p>
-        </div>
+		<div class="myrow">
+			<img [src]="firestore.selectedWorkDoc.featureImage" />
+			<p class="summarycollumn">
+				{{ firestore.selectedWorkDoc.body }}
+			  </p>
+		</div>
+		<!-- <div class="row"> -->
+		<!-- </div> -->
+        <!-- <p class="summarycollumn">
+          {{ SplitBodyInTwo(firestore.selectedWorkDoc.body)[1] }}
+        </p> -->
       </div>
     </div>
   </div>
@@ -76,7 +87,7 @@
     <div class="full-container">
       <div
         class="workbox"
-        *ngFor="let n of firestore.itemCol$ | async;"
+        *ngFor="let n of firestore.items; let i = index"
         (click)="select(n)"
         [style]="
           'background-image:url(' +
@@ -88,5 +99,29 @@
         <div class="workbox-border" *ngIf="selected && selectedItem == n"></div>
       </div>
     </div>
+
+    <!-- <div class="my-container-right" style="margin:0;">
+			<div style="column-count: 2;width:auto;margin-right:0;margin-left: 0;">
+				<div class="workbox" *ngFor="let n of rightcontainer; let i = index"
+					style="margin-left:0;margin-right:0;" (click)="select(n)">
+					<img src="assets/vr-screenshot.png">
+					<h3 class="header">Selected Name</h3>
+				</div>
+			</div>
+			<div [@flyInOut]="selected ? 'in' : '*'" class="summarybox" *ngIf="selected && firestore.selectedWorkDoc != undefined">
+				<div class="backdrop"></div>
+				<div class="closebtn">
+					<span class="material-symbols-outlined" (click)="select(selectedItem)">
+						close
+					</span>
+				</div>
+				<div class="summarycontent">
+					<h3>{{ firestore.selectedWorkDoc?.title }}</h3>
+					<p>Subtitle</p>
+				</div>
+			</div>
+		</div> -->
   </div>
+
+  <!-- <div class="blurcontainer"></div> -->
 </div>

@@ -2,7 +2,7 @@ $border: 5px;
 $borderRadius: 10px;
 $workboxWidth: 10em;
 
-$primaryColor: rgba(253, 8, 74, 1);
+$primaryColor: rgb(253, 8, 74);
 
 .work {
   z-index: -1;
@@ -203,11 +203,11 @@ $primaryColor: rgba(253, 8, 74, 1);
   // float:left;
 }
 .backdrop {
-  background: rgba(160, 254, 251, 0.5);
+  background: #a0fefb80;
   background: linear-gradient(
     142deg,
     rgba(160, 254, 251, 0.3) 0%,
-    rgba(73, 79, 193, 0.15) 36%,
+    #494fc126 36%,
     rgba(253, 8, 74, 0.15) 100%
   );
   position: absolute;

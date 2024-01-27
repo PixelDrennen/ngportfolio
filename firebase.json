@@ -1,12 +1,17 @@
 {
   "hosting": {
-    "public": "dist/ngportfolio",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
-    "site": "drennendoomsngportfolio"
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   },
   "database": {
     "rules": "database.rules.json"

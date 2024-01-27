@@ -15,6 +15,8 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { WorkComponent } from './components/pages/work/work.component';
 import { ContentComponent } from './components/shared/content/content.component';
+import { WorkdocCreatorComponent } from './components/admin/editors/workdoc-creator/workdoc-creator.component';
+import { provideMessaging,getMessaging } from '@angular/fire/messaging';
 // import { HttpClientModule }
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { ContentComponent } from './components/shared/content/content.component'
     NavbarComponent,
     HomepageComponent,
     WorkComponent,
-    ContentComponent
+    ContentComponent,
+    WorkdocCreatorComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import { ContentComponent } from './components/shared/content/content.component'
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
+    provideMessaging(() => getMessaging())
   ],
   providers: [],
   bootstrap: [AppComponent]
