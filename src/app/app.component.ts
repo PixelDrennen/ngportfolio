@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { UserAuthService } from './services/auth/user-auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'Drennen Dooms';
-  
-  constructor(router:Router){
+
+  constructor(router: Router, private userAuth: UserAuthService) {
     router.navigate(['work']);
   }
 }

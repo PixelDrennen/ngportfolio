@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { HomepageComponent } from './components/pages/homepage/homepage.component';
+import { AdminOverlayComponent } from './components/overlays/admin-overlay/admin-overlay.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -16,7 +17,7 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { WorkComponent } from './components/pages/work/work.component';
 import { ContentComponent } from './components/shared/content/content.component';
 import { WorkdocCreatorComponent } from './components/admin/editors/workdoc-creator/workdoc-creator.component';
-import { provideMessaging,getMessaging } from '@angular/fire/messaging';
+import { provideMessaging,getMessaging } from '@angular/fire/messaging'
 // import { HttpClientModule }
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { provideMessaging,getMessaging } from '@angular/fire/messaging';
     HomepageComponent,
     WorkComponent,
     ContentComponent,
-    WorkdocCreatorComponent
+    WorkdocCreatorComponent,
+    AdminOverlayComponent
   ],
   imports: [
     BrowserModule,
