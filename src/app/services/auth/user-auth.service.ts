@@ -5,6 +5,7 @@ import {
   authState,
   user,
   signInAnonymously,
+  signInWithEmailAndPassword,
 } from '@angular/fire/auth';
 import {
   Firestore,
@@ -31,19 +32,52 @@ export class UserAuthService implements OnDestroy {
   constructor(private auth: Auth, private firestore: Firestore) {
     this.userSubscription = this.user$.subscribe((aUser: User | null) => {
       //handle user state changes here. Note, that user will be null if there is no currently logged in user.
-      console.log(aUser);
+
+      if (aUser == null) {
+        console.log('Not signed in.');
+      } else {
+        if (aUser?.isAnonymous) {
+          console.log('Signed in as anonymous user.');
+        } else {
+          console.log('Signed in as ' + aUser.email + '\n' + aUser.uid);
+        }
+
+        this.handleUser(this.auth);
+      }
     });
 
-    signInAnonymously(auth)
+    // if (aUser == null) {
+    //   signInAnonymously(auth)
+    //     .then(() => {
+    //       // signed in
+    //       console.log('Signed in anonymously.');
+    //       this.handleUser(auth);
+    //     })
+    //     .catch((error) => {
+    //       const code = error.code;
+    //       const msg = error.message;
+    //       console.log(`Could not sign in anonymously. \n${code}\n${msg}`);
+    //     });
+    // }
+  }
+
+  SignInWithEmailPassword(email: string, password: string) {
+    // this.handleUser(this.auth);
+    if (this.auth.currentUser) this.auth.signOut();
+    signInWithEmailAndPassword(this.auth, email, password)
       .then(() => {
-        // signed in
-        console.log('Signed in anonymously.');
-        this.handleUser(auth);
+        console.log(
+          'Signed in with email and password. Signed in as',
+          this.auth.currentUser?.email
+        );
+        this.handleUser(this.auth);
       })
       .catch((error) => {
         const code = error.code;
         const msg = error.message;
-        console.log(`Could not sign in anonymously. \n${code}\n${msg}`);
+        console.log(
+          `Could not sign in with email and password. \n${code}\n${msg}`
+        );
       });
   }
 
@@ -60,12 +94,18 @@ export class UserAuthService implements OnDestroy {
 
     this.userAccount$.subscribe((a) => {
       console.log(a);
+      if (a.length > 0) {
+        this.isAdmin = a[0].admin;
+        console.log(`user is admin: ${this.isAdmin}`);
+      }
     });
   }
 
   user$ = user(this.auth);
   authState$ = authState(this.auth);
   userAccount$?: Observable<UserAccount[]>;
+
+  isAdmin: boolean = false;
 
   ngOnDestroy() {
     // when manually subscribing to an observable remember to unsubscribe in ngOnDestroy

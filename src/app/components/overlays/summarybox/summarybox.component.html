@@ -1,0 +1,98 @@
+<!-- WORKDOC SUMMARY BOX -->
+<div
+  tabindex="0"
+  (keyup.escape)="onKeyUp($event)"
+  [@flyInOut]="selected ? 'in' : '*'"
+  class="summarybox"
+  *ngIf="selected && firestore.selectedWorkDoc != undefined"
+>
+  <div class="backdrop"></div>
+  <div class="closebtn">
+    <span
+      style="margin: 5px"
+      class="material-symbols-outlined"
+      (click)="select()"
+    >
+      arrow_back
+    </span>
+  </div>
+
+  <div class="summarycontent">
+    <!-- HEADER -->
+    <div class="summaryheader">
+      <div class="headgroup">
+        <h3>{{ firestore.selectedWorkDoc.title }}</h3>
+        <p>{{ firestore.selectedWorkDoc.subtitle }}</p>
+      </div>
+
+      <!-- COLLABS -->
+      <div class="collabContainer">
+        <h4>Collaborators</h4>
+        <div class="break"></div>
+        <div class="collabs">
+          <div
+            *ngFor="let c of firestore.selectedWorkDoc.collaborators"
+            class="collab"
+            (click)="openSocialLink(c.socialLink)"
+            [style]="
+              'background-image:url(' +
+              c.image +
+              '); background-position:center;background-size:cover;'
+            "
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <hr id="divider" />
+
+    <p><i>At a glance</i></p>
+    <div class="summarybody">
+      <!-- FEATURED CONTENT -->
+      <div class="myrow">
+        <img
+          class="featureImage"
+          [src]="firestore.selectedWorkDoc.featureImage"
+        />
+        <p class="summarycollumn">
+          {{ firestore.selectedWorkDoc.featureBody }}
+        </p>
+      </div>
+      <!-- <div class="myrow">
+        <img [src]="firestore.selectedWorkDoc.featureImage" />
+        <p class="summarycollumn">
+          {{ firestore.selectedWorkDoc.body }}
+        </p>
+      </div> -->
+
+      <hr id="divider" />
+
+      <!-- REST OF WORK DOCUMENT -->
+
+      <div class="workgrid">
+        <div class="myrow" *ngFor="let _row of contentPerRow; let i = index;">
+                <app-content class="mycontentblock" *ngFor="let _content of _row" [contentBlock]="_content" [contentValue]="_content.value" [contentType]="_content.type"
+                [id]="_content.id"></app-content>
+        </div>
+
+        <!-- <table>
+          <tbody *ngFor="let _row of contentPerRow; let i = index;">
+            <th style="width:100%;">Row {{i + 1}}</th>
+            <tr>
+              <th>Type</th>
+              <th>Value</th>
+            </tr>
+            <tr *ngFor="let _content of _row">
+              <td>
+                {{ _content.type }}
+              </td>
+              <td>
+                {{ _content.value }}
+              </td>
+            </tr>
+          </tbody>
+        </table> -->
+      </div>
+    </div>
+  </div>
+</div>

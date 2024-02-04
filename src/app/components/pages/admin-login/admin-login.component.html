@@ -1,0 +1,28 @@
+<div class="page-overlay"></div>
+<div class="adminform">
+
+    <div class="form">
+  
+      <h1>Admin Login</h1>
+  
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+  
+        <div class="field">
+          <label for="email">Email</label>
+          <input formControlName="email" type="email" id="email">  
+        </div>
+  
+        <div class="field">
+          <label for="password">Password</label>
+          <input formControlName="password" type="password" id="password">
+        </div>
+  
+        <button id="btn">Login</button>
+        <!-- <button>test</button> -->
+        <!-- <span id="btn" (click)="login()">Login</span> -->
+      </form>
+  
+    </div>
+  
+  </div>
+  

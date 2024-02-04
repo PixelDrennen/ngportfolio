@@ -1,0 +1,22 @@
+.admin-overlay {
+  background-color: #2d75cd;
+  border: solid 2px blue;
+  border-radius: 20px;
+
+  position: fixed;
+  left: 15px;
+  top: 15px;
+  width: 100px;
+  height: 50px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+
+  border-top-left-radius: 0;
+}
+.admin-overlay span {
+    text-align: center;
+}

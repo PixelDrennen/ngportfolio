@@ -1,3 +1,36 @@
-<div *ngIf="contentType == contentTypes.IMAGE && contentValue != undefined" class="contentImg">
-    <img [src]="contentValue">
+<!-- <h1>workin</h1> -->
+<!-- <div
+  *ngIf="contentType == contentTypes.IMAGE && contentValue != undefined"
+  class="contentImg"
+>
+ 
+</div> -->
+ <img 
+  *ngIf="contentType == contentTypes.IMAGE && contentValue != undefined"
+  class="contentImg" style="width:100%; height:100%;" [src]="contentURL" />
+<div
+  *ngIf="contentType == contentTypes.TEXT && contentValue != undefined"
+  class="contentText"
+>
+  <!-- TODO: content types should have styling attached, so you can use headers etc. -->
+  <p>{{ contentValue }}</p>
 </div>
+<div
+  *ngIf="contentType == contentTypes.VIDEO && contentValue != undefined"
+  class="contentVideo"
+>
+  <!-- <p><i>videos not implemented.</i></p> -->
+  <iframe id="ytplayer" type="text/html" width="100%" height="100%" allowfullscreen
+  [src]="safeURL"
+  frameborder="0"></iframe>
+
+
+</div>
+
+<div
+*ngIf="contentType == contentTypes.CODEBLOCK && contentValue != undefined"
+class="contentCodeblock"
+>
+  <p>{{ contentValue }}</p>
+</div>
+

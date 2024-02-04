@@ -17,7 +17,11 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { WorkComponent } from './components/pages/work/work.component';
 import { ContentComponent } from './components/shared/content/content.component';
 import { WorkdocCreatorComponent } from './components/admin/editors/workdoc-creator/workdoc-creator.component';
-import { provideMessaging,getMessaging } from '@angular/fire/messaging'
+import { provideMessaging,getMessaging } from '@angular/fire/messaging';
+import { AdminLoginComponent } from './components/pages/admin-login/admin-login.component'
+import { ReactiveFormsModule } from '@angular/forms';
+import { SummaryboxComponent } from './components/overlays/summarybox/summarybox.component';
+import { SafePipe } from './pipes/youtube/safe.pipe';
 // import { HttpClientModule }
 @NgModule({
   declarations: [
@@ -27,11 +31,14 @@ import { provideMessaging,getMessaging } from '@angular/fire/messaging'
     WorkComponent,
     ContentComponent,
     WorkdocCreatorComponent,
-    AdminOverlayComponent
+    AdminOverlayComponent,
+    AdminLoginComponent,
+    SummaryboxComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     AngularFireModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -42,7 +49,7 @@ import { provideMessaging,getMessaging } from '@angular/fire/messaging'
     provideStorage(() => getStorage()),
     provideMessaging(() => getMessaging())
   ],
-  providers: [],
+  providers: [SafePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

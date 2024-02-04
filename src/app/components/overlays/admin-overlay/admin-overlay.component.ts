@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserAuthService } from 'src/app/services/auth/user-auth.service';
 
 @Component({
   selector: 'app-admin-overlay',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './admin-overlay.component.scss',
   moduleId: module.id,
 })
-export class AdminOverlayComponent {}
+export class AdminOverlayComponent {
+
+
+  constructor(public userAuth:UserAuthService){}
+
+}

@@ -5,7 +5,10 @@
     many skills in new media. Here are my works in VR, web, and teaching from
     the last few years.
   </p>
-  <div
+
+  <app-summarybox  [selected]="selected" [selectedItem]="selectedItem" (selectItemEvent)="select(selectedItem)"></app-summarybox>
+
+  <!-- <div
     tabindex="0"
     (keyup.escape)="onKeyUp($event)"
     [@flyInOut]="selected ? 'in' : '*'"
@@ -22,6 +25,7 @@
         arrow_back
       </span>
     </div>
+
     <div class="summarycontent">
       <div class="summaryheader">
         <div class="headgroup">
@@ -71,7 +75,11 @@
         </div>
       </div>
     </div>
-  </div>
+
+
+  </div> -->
+  
+  
   <div class="workcontainer">
     <div class="full-container">
       <div

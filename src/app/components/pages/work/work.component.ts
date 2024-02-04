@@ -5,12 +5,14 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   WorkDoc,
   Item,
   FirestoreService,
+  Collaborator,
 } from 'src/app/services/firebase/firestore.service';
+import { SummaryboxComponent } from '../../overlays/summarybox/summarybox.component';
 
 @Component({
   selector: 'app-work',
@@ -33,6 +35,7 @@ export class WorkComponent {
   rightcontainer: any[];
   selected: boolean = false;
   selectedItem?: Item;
+  @ViewChild(SummaryboxComponent) summarybox!: SummaryboxComponent;
 
   constructor(public firestore: FirestoreService) {
     this.leftcontainer = Array(0).fill(10);
@@ -60,28 +63,26 @@ export class WorkComponent {
 
   public SplitBodyInTwo(body?: string) {
     if (body != undefined) {
-
-      if(body.length < 400) return [body, ""];
+      if (body.length < 400) return [body, ''];
 
       let indexAtNextspace = 0;
-      
+
       let len = body.length;
       let halfLen = Math.floor(len / 2);
 
-      for(let i = halfLen; i < len; i++){
-        if(body[i] == '.') {
+      for (let i = halfLen; i < len; i++) {
+        if (body[i] == '.') {
           halfLen = i;
           break;
         }
       }
-
 
       let first = body.slice(0, halfLen + 1);
       let second = body.slice(halfLen + 1, len);
 
       let both = [first, second];
       return both;
-    } else return ['undefined','undefined'];
+    } else return ['undefined', 'undefined'];
   }
 
   public select(item?: Item) {
@@ -119,6 +120,8 @@ export class WorkComponent {
   private onSelected() {
     setTimeout(() => {
       (document.querySelector('.summarybox') as HTMLElement).focus();
+      if (this.selectedItem) this.summarybox.update();
+      else console.log("selected item is undefined.")
     }, 500);
   }
 }

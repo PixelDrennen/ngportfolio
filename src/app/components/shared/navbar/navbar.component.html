@@ -1,4 +1,12 @@
-<p id="navbar"><span class="navItem">Blog</span> <b><span class="navItem">Home</span></b>
-	<span class="navItem">Work</span> <span class="navItem">Snippets</span>
-	<span class="navItem">Contact Me</span>
+<p id="navbar">
+  <b *ngIf="routeUrl == 'blog'"><span class="navItem">Blog</span></b>
+  <span *ngIf="routeUrl != 'blog'" class="navItem">Blog</span>
+  <b *ngIf="routeUrl == 'home'"><span class="navItem" (click)="navigate('home')">Home</span></b>
+  <span *ngIf="routeUrl != 'home'" class="navItem" (click)="navigate('home')">Home</span>
+  <b *ngIf="routeUrl == 'work'"><span class="navItem" (click)="navigate('work')">Work</span></b>
+  <span *ngIf="routeUrl != 'work'" class="navItem" (click)="navigate('work')">Work</span>
+  <b *ngIf="routeUrl == 'snippets'"><span class="navItem">Snippets</span></b>
+  <span *ngIf="routeUrl != 'snippets'" class="navItem">Snippets</span>
+  <b *ngIf="routeUrl == 'contact'"><span class="navItem">Contact Me</span></b>
+  <span *ngIf="routeUrl != 'contact'" class="navItem">Contact Me</span>
 </p>
