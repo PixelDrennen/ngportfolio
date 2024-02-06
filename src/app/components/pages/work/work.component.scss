@@ -132,3 +132,15 @@ app-summarybox {
   height: 150%;
   // position:fixed;
 }
+
+.createbtn{
+  margin-left:auto;
+  margin-right:0;
+  text-align: right;
+  cursor: pointer;
+  color:rgb(71, 71, 209);
+}
+.createbtn:hover{
+  color:rgb(56, 56, 152);
+  text-decoration: underline;
+}

@@ -17,6 +17,8 @@ export class GlobalService {
     localStorage.getItem('route') || 'home'
   );
 
+  public isEditing:boolean = true;
+
   constructor(private router: Router) {
     // this.routeSubject.subscribe(route => {
     //   router.navigate([route]);

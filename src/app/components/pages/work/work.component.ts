@@ -19,6 +19,7 @@ import {
   HighlightJS,
   HighlightLoader,
 } from 'ngx-highlightjs';
+import { UserAuthService } from 'src/app/services/auth/user-auth.service';
 
 const themeGithub = 'assets/github-dark.css';
 const themeAtomOneDark = 'assets/atom-one-dark.css';
@@ -48,7 +49,8 @@ export class WorkComponent {
 
   constructor(
     public firestore: FirestoreService,
-    hljs: HighlightJS,
+    private hljs: HighlightJS,
+    public userAuth:UserAuthService,
     private hljsLoader: HighlightLoader,
   ) {
     // hljs.highlightAll();

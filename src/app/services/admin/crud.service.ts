@@ -19,6 +19,7 @@ export class CrudService {
 
   
   //c
+
   create(collectionString: string, data: any) {
     const _collection = collection(this.firestore.firestore, collectionString);
     

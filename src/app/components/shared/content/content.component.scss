@@ -47,3 +47,36 @@
   color:white;
   cursor: pointer;
 }
+.contentAdminCover{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  top:0;
+  cursor: pointer;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.contentAdminCover h5{
+  visibility: hidden;
+  color:white;
+  
+}
+.contentAdminCover:hover{
+  border:solid 3px rgb(63, 63, 172);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.455);
+}
+.contentAdminCover:hover h5{
+  visibility:visible;
+}
+
+
+._container{
+  width:100%;
+  height:100%;
+  position: relative;
+}

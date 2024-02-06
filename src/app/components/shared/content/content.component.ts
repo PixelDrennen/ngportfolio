@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { CONTENT_TYPES } from 'src/app/services/global.service';
+import { CONTENT_TYPES, GlobalService } from 'src/app/services/global.service';
 import { getStorage, ref, getDownloadURL } from '@angular/fire/storage';
 import { ContentBlock } from 'src/app/services/firebase/firestore.service';
 import { SafePipe } from 'src/app/pipes/youtube/safe.pipe';
@@ -25,6 +25,8 @@ import {
 import { Clipboard } from '@angular/cdk/clipboard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltip } from '@angular/material/tooltip';
+import { CrudService } from 'src/app/services/admin/crud.service';
+import { UserAuthService } from 'src/app/services/auth/user-auth.service';
 
 const themeGithub = 'assets/github-dark.css';
 const themeAtomOneDark = 'assets/atom-one-dark.css';
@@ -53,6 +55,9 @@ export class ContentComponent implements OnInit, AfterViewInit {
     private hljsLoader: HighlightLoader,
     public sanitizer: DomSanitizer,
     private clipboard: Clipboard,
+    public crudService:CrudService,
+    public userAuth:UserAuthService,
+    public global:GlobalService,
   ) {
     this.hljsLoader.setTheme(this.currentTheme);
   }
@@ -164,5 +169,9 @@ export class ContentComponent implements OnInit, AfterViewInit {
     // if (content.meta.wAuto) img.style.width = 'auto !important';
     // if (content.meta.hAuto) img.style.height = 'auto !important';
     console.log('setting width, height to:', el.style.width, el.style.height);
+  }
+
+  beginEdit(){
+    console.log('begin edit');
   }
 }

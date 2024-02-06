@@ -24,6 +24,10 @@ import { SummaryboxComponent } from './components/overlays/summarybox/summarybox
 import { SafePipe } from './pipes/youtube/safe.pipe';
 import { HIGHLIGHT_OPTIONS, HighlightModule, HighlightJS, HighlightOptions } from 'ngx-highlightjs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CreateComponent } from './components/overlays/crud/create/create.component';
+import { CreateButtonComponent } from './components/shared/crud/create-button/create-button.component';
+import { EditButtonComponent } from './components/shared/crud/edit-button/edit-button.component';
+import { DeleteButtonComponent } from './components/shared/crud/delete-button/delete-button.component';
 // import { HttpClientModule }
 @NgModule({
   declarations: [
@@ -36,6 +40,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AdminOverlayComponent,
     AdminLoginComponent,
     SummaryboxComponent,
+    CreateComponent,
+    CreateButtonComponent,
+    EditButtonComponent,
+    DeleteButtonComponent,
   ],
   imports: [
     HighlightModule,
