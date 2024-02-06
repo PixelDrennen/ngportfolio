@@ -5,6 +5,7 @@ import { UserAuthService } from './services/auth/user-auth.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  // standalone:true,
 })
 export class AppComponent {
   title = 'Drennen Dooms';

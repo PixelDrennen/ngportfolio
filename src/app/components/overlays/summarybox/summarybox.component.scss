@@ -121,7 +121,7 @@ $primaryColor: rgb(253, 8, 74);
 
 .summarybody .featureImage {
   clear: both;
-  width: 50% !important;
+  width: 40% !important;
   height: auto !important;
   //   opacity: 0;
   margin: 5px;
@@ -171,10 +171,12 @@ $primaryColor: rgb(253, 8, 74);
   // overflow:visible;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  // flex-wrap: nowrap;
   justify-content: normal;
   align-items: stretch;
   align-content: stretch;
+  flex-wrap: wrap;
+
 }
 .myrow p {
   width: 50%;
@@ -201,5 +203,8 @@ $primaryColor: rgb(253, 8, 74);
   flex-basis: 33%;
   align-self: auto;
   order: 0;
+  justify-content: center;
+  align-items: center;
+  padding:auto;
   // border:1px solid rgba(0, 0, 0, 0.388);
 }

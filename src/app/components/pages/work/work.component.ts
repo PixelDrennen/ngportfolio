@@ -13,6 +13,15 @@ import {
   Collaborator,
 } from 'src/app/services/firebase/firestore.service';
 import { SummaryboxComponent } from '../../overlays/summarybox/summarybox.component';
+import {
+  Highlight,
+  HighlightAutoResult,
+  HighlightJS,
+  HighlightLoader,
+} from 'ngx-highlightjs';
+
+const themeGithub = 'assets/github-dark.css';
+const themeAtomOneDark = 'assets/atom-one-dark.css';
 
 @Component({
   selector: 'app-work',
@@ -37,7 +46,14 @@ export class WorkComponent {
   selectedItem?: Item;
   @ViewChild(SummaryboxComponent) summarybox!: SummaryboxComponent;
 
-  constructor(public firestore: FirestoreService) {
+  constructor(
+    public firestore: FirestoreService,
+    hljs: HighlightJS,
+    private hljsLoader: HighlightLoader,
+  ) {
+    // hljs.highlightAll();
+    // hljs.initLineNumbersOnLoad();
+    hljs.lineNumbersBlock(document.querySelector('.linenums')!);
     this.leftcontainer = Array(0).fill(10);
     this.rightcontainer = Array(4).fill(10);
 
@@ -50,6 +66,37 @@ export class WorkComponent {
 
       summarybox.style.marginLeft = `${workboxLeft + workboxwidth}px`;
     }
+
+    // setTimeout(() => {
+      
+    //   this.changeTheme();
+    // }, 5000);
+    this.hljsLoader.setTheme(this.currentTheme);
+
+  }
+  currentTheme: string = themeGithub;
+  response!: HighlightAutoResult;
+  onHighlight(e: HighlightAutoResult) {
+    this.response = {
+      language: e.language,
+      relevance: e.relevance,
+      secondBest: '{...}',
+      value: '{...}',
+    };
+  }
+
+  // "node_modules/highlight.js/a11y-dark.css",
+  //             "node_modules/highlight.js/styles/github.css",
+  //             "node_modules/highlight.js/styles/atom-one-dark.css"
+
+  changeTheme() {
+    console.log('current theme:',this.currentTheme);
+
+    this.currentTheme =
+      this.currentTheme === themeGithub ? themeAtomOneDark : themeGithub;
+    this.hljsLoader.setTheme(this.currentTheme);
+
+    console.log('new theme:',this.currentTheme);
   }
 
   onKeyUp(event: any) {
@@ -121,7 +168,7 @@ export class WorkComponent {
     setTimeout(() => {
       (document.querySelector('.summarybox') as HTMLElement).focus();
       if (this.selectedItem) this.summarybox.update();
-      else console.log("selected item is undefined.")
+      else console.log('selected item is undefined.');
     }, 500);
   }
 }

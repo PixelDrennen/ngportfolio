@@ -7,21 +7,23 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { HomepageComponent } from './components/pages/homepage/homepage.component';
 import { AdminOverlayComponent } from './components/overlays/admin-overlay/admin-overlay.component';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideDatabase,getDatabase } from '@angular/fire/database';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideStorage,getStorage } from '@angular/fire/storage';
+import { provideDatabase, getDatabase } from '@angular/fire/database';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 import { WorkComponent } from './components/pages/work/work.component';
 import { ContentComponent } from './components/shared/content/content.component';
 import { WorkdocCreatorComponent } from './components/admin/editors/workdoc-creator/workdoc-creator.component';
-import { provideMessaging,getMessaging } from '@angular/fire/messaging';
-import { AdminLoginComponent } from './components/pages/admin-login/admin-login.component'
+import { provideMessaging, getMessaging } from '@angular/fire/messaging';
+import { AdminLoginComponent } from './components/pages/admin-login/admin-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SummaryboxComponent } from './components/overlays/summarybox/summarybox.component';
 import { SafePipe } from './pipes/youtube/safe.pipe';
+import { HIGHLIGHT_OPTIONS, HighlightModule, HighlightJS, HighlightOptions } from 'ngx-highlightjs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 // import { HttpClientModule }
 @NgModule({
   declarations: [
@@ -33,23 +35,45 @@ import { SafePipe } from './pipes/youtube/safe.pipe';
     WorkdocCreatorComponent,
     AdminOverlayComponent,
     AdminLoginComponent,
-    SummaryboxComponent
+    SummaryboxComponent,
   ],
   imports: [
+    HighlightModule,
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     AngularFireModule,
+    MatTooltipModule,
     AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
-    provideMessaging(() => getMessaging())
+    provideMessaging(() => getMessaging()),
   ],
-  providers: [SafePipe],
-  bootstrap: [AppComponent]
+  providers: [
+    SafePipe,
+    HighlightJS,
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: <HighlightOptions> {
+        lineNumbers:true,
+        coreLibraryLoader: () => import('highlight.js/lib/core'),
+        lineNumbersLoader: () => import('ngx-highlightjs/line-numbers'),
+        themePath: 'assets/atom-one-dark.css',
+        languages: {
+          xml: () => import('highlight.js/lib/languages/xml'),
+          typescript: () => import('highlight.js/lib/languages/typescript'),
+          scss: () => import('highlight.js/lib/languages/scss'),
+          css: () => import('highlight.js/lib/languages/css'),
+          c: () => import('highlight.js/lib/languages/c'),
+          csharp: () => import('highlight.js/lib/languages/csharp'),
+        },
+      },
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

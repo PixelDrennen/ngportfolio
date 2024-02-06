@@ -98,10 +98,11 @@ export class SummaryboxComponent implements OnInit {
     // console.log('Getting content for row', id);
     this.firestore.getContentForRow(id).then((contentArr) => {
       let contentInRow: ContentBlock[] = [];
+
       console.log('row', id, ':', contentInRow);
       contentArr.forEach((content) => {
-        let cblock: ContentBlock = content.data() as ContentBlock;
-        cblock.id = content.id;
+        let cblock: ContentBlock = { id:content.id, ...content.data() } as ContentBlock;
+        // cblock.id = content.id;
         contentInRow.push(cblock);
       });
       this.contentPerRow?.push(contentInRow);

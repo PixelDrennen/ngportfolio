@@ -6,7 +6,37 @@
     the last few years.
   </p>
 
-  <app-summarybox  [selected]="selected" [selectedItem]="selectedItem" (selectItemEvent)="select(selectedItem)"></app-summarybox>
+  <div class="codebox">
+    <pre><code [highlight]="'  @Input() contentValue?: string;'+'
+  @Input() contentType?: string;'+'
+  @Input() contentBlock?: ContentBlock;'+'
+  @Input() element?: ElementRef;'" 
+  [lineNumbers]="true">
+  </code></pre>
+  </div>
+
+  <style>
+    .codebox {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: normal;
+      align-items: stretch;
+      align-content: stretch;
+      border:1px solid transparent;
+      border-radius: 20%;
+      width:100%;
+    }
+    .codebox pre {
+      flex-grow: 1;
+    }
+  </style>
+
+  <app-summarybox
+    [selected]="selected"
+    [selectedItem]="selectedItem"
+    (selectItemEvent)="select(selectedItem)"
+  ></app-summarybox>
 
   <!-- <div
     tabindex="0"
@@ -78,13 +108,12 @@
 
 
   </div> -->
-  
-  
+
   <div class="workcontainer">
     <div class="full-container">
       <div
         class="workbox"
-        *ngFor="let n of firestore.itemCol$ | async;"
+        *ngFor="let n of firestore.itemCol$ | async"
         (click)="select(n)"
         [style]="
           'background-image:url(' +

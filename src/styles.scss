@@ -4,7 +4,8 @@
 // #d7d2ce
 // #d3c0b2
 // #a99282
-
+@import url('node_modules/highlight.js/styles/github.css');
+@import url('node_modules/highlight.js/styles/atom-one-dark.css');
 body {
 	background-color: #f4f2f0;
 	left:0;
@@ -23,3 +24,5 @@ body {
 		width:95% !important;
 	}
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
