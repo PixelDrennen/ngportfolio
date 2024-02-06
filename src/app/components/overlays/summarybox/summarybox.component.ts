@@ -7,6 +7,7 @@ import {
 } from '@angular/animations';
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { UserAuthService } from 'src/app/services/auth/user-auth.service';
 import {
   WorkDoc,
   Item,
@@ -15,7 +16,7 @@ import {
   ContentRow,
   ContentBlock,
 } from 'src/app/services/firebase/firestore.service';
-import { CONTENT_TYPES } from 'src/app/services/global.service';
+import { CONTENT_TYPES, GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-summarybox',
@@ -46,7 +47,7 @@ export class SummaryboxComponent implements OnInit {
 
   contentPerRow?: ContentBlock[][] = [] as ContentBlock[][];
 
-  constructor(public firestore: FirestoreService) {
+  constructor(public firestore: FirestoreService, public global:GlobalService, public userAuth:UserAuthService) {
     // console.log(this.rows$);
   }
   ngOnInit(): void {}

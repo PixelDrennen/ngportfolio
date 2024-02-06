@@ -20,6 +20,7 @@ import {
   HighlightLoader,
 } from 'ngx-highlightjs';
 import { UserAuthService } from 'src/app/services/auth/user-auth.service';
+import { GlobalService } from 'src/app/services/global.service';
 
 const themeGithub = 'assets/github-dark.css';
 const themeAtomOneDark = 'assets/atom-one-dark.css';
@@ -52,6 +53,7 @@ export class WorkComponent {
     private hljs: HighlightJS,
     public userAuth:UserAuthService,
     private hljsLoader: HighlightLoader,
+    public global:GlobalService,
   ) {
     // hljs.highlightAll();
     // hljs.initLineNumbersOnLoad();

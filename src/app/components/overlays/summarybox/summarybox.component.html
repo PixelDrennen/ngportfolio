@@ -24,7 +24,7 @@
         <h3>{{ firestore.selectedWorkDoc.title }}</h3>
         <p>{{ firestore.selectedWorkDoc.subtitle }}</p>
       </div>
-      <app-edit-button></app-edit-button>
+      <app-edit-button *ngIf="userAuth.isAdmin && global.isEditing"></app-edit-button>
 
       <!-- COLLABS -->
       <div class="collabContainer">

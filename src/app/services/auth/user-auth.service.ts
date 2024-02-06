@@ -6,6 +6,7 @@ import {
   user,
   signInAnonymously,
   signInWithEmailAndPassword,
+  signOut,
 } from '@angular/fire/auth';
 import {
   Firestore,
@@ -16,6 +17,7 @@ import {
   limit,
 } from '@angular/fire/firestore';
 import { Observable, Subscription } from 'rxjs';
+import { GlobalService } from '../global.service';
 
 export interface UserAccount {
   nickname: string;
@@ -29,7 +31,11 @@ export interface UserAccount {
 export class UserAuthService implements OnDestroy {
   userSubscription: Subscription;
 
-  constructor(private auth: Auth, private firestore: Firestore) {
+  constructor(
+    private auth: Auth,
+    private firestore: Firestore,
+    private globalService: GlobalService,
+  ) {
     this.userSubscription = this.user$.subscribe((aUser: User | null) => {
       //handle user state changes here. Note, that user will be null if there is no currently logged in user.
 
@@ -61,6 +67,16 @@ export class UserAuthService implements OnDestroy {
     // }
   }
 
+  logout() {
+    signOut(this.auth).then(() => {
+      console.log('Signed out.');
+      this.userSubscription.unsubscribe();
+      signInAnonymously(this.auth).then(() => {
+        console.log('signed in anonymously.');
+      });
+    });
+  }
+
   SignInWithEmailPassword(email: string, password: string) {
     // this.handleUser(this.auth);
     if (this.auth.currentUser) this.auth.signOut();
@@ -68,7 +84,7 @@ export class UserAuthService implements OnDestroy {
       .then(() => {
         console.log(
           'Signed in with email and password. Signed in as',
-          this.auth.currentUser?.email
+          this.auth.currentUser?.email,
         );
         this.handleUser(this.auth);
       })
@@ -76,7 +92,7 @@ export class UserAuthService implements OnDestroy {
         const code = error.code;
         const msg = error.message;
         console.log(
-          `Could not sign in with email and password. \n${code}\n${msg}`
+          `Could not sign in with email and password. \n${code}\n${msg}`,
         );
       });
   }
@@ -87,7 +103,7 @@ export class UserAuthService implements OnDestroy {
     const q = query(
       accountCol,
       where('userID', '==', auth.currentUser?.uid),
-      limit(1)
+      limit(1),
     );
     const data = collectionData(q) as Observable<UserAccount[]>;
     this.userAccount$ = data;
@@ -97,6 +113,8 @@ export class UserAuthService implements OnDestroy {
       if (a.length > 0) {
         this.isAdmin = a[0].admin;
         console.log(`user is admin: ${this.isAdmin}`);
+        if (this.globalService.routeSubject.getValue() == 'admin')
+          if (this.isAdmin) this.globalService.setRoute('home');
       }
     });
   }

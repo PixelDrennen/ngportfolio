@@ -12,10 +12,13 @@ import { GlobalService } from 'src/app/services/global.service';
 export class AdminOverlayComponent {
 
 
-  constructor(public userAuth:UserAuthService, public global:GlobalService){}
+  constructor(public userAuth:UserAuthService, public global:GlobalService){
+    this.global.isEditing = (localStorage.getItem('isEditing') == 'true');
+  }
 
   toggleEdit(){
     this.global.isEditing = !this.global.isEditing;
+    localStorage.setItem('isEditing', this.global.isEditing.toString());
   }
 
 }
