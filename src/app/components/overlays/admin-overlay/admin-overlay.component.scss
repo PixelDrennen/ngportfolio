@@ -21,10 +21,22 @@
     text-align: center;
 }
 
+$isEditing: false;
+
 .mybtn{
   cursor: pointer;
   color:white;
 }
 .mybtn:hover{
-  color:#265da1;
+  // color:#265da1;
+  text-decoration: underline;
+}
+
+.mybtnEditActive{
+  cursor: pointer;
+  color:rgb(0, 255, 0);
+}
+.mybtnEditActive:hover{
+  // color:rgb(0, 83, 0);
+  text-decoration: underline;
 }

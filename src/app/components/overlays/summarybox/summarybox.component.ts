@@ -15,6 +15,7 @@ import {
   ContentRow,
   ContentBlock,
 } from 'src/app/services/firebase/firestore.service';
+import { CONTENT_TYPES } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-summarybox',
@@ -37,6 +38,8 @@ export class SummaryboxComponent implements OnInit {
   @Input() selectedItem?: Item;
 
   @Output() selectItemEvent = new EventEmitter<Item>();
+
+  contentTypes = CONTENT_TYPES;
 
   // rows?: string[] = [] as string[];
   rows?: ContentRow[] = [] as ContentRow[];
@@ -130,9 +133,9 @@ export class SummaryboxComponent implements OnInit {
 
   setWidthOfImage(img: HTMLElement, content: ContentBlock) {
     console.log('setting size for element', img.nodeName);
-    img.style.width = content.meta.width + '%';
-    img.style.height = content.meta.height + '%';
-    if (content.meta.wAuto) img.style.width = 'auto';
-    if (content.meta.hAuto) img.style.height = 'auto';
+    // img.style.width = content.meta.width + '%';
+    // img.style.height = content.meta.height + '%';
+    // if (content.meta.wAuto) img.style.width = 'auto';
+    // if (content.meta.hAuto) img.style.height = 'auto';
   }
 }

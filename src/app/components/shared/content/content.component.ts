@@ -162,10 +162,10 @@ export class ContentComponent implements OnInit, AfterViewInit {
     }
     console.log('css:', el.css);
 
-    let w = `${this.contentBlock!.meta.width}% !important`;
-    let h = `${this.contentBlock!.meta.height}% !important`;
-    el.style.width = w;
-    el.style.height = h;
+    // let w = `${this.contentBlock!.meta.width}% !important`;
+    // let h = `${this.contentBlock!.meta.height}% !important`;
+    // el.style.width = w;
+    // el.style.height = h;
     // if (content.meta.wAuto) img.style.width = 'auto !important';
     // if (content.meta.hAuto) img.style.height = 'auto !important';
     console.log('setting width, height to:', el.style.width, el.style.height);

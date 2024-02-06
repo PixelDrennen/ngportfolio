@@ -53,12 +53,12 @@ export interface ContentBlock {
   id: string;
   type: string;
   value: string;
-  meta:{
-    width:20,
-    height:20,
-    wAuto:false,
-    hAuto:true
-  }
+  // meta:{
+  //   width:20,
+  //   height:20,
+  //   wAuto:false,
+  //   hAuto:true
+  // }
 }
 
 @Injectable({

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserAuthService } from 'src/app/services/auth/user-auth.service';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-admin-overlay',
@@ -11,6 +12,10 @@ import { UserAuthService } from 'src/app/services/auth/user-auth.service';
 export class AdminOverlayComponent {
 
 
-  constructor(public userAuth:UserAuthService){}
+  constructor(public userAuth:UserAuthService, public global:GlobalService){}
+
+  toggleEdit(){
+    this.global.isEditing = !this.global.isEditing;
+  }
 
 }

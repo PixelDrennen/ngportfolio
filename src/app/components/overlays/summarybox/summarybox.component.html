@@ -24,6 +24,7 @@
         <h3>{{ firestore.selectedWorkDoc.title }}</h3>
         <p>{{ firestore.selectedWorkDoc.subtitle }}</p>
       </div>
+      <app-edit-button></app-edit-button>
 
       <!-- COLLABS -->
       <div class="collabContainer">
@@ -49,7 +50,9 @@
     <p><i>At a glance</i></p>
     <div class="summarybody">
       <!-- FEATURED CONTENT -->
-      <div class="myrow">
+      <div class="myrow featureContainer">
+        <!-- <app-content class="featureImage" [contentBlock]="{ id:'', type:contentTypes.IMAGE, value:firestore.selectedWorkDoc.featureImage }" [contentType]="contentTypes.IMAGE" [contentValue]="firestore.selectedWorkDoc.featureImage"></app-content>
+        <app-content class="mycontentblock" [contentBlock]="{ id:'', type:contentTypes.TEXT, value:firestore.selectedWorkDoc.featureBody }" [contentType]="contentTypes.TEXT" [contentValue]="firestore.selectedWorkDoc.featureBody"></app-content> -->
         <img
           class="featureImage"
           [src]="firestore.selectedWorkDoc.featureImage"
@@ -58,12 +61,6 @@
           {{ firestore.selectedWorkDoc.featureBody }}
         </p>
       </div>
-      <!-- <div class="myrow">
-        <img [src]="firestore.selectedWorkDoc.featureImage" />
-        <p class="summarycollumn">
-          {{ firestore.selectedWorkDoc.body }}
-        </p>
-      </div> -->
 
       <hr id="divider" />
 

@@ -1,4 +1,4 @@
 <div class="admin-overlay" *ngIf="userAuth.isAdmin">
   <span>Admin</span>
-  <span class="material-symbols-outlined mybtn"> edit </span>
+  <span class="material-symbols-outlined mybtn" [classList]="!global.isEditing ? 'material-symbols-outlined mybtn' : 'material-symbols-outlined mybtnEditActive'" (click)="toggleEdit()"> edit </span>
 </div>
