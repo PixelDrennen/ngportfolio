@@ -7,6 +7,7 @@ import {
 } from '@angular/animations';
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { CreateWindowService } from 'src/app/services/admin/crud/create-window.service';
 import { UserAuthService } from 'src/app/services/auth/user-auth.service';
 import {
   WorkDoc,
@@ -47,7 +48,7 @@ export class SummaryboxComponent implements OnInit {
 
   contentPerRow?: ContentBlock[][] = [] as ContentBlock[][];
 
-  constructor(public firestore: FirestoreService, public global:GlobalService, public userAuth:UserAuthService) {
+  constructor(public firestore: FirestoreService, public global:GlobalService, public userAuth:UserAuthService, public createWindowService:CreateWindowService) {
     // console.log(this.rows$);
   }
   ngOnInit(): void {}
@@ -138,5 +139,11 @@ export class SummaryboxComponent implements OnInit {
     // img.style.height = content.meta.height + '%';
     // if (content.meta.wAuto) img.style.width = 'auto';
     // if (content.meta.hAuto) img.style.height = 'auto';
+  }
+
+
+  beginCreateContent(){
+    console.log('begin edit');
+    this.createWindowService.showWindow = true;
   }
 }

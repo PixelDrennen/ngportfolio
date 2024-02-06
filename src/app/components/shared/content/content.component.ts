@@ -27,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTooltip } from '@angular/material/tooltip';
 import { CrudService } from 'src/app/services/admin/crud.service';
 import { UserAuthService } from 'src/app/services/auth/user-auth.service';
+import { CreateWindowService } from 'src/app/services/admin/crud/create-window.service';
 
 const themeGithub = 'assets/github-dark.css';
 const themeAtomOneDark = 'assets/atom-one-dark.css';
@@ -58,9 +59,13 @@ export class ContentComponent implements OnInit, AfterViewInit {
     public crudService:CrudService,
     public userAuth:UserAuthService,
     public global:GlobalService,
+    public createWindowService:CreateWindowService,
   ) {
     this.hljsLoader.setTheme(this.currentTheme);
   }
+
+
+
   currentTheme: string = themeGithub;
   response!: HighlightAutoResult;
   onHighlight(e: HighlightAutoResult) {
@@ -173,5 +178,6 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
   beginEdit(){
     console.log('begin edit');
+    this.createWindowService.showWindow = true;
   }
 }

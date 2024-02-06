@@ -1,0 +1,171 @@
+.mybackdrop {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.652);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.editorWindow {
+  z-index: 5;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.editorContainer {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+
+  margin: auto;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding-right:30px;
+  // padding:30px;
+}
+
+.editorContent {
+  background-color: rgba(202, 202, 202, 0.489);
+  backdrop-filter: blur(3px);
+  width: 20%;
+  height: 50%;
+  // padding: 30px;
+  border: solid 10px rgb(40, 40, 40);
+  border-radius: 10px;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  // padding-top: 10px;
+  // padding-bottom: 10px;
+  position: relative;
+  // padding-top:30px;
+  overflow: hidden;
+  // overflow: auto;
+  // z-index: 0;
+}
+.scrollbox{
+  width:100%;
+  height:100%;
+  overflow: auto;
+}
+
+.mygrid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  column-count: 3;
+  max-width: 90%;
+  margin: auto;
+  // height:99%;
+  // padding-top:100px;
+  padding-bottom:80px;
+  // padding:30px;
+  // color:white;
+  // z-index: 1;
+  font-weight: light;
+  color:rgb(50, 50, 50);
+  
+}
+.editorBackdrop{
+  position: absolute;
+  // background-color: black;
+  // width:100%;
+  // height:100%;
+  // top:60px;
+  // z-index: 0;
+}
+.ctntBtn {
+  cursor: pointer;
+  border: solid 1px transparent;
+  user-select: none;
+  position: relative;
+  padding: 5px;
+}
+.ctntBtn .material-symbols-outlined {
+  font-size: 70px;
+
+  font-variation-settings:
+              'FILL' 0,
+              'wght' 100,
+              'GRAD' 0,
+              'opsz' 24;
+  // color:white;
+          
+}
+.ctntBtn:hover {
+  border: solid 1px black;
+  border-radius: 20px;
+}
+.ctntBtn:active {
+  border: solid 1px black;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.249);
+}
+.ctntBtn span {
+  margin-left: auto;
+  margin-right: auto;
+}
+.ctntLabel {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: smaller;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  padding:10px;
+  background-color: rgb(215, 215, 215);
+  border-bottom:solid 1px black;
+
+  // position:absolute;
+  // top:0;
+  // height:30%;
+}
+.mybtn {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  user-select: none;
+}
+.mybtn div {
+  width:100%;
+  height:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  user-select: none;
+}
+.mybtn:hover div {
+  border: solid 1px black;
+  border-radius: 5px;
+  width: 20px;
+  height: 20px;
+}
+.mybtn:active div span{
+  font-size: smaller;
+  color:white;
+}
+.mybtn:active div {
+  background-color: rgba(0, 0, 0, 0.63);
+}

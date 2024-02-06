@@ -28,6 +28,8 @@ import { CreateComponent } from './components/overlays/crud/create/create.compon
 import { CreateButtonComponent } from './components/shared/crud/create-button/create-button.component';
 import { EditButtonComponent } from './components/shared/crud/edit-button/edit-button.component';
 import { DeleteButtonComponent } from './components/shared/crud/delete-button/delete-button.component';
+import { EditContentWindowComponent } from './components/admin/editors/edit-content-window/edit-content-window.component';
+import { CreateContentWindowComponent } from './components/admin/editors/create-content-window/create-content-window.component';
 // import { HttpClientModule }
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { DeleteButtonComponent } from './components/shared/crud/delete-button/de
     CreateButtonComponent,
     EditButtonComponent,
     DeleteButtonComponent,
+    EditContentWindowComponent,
+    CreateContentWindowComponent,
   ],
   imports: [
     HighlightModule,

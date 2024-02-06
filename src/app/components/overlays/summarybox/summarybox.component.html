@@ -70,6 +70,8 @@
         <div class="myrow" *ngFor="let _row of contentPerRow; let i = index;">
                 <app-content class="mycontentblock" *ngFor="let _content of _row" [contentBlock]="_content" [contentValue]="_content.value" [contentType]="_content.type"
                 [id]="_content.id"></app-content>
+
+                <app-create-button (click)="beginCreateContent()" *ngIf="userAuth.isAdmin && global.isEditing" class="admin_createbtn_container"></app-create-button>
         </div>
 
         <!-- <table>
