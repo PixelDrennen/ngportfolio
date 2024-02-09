@@ -48,7 +48,12 @@ export class SummaryboxComponent implements OnInit {
 
   contentPerRow?: ContentBlock[][] = [] as ContentBlock[][];
 
-  constructor(public firestore: FirestoreService, public global:GlobalService, public userAuth:UserAuthService, public createWindowService:CreateWindowService) {
+  constructor(
+    public firestore: FirestoreService,
+    public global: GlobalService,
+    public userAuth: UserAuthService,
+    public createWindowService: CreateWindowService,
+  ) {
     // console.log(this.rows$);
   }
   ngOnInit(): void {}
@@ -85,7 +90,7 @@ export class SummaryboxComponent implements OnInit {
     //this.firestore.firestore
     console.log(this.selectedItem);
     const result = this.firestore.getRowsForWorkdoc(
-      this.selectedItem?.workdoc!
+      this.selectedItem?.workdoc!,
     );
     result.then((a) => {
       a.forEach((row) => {
@@ -106,11 +111,20 @@ export class SummaryboxComponent implements OnInit {
 
       console.log('row', id, ':', contentInRow);
       contentArr.forEach((content) => {
-        let cblock: ContentBlock = { id:content.id, ...content.data() } as ContentBlock;
+        let cblock: ContentBlock = {
+          id: content.id,
+          ...content.data(),
+        } as ContentBlock;
         // cblock.id = content.id;
         contentInRow.push(cblock);
       });
       this.contentPerRow?.push(contentInRow);
+
+      if (contentInRow != undefined) {
+        if (contentInRow.length > 0)
+          this.createWindowService.order = contentInRow.length - 1;
+        else this.createWindowService.order = 0;
+      }
     });
 
     // console.log(this.contentPerRow);
@@ -141,9 +155,11 @@ export class SummaryboxComponent implements OnInit {
     // if (content.meta.hAuto) img.style.height = 'auto';
   }
 
-
-  beginCreateContent(){
-    console.log('begin edit');
+  beginCreateContent(rowId: string) {
+    console.log(`begin edit in row ${rowId}`);
     this.createWindowService.showWindow = true;
+    this.createWindowService.rowId = rowId;
+    this.getContentForRow(rowId);
+    // this.createWindowService.order =
   }
 }

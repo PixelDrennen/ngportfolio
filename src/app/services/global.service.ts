@@ -7,6 +7,14 @@ export const CONTENT_TYPES = {
   VIDEO: 'video',
   TEXT: 'text',
   CODEBLOCK: 'codeblock',
+  MODEL:'model',
+  GALLERY:'gallery',
+  CAROUSEL:'carousel',
+  EMBED:'embed',
+  HYPERLINK:'hyperlink',
+  AUDIO:'audio',
+  BUTTON:'button',
+  SPACER:'spacer',
 };
 
 @Injectable({

@@ -7,6 +7,13 @@
   left: 0;
   top: 0;
 }
+.contentWindow{
+  padding:30px;
+  // display:flex;
+  justify-content: center;
+  align-items: center;
+  // align-self: center;
+}
 .editorWindow {
   z-index: 5;
   position: fixed;
@@ -14,6 +21,12 @@
   right: 0;
   top: 0;
   bottom: 0;
+}
+
+.input{
+flex-grow:1;
+width:100%;
+margin:5px;
 }
 
 .editorContainer {
@@ -33,8 +46,8 @@
   // padding:30px;
 }
 
-.editorContent {
-  background-color: rgba(202, 202, 202, 0.489);
+.editorBody {
+  background-color: rgba(202, 202, 202, 0.712);
   backdrop-filter: blur(3px);
   width: 20%;
   height: 50%;
@@ -52,10 +65,11 @@
   // overflow: auto;
   // z-index: 0;
 }
-.scrollbox{
+.editorContent{
   width:100%;
   height:100%;
   overflow: auto;
+  padding-top:10px;
 }
 
 .mygrid {
@@ -129,10 +143,11 @@
 .head {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding:10px;
   background-color: rgb(215, 215, 215);
   border-bottom:solid 1px black;
-
+  
   // position:absolute;
   // top:0;
   // height:30%;

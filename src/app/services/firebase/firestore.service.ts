@@ -10,10 +10,14 @@ import {
   docData,
   query,
   getDocs,
+  setDoc,
+  addDoc,
+  orderBy,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UserAuthService } from '../auth/user-auth.service';
-import { where } from 'firebase/firestore';
+import { CollectionReference, where } from 'firebase/firestore';
+import { DocumentData } from '@angular/fire/firestore';
 
 export interface Item {
   id: string;
@@ -53,6 +57,8 @@ export interface ContentBlock {
   id: string;
   type: string;
   value: string;
+  row:string;
+  order:number;
   // meta:{
   //   width:20,
   //   height:20,
@@ -82,12 +88,12 @@ export class FirestoreService {
     const itemCol = collection(this.firestore, 'items');
     const itemQuery = query(itemCol);
 
-    this.itemCol$ = collectionData(itemQuery) as Observable<Item[]>;
+    this.itemCol$ = collectionData(itemQuery, {idField:'id'}) as Observable<Item[]>;
 
     const workdocCol = collection(this.firestore, 'workdocs');
     const workdocQuery = query(workdocCol);
 
-    this.workdocs$ = collectionData(workdocQuery) as Observable<WorkDoc[]>;
+    this.workdocs$ = collectionData(workdocQuery, {idField:'id'}) as Observable<WorkDoc[]>;
   }
 
   async getWorkDoc(id: string) {
@@ -115,7 +121,8 @@ export class FirestoreService {
   async getRowsForWorkdoc(rowId: string) {
     const _collection = collection(this.firestore, 'contentRows');
     const _where = where('workdoc', '==', rowId);
-    const _query = query(_collection, _where);
+    const order = orderBy('order', 'asc');
+    const _query = query(_collection, _where, order);
 
     // const _data = collectionData(_query);
 
@@ -130,7 +137,8 @@ export class FirestoreService {
   async getContentForRow(id: string) {
     const _collection = collection(this.firestore, 'content');
     const _where = where('row', '==', id);
-    const _query = query(_collection, _where);
+    const order = orderBy('order', 'asc');
+    const _query = query(_collection, _where, order);
     const querySnapshot = await getDocs(_query);
     return querySnapshot;
 
@@ -150,4 +158,17 @@ export class FirestoreService {
   }
 
   public getDocument(url: string) {}
+
+  public addContentBlock(content: ContentBlock) {
+    const _collection = collection(this.firestore, 'content');
+
+    addDoc(_collection, content).then(a =>{
+      console.log(`Document added. \n${a.id}`);
+    }).catch((error) =>{
+      console.log(`Could not add document. \n${error}`)
+    });
+    
+    
+    // setDoc(_collection, 'content')
+  }
 }

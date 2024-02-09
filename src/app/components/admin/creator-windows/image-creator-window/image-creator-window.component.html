@@ -1,0 +1,31 @@
+<div class="input-group">
+  <div class="form-check form-switch" style="user-select: none">
+    <input
+      [formControl]="isURLInput"
+      class="form-check-input"
+      type="checkbox"
+      role="switch"
+      id="flexSwitchCheckDefault"
+    />
+    <label class="form-check-label" for="flexSwitchCheckDefault"
+      >Link content</label
+    >
+  </div>
+</div>
+
+<div class="input-group" *ngIf="isURLInput.value == false">
+    <input (change)="onImageChanged($event)" class="input form-control" aria-label="Select Image" type="file" id="upload" accept=".png, .jpg, .jpeg, .psd, .webm, .gif, .webp, .svg, .tiff, .avif" />
+    <!-- <label class="input input-group-text" for="upload">Select Image</label> -->
+</div>
+
+<div class="input-group" *ngIf="isURLInput.value == true">
+  <label class="input input-group-text" for="url">URL</label>
+  <input class="input form-control" type="url" id="url" />
+</div>
+
+<div class="input-group">
+    <label class="input input-group-text" for="alt">Alt text</label>
+    <input class="input form-control" type="text" id="alt" />
+</div>
+
+<button class="input form-control" type="submit" (click)="submit()">Add</button>

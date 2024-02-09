@@ -9,5 +9,8 @@ export class CreateWindowService {
 
   showWindow:boolean = false;
 
+  rowId?:string;
+  order?:number;
+
   
 }

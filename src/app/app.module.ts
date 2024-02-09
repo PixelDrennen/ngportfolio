@@ -30,6 +30,10 @@ import { EditButtonComponent } from './components/shared/crud/edit-button/edit-b
 import { DeleteButtonComponent } from './components/shared/crud/delete-button/delete-button.component';
 import { EditContentWindowComponent } from './components/admin/editors/edit-content-window/edit-content-window.component';
 import { CreateContentWindowComponent } from './components/admin/editors/create-content-window/create-content-window.component';
+import { ContentOptionBoxComponent } from './components/shared/crud/content-option-box/content-option-box.component';
+import { ImageCreatorWindowComponent } from './components/admin/creator-windows/image-creator-window/image-creator-window.component';
+import { TextCreatorWindowComponent } from './components/admin/creator-windows/text-creator-window/text-creator-window.component';
+import { VideooCreatorWindowComponent } from './components/admin/creator-windows/videoo-creator-window/videoo-creator-window.component';
 // import { HttpClientModule }
 @NgModule({
   declarations: [
@@ -48,6 +52,10 @@ import { CreateContentWindowComponent } from './components/admin/editors/create-
     DeleteButtonComponent,
     EditContentWindowComponent,
     CreateContentWindowComponent,
+    ContentOptionBoxComponent,
+    ImageCreatorWindowComponent,
+    TextCreatorWindowComponent,
+    VideooCreatorWindowComponent,
   ],
   imports: [
     HighlightModule,

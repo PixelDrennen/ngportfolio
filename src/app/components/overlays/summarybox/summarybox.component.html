@@ -24,7 +24,9 @@
         <h3>{{ firestore.selectedWorkDoc.title }}</h3>
         <p>{{ firestore.selectedWorkDoc.subtitle }}</p>
       </div>
-      <app-edit-button *ngIf="userAuth.isAdmin && global.isEditing"></app-edit-button>
+      <app-edit-button
+        *ngIf="userAuth.isAdmin && global.isEditing"
+      ></app-edit-button>
 
       <!-- COLLABS -->
       <div class="collabContainer">
@@ -50,16 +52,18 @@
     <p><i>At a glance</i></p>
     <div class="summarybody">
       <!-- FEATURED CONTENT -->
-      <div class="myrow featureContainer">
+      <div class="featureContainer">
         <!-- <app-content class="featureImage" [contentBlock]="{ id:'', type:contentTypes.IMAGE, value:firestore.selectedWorkDoc.featureImage }" [contentType]="contentTypes.IMAGE" [contentValue]="firestore.selectedWorkDoc.featureImage"></app-content>
         <app-content class="mycontentblock" [contentBlock]="{ id:'', type:contentTypes.TEXT, value:firestore.selectedWorkDoc.featureBody }" [contentType]="contentTypes.TEXT" [contentValue]="firestore.selectedWorkDoc.featureBody"></app-content> -->
-        <img
-          class="featureImage"
-          [src]="firestore.selectedWorkDoc.featureImage"
-        />
-        <p class="summarycollumn">
-          {{ firestore.selectedWorkDoc.featureBody }}
-        </p>
+        <div class="featureFlex">
+          <img
+            class="featureImage"
+            [src]="firestore.selectedWorkDoc.featureImage"
+          />
+          <p class="summarycollumn">
+            {{ firestore.selectedWorkDoc.featureBody }}
+          </p>
+        </div>
       </div>
 
       <hr id="divider" />
@@ -67,11 +71,25 @@
       <!-- REST OF WORK DOCUMENT -->
 
       <div class="workgrid">
-        <div class="myrow" *ngFor="let _row of contentPerRow; let i = index;">
-                <app-content class="mycontentblock" *ngFor="let _content of _row" [contentBlock]="_content" [contentValue]="_content.value" [contentType]="_content.type"
-                [id]="_content.id"></app-content>
-
-                <app-create-button (click)="beginCreateContent()" *ngIf="userAuth.isAdmin && global.isEditing" class="admin_createbtn_container"></app-create-button>
+        <div class="myrow" *ngFor="let __row of rows; let i = index">
+          <app-content
+            class="mycontentblock"
+            *ngFor="let _content of contentPerRow![i]"
+            [contentBlock]="_content"
+            [contentValue]="_content.value"
+            [contentType]="_content.type"
+            [id]="_content.id"
+          >
+          </app-content>
+          <app-create-button
+            (click)="beginCreateContent(__row.id)"
+            *ngIf="i && contentPerRow![i] &&
+              contentPerRow![i].length < 3 &&
+              userAuth.isAdmin &&
+              global.isEditing
+            "
+            class="admin_createbtn_container"
+          ></app-create-button>
         </div>
 
         <!-- <table>

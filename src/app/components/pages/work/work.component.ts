@@ -22,6 +22,8 @@ import {
 import { UserAuthService } from 'src/app/services/auth/user-auth.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { CreateWindowService } from 'src/app/services/admin/crud/create-window.service';
+import { firstValueFrom, tap } from 'rxjs';
+import { DocumentData } from '@angular/fire/firestore';
 
 const themeGithub = 'assets/github-dark.css';
 const themeAtomOneDark = 'assets/atom-one-dark.css';
@@ -52,11 +54,25 @@ export class WorkComponent {
   constructor(
     public firestore: FirestoreService,
     private hljs: HighlightJS,
-    public userAuth:UserAuthService,
+    public userAuth: UserAuthService,
     private hljsLoader: HighlightLoader,
-    public global:GlobalService,
-    public createWindowService:CreateWindowService,
+    public global: GlobalService,
+    public createWindowService: CreateWindowService,
   ) {
+    this.selected = localStorage.getItem('itemIsSelected') === 'true';
+    if (this.selected) this.getItemsOnce();
+
+    // this.firestore.itemCol$.pipe(
+    //   tap((item) => {
+    //     item.forEach((item) => {
+    //       if (item.id == localStorage.getItem('selectedItemId'))
+    //         this.select(item);
+    //     });
+    //   }),
+    // );
+    // .forEach((item) => {
+    // });
+
     // hljs.highlightAll();
     // hljs.initLineNumbersOnLoad();
     hljs.lineNumbersBlock(document.querySelector('.linenums')!);
@@ -74,12 +90,21 @@ export class WorkComponent {
     }
 
     // setTimeout(() => {
-      
+
     //   this.changeTheme();
     // }, 5000);
     this.hljsLoader.setTheme(this.currentTheme);
-
   }
+
+  async getItemsOnce() {
+    const _items = await firstValueFrom(this.firestore.itemCol$);
+    const _selectedItem = _items.find(
+      (item) => item.id == localStorage.getItem('selectedItemId'),
+    );
+    if (_selectedItem) { this.select(_selectedItem); console.log(`Item selected: ${_selectedItem.id}`)}
+    else console.log(`Could not find item with id ${localStorage.getItem('selectedItemId')}`);
+  }
+
   currentTheme: string = themeGithub;
   response!: HighlightAutoResult;
   onHighlight(e: HighlightAutoResult) {
@@ -96,13 +121,13 @@ export class WorkComponent {
   //             "node_modules/highlight.js/styles/atom-one-dark.css"
 
   changeTheme() {
-    console.log('current theme:',this.currentTheme);
+    console.log('current theme:', this.currentTheme);
 
     this.currentTheme =
       this.currentTheme === themeGithub ? themeAtomOneDark : themeGithub;
     this.hljsLoader.setTheme(this.currentTheme);
 
-    console.log('new theme:',this.currentTheme);
+    console.log('new theme:', this.currentTheme);
   }
 
   onKeyUp(event: any) {
@@ -173,8 +198,12 @@ export class WorkComponent {
   private onSelected() {
     setTimeout(() => {
       (document.querySelector('.summarybox') as HTMLElement).focus();
-      if (this.selectedItem) this.summarybox.update();
-      else console.log('selected item is undefined.');
+      if (this.selectedItem) {
+        console.log(`Saving selected item ${this.selectedItem.id}`)
+        localStorage.setItem('selectedItemId', this.selectedItem.id);
+        localStorage.setItem('itemIsSelected', this.selected.toString());
+        this.summarybox.update();
+      } else console.log('selected item is undefined.');
     }, 500);
   }
 }
