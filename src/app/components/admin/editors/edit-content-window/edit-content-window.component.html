@@ -1,1 +1,59 @@
-<p>edit-content-window works!</p>
+<div class="editorWindow">
+  <!-- <div class="mybackdrop"></div> -->
+
+  <div class="editorContainer">
+   
+    <div class="editorBody">
+      <div class="editorBackdrop"></div>
+      <div class="head">
+        <p style="text-align: center; margin: auto; font-weight: bold">
+          {{ "Edit Content" }}
+        </p>
+        <div class="mybtn" (click)="closeWindow()">
+          <div class="btncontainer">
+            <span class="material-symbols-outlined"> close </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="editorContent">
+
+        
+
+        <div class="input-group">
+          <label class="input-group-text">type</label>
+
+          <select class="form-select" aria-label="Content Type" [formControl]="contentTypesDropdown">
+            <!-- <option selected>Open this select menu</option> -->
+            <option *ngFor="let type of contentTypesArr" [value]="type">{{type}}</option>
+          </select>
+
+          <input
+            class="form-control"
+            [value]="editWindowService.selectedContent?.type"
+          />
+        </div>
+        <div class="input-group">
+          <label class="input-group-text">value</label>
+          <textarea 
+            id="contentValueTextArea"
+            [formControl]="contentValueTextArea"
+            class="form-control"
+            [value]="editWindowService.selectedContent?.value"
+          ></textarea>
+        </div>
+
+        <button class="input btn btn-primary">Save</button>
+
+        <app-content *ngIf="editWindowService.selectedContent"
+        class="mycontentblock"
+            [allowAdminControls]="false"
+            [contentBlock]="editWindowService.selectedContent"
+            [contentValue]="editWindowService.selectedContent!.value"
+            [contentType]="editWindowService.selectedContent!.type"
+            [id]="editWindowService.selectedContent!.id"></app-content>
+      </div>
+     
+    </div>
+  </div>
+</div>

@@ -24,6 +24,7 @@ import { GlobalService } from 'src/app/services/global.service';
 import { CreateWindowService } from 'src/app/services/admin/crud/create-window.service';
 import { firstValueFrom, tap } from 'rxjs';
 import { DocumentData } from '@angular/fire/firestore';
+import { EditWindowService } from 'src/app/services/admin/crud/edit-window.service';
 
 const themeGithub = 'assets/github-dark.css';
 const themeAtomOneDark = 'assets/atom-one-dark.css';
@@ -58,6 +59,7 @@ export class WorkComponent {
     private hljsLoader: HighlightLoader,
     public global: GlobalService,
     public createWindowService: CreateWindowService,
+    public editWindowService: EditWindowService,
   ) {
     this.selected = localStorage.getItem('itemIsSelected') === 'true';
     if (this.selected) this.getItemsOnce();
@@ -170,6 +172,8 @@ export class WorkComponent {
       if (this.selectedItem == item || item == undefined) {
         this.selectedItem = undefined;
         this.selected = false;
+        localStorage.setItem('selectedItemId', '');
+        localStorage.setItem('itemIsSelected', this.selected.toString());
       }
       // the clicked item is different than our current item, so switch to that one
       else {

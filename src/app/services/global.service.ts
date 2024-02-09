@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
-export const CONTENT_TYPES = {
-  IMAGE: 'image',
-  VIDEO: 'video',
-  TEXT: 'text',
-  CODEBLOCK: 'codeblock',
-  MODEL:'model',
-  GALLERY:'gallery',
-  CAROUSEL:'carousel',
-  EMBED:'embed',
-  HYPERLINK:'hyperlink',
-  AUDIO:'audio',
-  BUTTON:'button',
-  SPACER:'spacer',
+export enum CONTENT_TYPES {
+  IMAGE= 'image',
+  VIDEO= 'video',
+  TEXT= 'text',
+  CODEBLOCK= 'codeblock',
+  MODEL='model',
+  GALLERY='gallery',
+  CAROUSEL='carousel',
+  EMBED='embed',
+  HYPERLINK='hyperlink',
+  AUDIO='audio',
+  BUTTON='button',
+  SPACER='spacer',
 };
 
 @Injectable({

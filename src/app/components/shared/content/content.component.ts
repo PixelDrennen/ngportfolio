@@ -28,6 +28,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { CrudService } from 'src/app/services/admin/crud.service';
 import { UserAuthService } from 'src/app/services/auth/user-auth.service';
 import { CreateWindowService } from 'src/app/services/admin/crud/create-window.service';
+import { EditWindowService } from 'src/app/services/admin/crud/edit-window.service';
 
 const themeGithub = 'assets/github-dark.css';
 const themeAtomOneDark = 'assets/atom-one-dark.css';
@@ -59,11 +60,13 @@ export class ContentComponent implements OnInit, AfterViewInit {
     public crudService:CrudService,
     public userAuth:UserAuthService,
     public global:GlobalService,
-    public createWindowService:CreateWindowService,
+    // public createWindowService:CreateWindowService,
+    public editWindowService:EditWindowService,
   ) {
     this.hljsLoader.setTheme(this.currentTheme);
   }
 
+  @Input() public allowAdminControls:boolean = true;
 
 
   currentTheme: string = themeGithub;
@@ -178,6 +181,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
   beginEdit(){
     console.log('begin edit');
-    this.createWindowService.showWindow = true;
+    this.editWindowService.selectedContent = this.contentBlock!;
+    this.editWindowService.showWindow = true;
   }
 }
