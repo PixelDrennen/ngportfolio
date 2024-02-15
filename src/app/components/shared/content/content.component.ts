@@ -5,6 +5,7 @@ import {
   Input,
   OnInit,
   ViewChild,
+  SecurityContext,
 } from '@angular/core';
 import { CONTENT_TYPES, GlobalService } from 'src/app/services/global.service';
 import { getStorage, ref, getDownloadURL } from '@angular/fire/storage';
@@ -30,6 +31,8 @@ import { UserAuthService } from 'src/app/services/auth/user-auth.service';
 import { CreateWindowService } from 'src/app/services/admin/crud/create-window.service';
 import { EditWindowService } from 'src/app/services/admin/crud/edit-window.service';
 
+
+
 const themeGithub = 'assets/github-dark.css';
 const themeAtomOneDark = 'assets/atom-one-dark.css';
 @Component({
@@ -38,6 +41,7 @@ const themeAtomOneDark = 'assets/atom-one-dark.css';
   styleUrls: ['./content.component.scss'],
 })
 export class ContentComponent implements OnInit, AfterViewInit {
+  badContent:boolean = false;
   contentTypes = CONTENT_TYPES;
   @Input() contentValue?: string;
   @Input() contentType?: string;
@@ -128,6 +132,12 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
   // @Input() contentId?:string;
 
+  updateContent(val:string){
+    this.badContent = false;
+    this.contentURL = val;
+    this.contentValue = val;
+  }
+
   checkContent() {
     console.log('checking content for', this.contentType);
     if (this.contentType == this.contentTypes.IMAGE) {
@@ -150,6 +160,12 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
   getContentTrimmed() {
     return this.contentValue!.trim();
+  }
+
+  contentError(error:any){
+    this.badContent = true;
+    console.log('error:', error);
+
   }
 
   setWidthOfImage() {

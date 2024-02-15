@@ -33,6 +33,7 @@ import { CreateContentWindowComponent } from './components/admin/editors/create-
 import { ContentOptionBoxComponent } from './components/shared/crud/content-option-box/content-option-box.component';
 import { ImageCreatorWindowComponent } from './components/admin/creator-windows/image-creator-window/image-creator-window.component';
 import { TextCreatorWindowComponent } from './components/admin/creator-windows/text-creator-window/text-creator-window.component';
+import { FakeContentBlockComponent } from './components/admin/shared/fake-content-block/fake-content-block.component';
 // import { VideooCreatorWindowComponent } from './components/admin/creator-windows/videoo-creator-window/videoo-creator-window.component';
 // import { HttpClientModule }
 @NgModule({
@@ -55,6 +56,7 @@ import { TextCreatorWindowComponent } from './components/admin/creator-windows/t
     ContentOptionBoxComponent,
     ImageCreatorWindowComponent,
     TextCreatorWindowComponent,
+    FakeContentBlockComponent,
     // VideooCreatorWindowComponent,
   ],
   imports: [

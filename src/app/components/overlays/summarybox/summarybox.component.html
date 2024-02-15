@@ -19,14 +19,44 @@
 
   <div class="summarycontent">
     <!-- HEADER -->
-    <div class="summaryheader">
-      <div class="headgroup">
+    <div class="summaryheader" >
+      <div
+        class="headgroup"
+        *ngIf="!userAuth.isAdmin || (userAuth.isAdmin && !editMode)"
+      >
         <h3>{{ firestore.selectedWorkDoc.title }}</h3>
         <p>{{ firestore.selectedWorkDoc.subtitle }}</p>
       </div>
+      <div class="headgroup" *ngIf="userAuth.isAdmin && editMode">
+        <input
+          [formControl]="titleInput"
+          class="invisibleTextInput h3"
+          type="text"
+          [value]="firestore.selectedWorkDoc.title"
+        />
+        <textarea
+          [formControl]="subtitleInput"
+          class="invisibleTextInput d-flex p"
+          type="text"
+          [value]="firestore.selectedWorkDoc.subtitle"
+        ></textarea>
+
+        <!-- <h3>{{ firestore.selectedWorkDoc.title }}</h3> -->
+        <!-- <p>{{ firestore.selectedWorkDoc.subtitle }}</p> -->
+      </div>
+
       <app-edit-button
-        *ngIf="userAuth.isAdmin && global.isEditing"
+        (click)="toggleWorkdocEdit()"
+        *ngIf="userAuth.isAdmin && global.isEditing && !editMode"
       ></app-edit-button>
+      <button
+        class="btn btn-primary"
+        style="margin: 30px"
+        (click)="toggleWorkdocEdit()"
+        *ngIf="userAuth.isAdmin && global.isEditing && editMode"
+      >
+        Save
+      </button>
 
       <!-- COLLABS -->
       <div class="collabContainer">
@@ -36,6 +66,7 @@
           <div
             *ngFor="let c of firestore.selectedWorkDoc.collaborators"
             class="collab"
+            [matTooltip]="c.name"
             (click)="openSocialLink(c.socialLink)"
             [style]="
               'background-image:url(' +
@@ -56,12 +87,37 @@
         <!-- <app-content class="featureImage" [contentBlock]="{ id:'', type:contentTypes.IMAGE, value:firestore.selectedWorkDoc.featureImage }" [contentType]="contentTypes.IMAGE" [contentValue]="firestore.selectedWorkDoc.featureImage"></app-content>
         <app-content class="mycontentblock" [contentBlock]="{ id:'', type:contentTypes.TEXT, value:firestore.selectedWorkDoc.featureBody }" [contentType]="contentTypes.TEXT" [contentValue]="firestore.selectedWorkDoc.featureBody"></app-content> -->
         <div class="featureFlex">
+          <div class="fImgFlexEdit" *ngIf="userAuth.isAdmin && editMode">
+            <input
+              [formControl]="featureImageInput"
+              class="invisibleTextInput"
+              type="text"
+              [value]="firestore.selectedWorkDoc.featureImage"
+            />
+            <img
+              class="featureImageEdit"
+              [src]="firestore.selectedWorkDoc.featureImage"
+            />
+          </div>
+
+          <textarea
+            *ngIf="userAuth.isAdmin && editMode"
+            [formControl]="featureBodyInput"
+            class="invisibleTextInput d-flex p"
+            type="text"
+            [value]="firestore.selectedWorkDoc.featureBody"
+          ></textarea>
           <img
+            *ngIf="!editMode"
             class="featureImage"
             [src]="firestore.selectedWorkDoc.featureImage"
           />
-          <p class="summarycollumn">
-            {{ firestore.selectedWorkDoc.featureBody }}
+          <p
+            *ngIf="!editMode"
+            class="summarycollumn"
+            [innerHTML]="formatFeatureBodyForDisplay()"
+          >
+            {{ formatFeatureBodyForDisplay() }}
           </p>
         </div>
       </div>
@@ -71,44 +127,63 @@
       <!-- REST OF WORK DOCUMENT -->
 
       <div class="workgrid">
-        <div class="myrow" *ngFor="let __row of rows; let i = index">
-          <app-content
-            class="mycontentblock"
-            *ngFor="let _content of contentPerRow![i]"
-            [contentBlock]="_content"
-            [contentValue]="_content.value"
-            [contentType]="_content.type"
-            [id]="_content.id"
-          >
-          </app-content>
-          <app-create-button
-            (click)="beginCreateContent(__row.id)"
-            *ngIf="i && contentPerRow![i] &&
-              contentPerRow![i].length < 3 &&
-              userAuth.isAdmin &&
-              global.isEditing
-            "
-            class="admin_createbtn_container"
-          ></app-create-button>
-        </div>
+        <div class="_rowContainer" *ngFor="let __row of rows; let i = index">
+          <div class="myrow">
+            <div
+              class="mycontentblock"
+              *ngFor="let _content of contentPerRow![i]"
+            >
+              <app-content
+                [contentBlock]="_content"
+                [contentValue]="_content.value"
+                [contentType]="_content.type"
+                [id]="_content.id"
+              >
+              </app-content>
+            </div>
+            <app-create-button
+              (click)="beginCreateContent(__row.id)"
+              *ngIf="
+                contentPerRow![i] &&
+                contentPerRow![i].length > 0 &&
+                contentPerRow![i].length < 3 &&
+                userAuth.isAdmin &&
+                global.isEditing
+              "
+              class="admin_createbtn_container"
+            ></app-create-button>
+            <div
+              (click)="beginCreateContent(__row.id)"
+              *ngIf="
+                userAuth.isAdmin &&
+                global.isEditing &&
+                (!contentPerRow![i] || contentPerRow![i].length == 0)
+              "
+              class="no-content-spacer"
+            >
+              <span class="material-symbols-outlined"> add </span>
+            </div>
 
-        <!-- <table>
-          <tbody *ngFor="let _row of contentPerRow; let i = index;">
-            <th style="width:100%;">Row {{i + 1}}</th>
-            <tr>
-              <th>Type</th>
-              <th>Value</th>
-            </tr>
-            <tr *ngFor="let _content of _row">
-              <td>
-                {{ _content.type }}
-              </td>
-              <td>
-                {{ _content.value }}
-              </td>
-            </tr>
-          </tbody>
-        </table> -->
+            <app-create-button
+              (click)="addEmptyRow()"
+              *ngIf="
+                userAuth.isAdmin &&
+                global.isEditing &&
+                i == contentPerRow!.length - 1
+              "
+              class="admin_createbtn_containerRow"
+            ></app-create-button>
+          </div>
+        </div>
+        <app-create-button
+          (click)="addEmptyRow()"
+          *ngIf="
+            userAuth.isAdmin &&
+            global.isEditing &&
+            (!contentPerRow || contentPerRow.length == 0)
+          "
+          class="admin_createbtn_containerRow"
+        ></app-create-button>
       </div>
     </div>
   </div>

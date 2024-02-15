@@ -1,8 +1,7 @@
 <div class="editorWindow">
-  <!-- <div class="mybackdrop"></div> -->
+  <div class="mybackdrop"></div>
 
   <div class="editorContainer">
-   
     <div class="editorBody">
       <div class="editorBackdrop"></div>
       <div class="head">
@@ -15,45 +14,60 @@
           </div>
         </div>
       </div>
-      
+
       <div class="editorContent">
-
-        
-
         <div class="input-group">
           <label class="input-group-text">type</label>
 
-          <select class="form-select" aria-label="Content Type" [formControl]="contentTypesDropdown">
+          <select
+            class="form-select"
+            aria-label="Content Type"
+            [formControl]="contentTypesDropdown"
+          >
             <!-- <option selected>Open this select menu</option> -->
-            <option *ngFor="let type of contentTypesArr" [value]="type">{{type}}</option>
+            <option *ngFor="let type of contentTypesArr" [value]="type">
+              {{ type }}
+            </option>
           </select>
 
-          <input
+          <!-- <input
             class="form-control"
             [value]="editWindowService.selectedContent?.type"
-          />
+          /> -->
         </div>
         <div class="input-group">
           <label class="input-group-text">value</label>
-          <textarea 
+          <textarea
+            *ngIf="editWindowService.selectedContent?.type == contentTypes.TEXT ||  editWindowService.selectedContent?.type == contentTypes.CODEBLOCK"
+            id="contentValueTextArea"
+            [formControl]="contentValueTextArea"
+            class="form-control"
+          ></textarea>
+          <input
+            *ngIf="editWindowService.selectedContent?.type != contentTypes.TEXT && editWindowService.selectedContent?.type != contentTypes.CODEBLOCK  "
+            type="text"
             id="contentValueTextArea"
             [formControl]="contentValueTextArea"
             class="form-control"
             [value]="editWindowService.selectedContent?.value"
-          ></textarea>
+          />
         </div>
 
-        <button class="input btn btn-primary">Save</button>
-
-        <app-content *ngIf="editWindowService.selectedContent"
-        class="mycontentblock"
+        <button class="input btn btn-primary" (click)="updateContent()">Save</button>
+        <button class="input btn btn-danger" (click)="deleteContent()">Delete</button>
+        <div class="previewContainer">
+          <app-content
+            *ngIf="editWindowService.selectedContent"
+            class="mycontentblock" 
             [allowAdminControls]="false"
             [contentBlock]="editWindowService.selectedContent"
-            [contentValue]="editWindowService.selectedContent!.value"
+            [contentValue]="parseToHTMLBreaks(contentValueTextArea!.value!)"
             [contentType]="editWindowService.selectedContent!.type"
-            [id]="editWindowService.selectedContent!.id"></app-content>
+            [id]="editWindowService.selectedContent!.id"
+          ></app-content>
+        </div>
       </div>
-     
+
     </div>
   </div>
 </div>

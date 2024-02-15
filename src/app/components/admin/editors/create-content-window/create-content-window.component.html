@@ -24,7 +24,7 @@
 
         <div *ngIf="optionSelected" class="contentWindow">
           <app-image-creator-window [imageURLEmitter]="imageURLEmitter" *ngIf="selectedOption == contentTypes.IMAGE"></app-image-creator-window>
-          <app-text-creator-window *ngIf="selectedOption == contentTypes.TEXT"></app-text-creator-window>
+          <app-text-creator-window [valueEmitter]="valueEmitter" *ngIf="selectedOption == contentTypes.TEXT"></app-text-creator-window>
           <!-- <div *ngIf="selectedOption == contentTypes.TEXT">
             <textarea class="input" type="text"></textarea>
             <button class="input" type="submit">Add</button>

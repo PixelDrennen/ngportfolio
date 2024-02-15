@@ -38,6 +38,7 @@ export class CreateContentWindowComponent implements OnInit {
   windowIsOpen: boolean = false;
 
   imageURLEmitter: EventEmitter<string> = new EventEmitter();
+  valueEmitter: EventEmitter<string> = new EventEmitter();
 
   constructor(
     public createWindowService: CreateWindowService,
@@ -53,6 +54,16 @@ export class CreateContentWindowComponent implements OnInit {
       let content: ContentBlock = {
         type: CONTENT_TYPES.IMAGE,
         value: url,
+        row: this.createWindowService.rowId!,
+        order: this.createWindowService.order,
+      } as ContentBlock;
+      this.firestore.addContentBlock(content);
+    });
+
+    this.valueEmitter.subscribe((value: string) => {
+      let content: ContentBlock = {
+        type: CONTENT_TYPES.TEXT,
+        value: value,
         row: this.createWindowService.rowId!,
         order: this.createWindowService.order,
       } as ContentBlock;

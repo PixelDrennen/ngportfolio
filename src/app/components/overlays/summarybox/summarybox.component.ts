@@ -6,6 +6,8 @@ import {
   animate,
 } from '@angular/animations';
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { DocumentData } from 'rxfire/firestore/interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CreateWindowService } from 'src/app/services/admin/crud/create-window.service';
 import { UserAuthService } from 'src/app/services/auth/user-auth.service';
@@ -41,12 +43,16 @@ export class SummaryboxComponent implements OnInit {
 
   @Output() selectItemEvent = new EventEmitter<Item>();
 
+  editMode: boolean = false;
+
   contentTypes = CONTENT_TYPES;
 
   // rows?: string[] = [] as string[];
   rows?: ContentRow[] = [] as ContentRow[];
 
   contentPerRow?: ContentBlock[][] = [] as ContentBlock[][];
+
+  fakeContentBlocks: number[][] = [] as number[][];
 
   constructor(
     public firestore: FirestoreService,
@@ -87,6 +93,7 @@ export class SummaryboxComponent implements OnInit {
   getRows() {
     this.rows = [];
     this.contentPerRow = [];
+    this.fakeContentBlocks = [];
     //this.firestore.firestore
     console.log(this.selectedItem);
     const result = this.firestore.getRowsForWorkdoc(
@@ -94,10 +101,11 @@ export class SummaryboxComponent implements OnInit {
     );
     result.then((a) => {
       a.forEach((row) => {
-        console.log(row.id);
+        // console.log(row.id);
         const _row = row.data() as ContentRow;
         _row.id = row.id;
         this.rows?.push(_row);
+        console.log(`Row: ${_row.id}`);
 
         this.getContentForRow(row.id);
       });
@@ -119,6 +127,7 @@ export class SummaryboxComponent implements OnInit {
         contentInRow.push(cblock);
       });
       this.contentPerRow?.push(contentInRow);
+      console.log(this.contentPerRow?.length);
 
       if (contentInRow != undefined) {
         if (contentInRow.length > 0)
@@ -161,5 +170,69 @@ export class SummaryboxComponent implements OnInit {
     this.createWindowService.rowId = rowId;
     this.getContentForRow(rowId);
     // this.createWindowService.order =
+  }
+
+  titleInput: FormControl = new FormControl(
+    this.firestore.selectedWorkDoc?.title,
+  );
+  subtitleInput: FormControl = new FormControl(
+    this.firestore.selectedWorkDoc?.subtitle,
+  );
+  featureImageInput: FormControl = new FormControl(
+    this.firestore.selectedWorkDoc?.featureImage,
+  );
+  featureBodyInput: FormControl = new FormControl(
+    this.firestore.selectedWorkDoc?.featureBody,
+  );
+
+  async toggleWorkdocEdit() {
+    this.editMode = !this.editMode;
+    const _title = this.titleInput.value;
+    const _subtitle = this.subtitleInput.value;
+    const _featureImg = this.featureImageInput.value;
+    const _featureBody = this.featureBodyInput.value;
+
+    this.titleInput = new FormControl(this.firestore.selectedWorkDoc?.title);
+    this.subtitleInput = new FormControl(
+      this.firestore.selectedWorkDoc?.subtitle,
+    );
+    this.featureImageInput = new FormControl(
+      this.firestore.selectedWorkDoc?.featureImage,
+    );
+    this.featureBodyInput = new FormControl(this.formatFeatureBodyForInput());
+
+    // update on editmode disable
+    if (this.editMode == false) {
+      const workdoc: WorkDoc = this.firestore.selectedWorkDoc!;
+
+      workdoc.title = _title;
+      workdoc.subtitle = _subtitle;
+      workdoc.featureImage = _featureImg;
+      workdoc.featureBody = _featureBody.replaceAll('\n', '<br>');
+
+      this.firestore.updateWorkDoc(workdoc);
+    }
+  }
+
+  formatFeatureBodyForInput() {
+    return this.firestore.selectedWorkDoc!.featureBody.replaceAll('<br>', '\n');
+  }
+  formatFeatureBodyForDisplay() {
+    const linebreaks =
+      this.firestore.selectedWorkDoc!.featureBody.split('<br>');
+    linebreaks.forEach((line, index) => {
+      let newline = "<span class='tabline'></span>" + line;
+      linebreaks[index] = newline;
+    });
+
+    const newString = linebreaks.join("<br>");
+
+    return newString;
+  }
+
+  async addEmptyRow() {
+    this.firestore
+      .addEmptyRow(this.selectedItem?.workdoc!, this.contentPerRow!.length)
+      .then(() => {});
   }
 }
