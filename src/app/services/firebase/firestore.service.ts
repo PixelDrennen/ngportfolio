@@ -76,7 +76,7 @@ export interface ContentBlock {
 export class FirestoreService {
   // collection_items: AngularFirestoreCollection<Item>;
   //FirebaseError: Expected type 'Query', but it was: a custom wh objec
-  firestore: Firestore = inject(Firestore);
+  db: Firestore = inject(Firestore);
 
   snapshot: any;
   items?: Item[];
@@ -88,14 +88,14 @@ export class FirestoreService {
 
   // public items$: Observable<any[]>;
   constructor() {
-    const itemCol = collection(this.firestore, 'items');
+    const itemCol = collection(this.db, 'items');
     const itemQuery = query(itemCol);
 
     this.itemCol$ = collectionData(itemQuery, { idField: 'id' }) as Observable<
       Item[]
     >;
 
-    const workdocCol = collection(this.firestore, 'workdocs');
+    const workdocCol = collection(this.db, 'workdocs');
     const workdocQuery = query(workdocCol);
 
     this.workdocs$ = collectionData(workdocQuery, {
@@ -104,7 +104,7 @@ export class FirestoreService {
   }
 
   async getWorkDoc(id: string) {
-    const workdocCol = collection(this.firestore, 'workdocs');
+    const workdocCol = collection(this.db, 'workdocs');
 
     const cDoc = docData(doc(workdocCol, id), {
       idField: 'id',
@@ -116,26 +116,26 @@ export class FirestoreService {
   }
 
   async getWorkdocAsFirestore(id: string) {
-    const _collection = collection(this.firestore, 'workdocs');
+    const _collection = collection(this.db, 'workdocs');
 
     const _doc = docData(doc(_collection, id));
     return _doc;
   }
   async getDocumentAsFirestoreAsync(col:string, id: string) {
-    const _collection = collection(this.firestore, col);
+    const _collection = collection(this.db, col);
 
     const _doc = docData(doc(_collection, id));
     return _doc;
   }
   getDocumentAsFirestore(col:string, id: string) {
-    const _collection = collection(this.firestore, col);
+    const _collection = collection(this.db, col);
 
     const _doc = docData(doc(_collection, id));
     return _doc;
   }
   
   getRow(id: string) {
-    const _collection = collection(this.firestore, 'contentRows');
+    const _collection = collection(this.db, 'contentRows');
     const _query = query(_collection);
     const _where = where('workdoc', '==', id);
 
@@ -147,7 +147,7 @@ export class FirestoreService {
   }
 
   async getRowsForWorkdoc(rowId: string) {
-    const _collection = collection(this.firestore, 'contentRows');
+    const _collection = collection(this.db, 'contentRows');
     const _where = where('workdoc', '==', rowId);
     const order = orderBy('order', 'asc');
     const _query = query(_collection, _where, order);
@@ -163,7 +163,7 @@ export class FirestoreService {
     // return _data;
   }
   async getContentForRow(id: string) {
-    const _collection = collection(this.firestore, 'content');
+    const _collection = collection(this.db, 'content');
     const _where = where('row', '==', id);
     const order = orderBy('order', 'asc');
     const _query = query(_collection, _where, order);
@@ -176,7 +176,7 @@ export class FirestoreService {
   }
 
   async getContentBlock(id: string) {
-    const _collection = collection(this.firestore, 'content');
+    const _collection = collection(this.db, 'content');
 
     const _doc = docData(doc(_collection, id)) as Observable<ContentBlock>;
     return _doc;
@@ -188,7 +188,7 @@ export class FirestoreService {
   public getDocument(url: string) {}
 
   public addContentBlock(content: ContentBlock) {
-    const _collection = collection(this.firestore, 'content');
+    const _collection = collection(this.db, 'content');
 
     addDoc(_collection, content)
       .then((a) => {
@@ -207,7 +207,7 @@ export class FirestoreService {
       console.error('No content id supplied for update.', content);
       return;
     }
-    const _collection = collection(this.firestore, 'content');
+    const _collection = collection(this.db, 'content');
     const _doc = doc(_collection, content.id);
     const data = content as DocumentData;
 
@@ -229,7 +229,7 @@ export class FirestoreService {
       console.error('No content id supplied for delete.', content);
       return;
     }
-    const _collection = collection(this.firestore, 'content');
+    const _collection = collection(this.db, 'content');
     const _doc = doc(_collection, content.id);
 
     await deleteDoc(_doc)
@@ -247,7 +247,7 @@ export class FirestoreService {
       console.error('No workdoc id supplied for update.', workdoc);
       return;
     }
-    const _collection = collection(this.firestore, 'workdocs');
+    const _collection = collection(this.db, 'workdocs');
     const _doc = doc(_collection, workdoc.id);
     const data = workdoc as DocumentData;
 
@@ -269,7 +269,7 @@ export class FirestoreService {
       console.error('No workdoc id supplied for update.', workdoc);
       return;
     }
-    const _collection = collection(this.firestore, 'contentRows');
+    const _collection = collection(this.db, 'contentRows');
     const _doc = addDoc(_collection, {
       workdoc: workdoc,
       order: order,

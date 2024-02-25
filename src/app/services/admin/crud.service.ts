@@ -21,7 +21,7 @@ export class CrudService {
   //c
 
   create(collectionString: string, data: any) {
-    const _collection = collection(this.firestore.firestore, collectionString);
+    const _collection = collection(this.firestore.db, collectionString);
     
     addDoc(_collection, data)
     .then((res) => {
@@ -34,13 +34,13 @@ export class CrudService {
   
   //r
   read(collectionString: string, id: string) {
-    const _doc = getDoc(doc(this.firestore.firestore, collectionString, id));
+    const _doc = getDoc(doc(this.firestore.db, collectionString, id));
     return _doc;
   }
 
   //u
   update(collectionString: string, id: string, data: any) {
-    const _doc = doc(this.firestore.firestore, collectionString, id);
+    const _doc = doc(this.firestore.db, collectionString, id);
     updateDoc(_doc, data)
       .then((res) => {
         console.log(`Updated document with id ${id}`);
@@ -52,7 +52,7 @@ export class CrudService {
 
   //d
   delete(collectionString: string, id: string) {
-    const _doc = doc(this.firestore.firestore, collectionString, id);
+    const _doc = doc(this.firestore.db, collectionString, id);
     deleteDoc(_doc)
       .then((res) => {
         console.log(`Deleted document with id ${id}`);

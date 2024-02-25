@@ -34,7 +34,7 @@ export class OrderUpdateService {
     );
 
     await updateDoc(
-      doc(this.firestore.firestore, reorder.elementType.toString(), reorder.id),
+      doc(this.firestore.db, reorder.elementType.toString(), reorder.id),
       { order: reorder.order },
     ).then(() => {
       location.reload();
