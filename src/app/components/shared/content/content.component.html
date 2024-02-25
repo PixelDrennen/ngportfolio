@@ -1,28 +1,46 @@
 <!-- <app-edit-button></app-edit-button>
 <app-delete-button></app-delete-button> -->
-<div class="_container">
+<div [class]="(isContentPreviewEnabled() ?'previewAvailable' : '')+ contentType == contentTypes.SPACER ? '_containerSpacer' :'_container'">
+  <div class="previewAvailableIcon" *ngIf="isContentPreviewEnabled()" (click)="showPreview()">
+    <span class="material-symbols-outlined">
+      preview
+      </span>
+  </div>
   <img
-    *ngIf="!badContent && contentType == contentTypes.IMAGE && contentValue != undefined"
+    *ngIf="
+      !badContent &&
+      contentType == contentTypes.IMAGE &&
+      contentValue != undefined
+    "
     class="contentImg"
     style="width: 100%; height: 100%"
     [src]="contentURL"
     (error)="contentError($event)"
   />
   <div
-    *ngIf="!badContent && contentType == contentTypes.TEXT && contentValue != undefined"
+    *ngIf="
+      !badContent &&
+      contentType == contentTypes.TEXT &&
+      contentValue != undefined
+    "
     class="contentText"
   >
     <!-- TODO: content types should have styling attached, so you can use headers etc. -->
-    <p [innerHTML]="sanitizer.bypassSecurityTrustHtml(contentValue)">
+    <p [innerHTML]="sanitizer.bypassSecurityTrustHtml(contentValue!)">
       {{ contentValue }}
     </p>
   </div>
   <div
-    *ngIf="!badContent && contentType == contentTypes.VIDEO && contentValue != undefined"
+    *ngIf="
+      !badContent &&
+      contentType == contentTypes.VIDEO &&
+      contentValue != undefined
+    "
     class="contentVideo"
   >
     <!-- <p><i>videos not implemented.</i></p> -->
     <iframe
+    class="ratio"
       id="ytplayer"
       type="text/html"
       width="100%"
@@ -34,7 +52,11 @@
   </div>
 
   <div
-    *ngIf="!badContent && contentType == contentTypes.CODEBLOCK && contentValue != undefined"
+    *ngIf="
+      !badContent &&
+      contentType == contentTypes.CODEBLOCK &&
+      contentValue != undefined
+    "
     class="contentCodeblock"
   >
     <div class="codebox">
@@ -58,7 +80,10 @@
     </div>
   </div>
 
-  <div *ngIf="!badContent && contentType == contentTypes.SPACER" class="contentSpacer"></div>
+  <div
+    *ngIf="contentType == contentTypes.SPACER"
+    class="contentSpacer"
+  ></div>
 
   <div *ngIf="badContent" class="badContent">
     <h5>Content Unavailable</h5>
@@ -74,4 +99,5 @@
       Click to edit <span class="material-symbols-outlined mybtn"> edit </span>
     </h5>
   </div>
+  <!-- <span *ngIf="userAuth.isAdmin && global.isEditing && allowAdminControls" class="material-symbols-outlined sortbtn"> sort </span> -->
 </div>

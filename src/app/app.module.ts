@@ -34,6 +34,10 @@ import { ContentOptionBoxComponent } from './components/shared/crud/content-opti
 import { ImageCreatorWindowComponent } from './components/admin/creator-windows/image-creator-window/image-creator-window.component';
 import { TextCreatorWindowComponent } from './components/admin/creator-windows/text-creator-window/text-creator-window.component';
 import { FakeContentBlockComponent } from './components/admin/shared/fake-content-block/fake-content-block.component';
+import { ReorderModalComponent } from './components/admin/modals/reorder-modal/reorder-modal.component';
+import { CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
+import { ContentAsFirestoreComponent } from './components/shared/content-as-firestore/content-as-firestore.component';
+import { ContentViewerModalComponent } from './components/modals/content-viewer-modal/content-viewer-modal.component';
 // import { VideooCreatorWindowComponent } from './components/admin/creator-windows/videoo-creator-window/videoo-creator-window.component';
 // import { HttpClientModule }
 @NgModule({
@@ -57,6 +61,9 @@ import { FakeContentBlockComponent } from './components/admin/shared/fake-conten
     ImageCreatorWindowComponent,
     TextCreatorWindowComponent,
     FakeContentBlockComponent,
+    ReorderModalComponent,
+    ContentAsFirestoreComponent,
+    ContentViewerModalComponent,
     // VideooCreatorWindowComponent,
   ],
   imports: [
@@ -67,6 +74,8 @@ import { FakeContentBlockComponent } from './components/admin/shared/fake-conten
     AppRoutingModule,
     AngularFireModule,
     MatTooltipModule,
+    CdkDropList,
+    CdkDrag,
     AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),

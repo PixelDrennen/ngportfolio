@@ -20,7 +20,7 @@
 
 <div class="input-group" *ngIf="isURLInput.value == true">
   <label class="input input-group-text" for="url">URL</label>
-  <input class="input form-control" type="url" id="url" />
+  <input [formControl]="imageURL" class="input form-control" type="url" id="url" />
 </div>
 
 <div class="input-group">

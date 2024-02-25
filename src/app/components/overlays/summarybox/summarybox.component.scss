@@ -29,6 +29,8 @@ $primaryColor: rgb(253, 8, 74);
   min-height: 50vh;
   z-index: 1 !important;
   padding: 50px;
+  padding-left: 15%;
+  padding-right: 15%;
   border: black solid 2px;
   border-top-left-radius: 0;
   backdrop-filter: blur(50px);
@@ -47,9 +49,8 @@ $primaryColor: rgb(253, 8, 74);
   // );
   // border-width: 30px;
 
-
-  padding-left: 150px;
-  padding-right: 150px;
+  // padding-left: 150px;
+  // padding-right: 150px;
 }
 .summarybox .summarycontent {
 }
@@ -180,6 +181,8 @@ $primaryColor: rgb(253, 8, 74);
   flex-grow: 1;
   flex-shrink: 0;
   width: 100%;
+  position: relative;
+  margin-bottom: 10px;
 }
 
 .myrow p {
@@ -238,14 +241,14 @@ $primaryColor: rgb(253, 8, 74);
 
 .admin_createbtn_container {
   width: 10px;
-  display: inline-flex;
+  // display: inline-flex;
   flex-grow: 0;
   flex-shrink: 1;
   flex-basis: 5%;
   align-self: auto;
   padding: auto;
   margin-left: 20px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: stretch;
   // position:absolute;
   // right:50px;
@@ -414,4 +417,68 @@ $primaryColor: rgb(253, 8, 74);
   .mycontentblock {
     margin: auto;
   }
+}
+.sortRowBtn {
+  margin-left: auto;
+  display: flex;
+  justify-content: right;
+  // cursor: pointer;
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+}
+.sortRowBtnContainer {
+  padding: 10px;
+  border: 1px solid transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+.sortRowBtnContainer .sortbtnIcon {
+  color: white;
+  border: solid 1px rgba(0, 0, 0, 0.195);
+  border-radius: 5px;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  background: rgb(104, 104, 104);
+}
+.sortRowBtnContainer:hover {
+  border: 1px solid black;
+  border-radius: 6px;
+}
+.sortRowBtn.sortRowBtnContainer:hover .sortbtnIcon {
+  background: rgb(31, 31, 31);
+  border: solid 1px black;
+  border-radius: 5px;
+  color: white;
+}
+.sortbtn {
+  cursor: pointer;
+  // position:absolute;
+  top: 0px;
+  right: 0px;
+  color: white;
+  border: solid 1px rgba(0, 0, 0, 0.195);
+  border-radius: 5px;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  background: rgb(104, 104, 104);
+}
+.sortbtnAbs {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.sortbtn:hover {
+  color: white;
+  background: rgb(31, 31, 31);
+  border: solid 1px black;
+  border-radius: 5px;
 }

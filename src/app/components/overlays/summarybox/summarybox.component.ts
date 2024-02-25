@@ -6,10 +6,11 @@ import {
   animate,
 } from '@angular/animations';
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { DocumentData, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 import { FormControl } from '@angular/forms';
-import { DocumentData } from 'rxfire/firestore/interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CreateWindowService } from 'src/app/services/admin/crud/create-window.service';
+import { ELEMENT_TYPES } from 'src/app/services/admin/order-update.service';
 import { UserAuthService } from 'src/app/services/auth/user-auth.service';
 import {
   WorkDoc,
@@ -20,6 +21,7 @@ import {
   ContentBlock,
 } from 'src/app/services/firebase/firestore.service';
 import { CONTENT_TYPES, GlobalService } from 'src/app/services/global.service';
+import { ModalManagerService } from 'src/app/services/modal-manager.service';
 
 @Component({
   selector: 'app-summarybox',
@@ -51,6 +53,7 @@ export class SummaryboxComponent implements OnInit {
   rows?: ContentRow[] = [] as ContentRow[];
 
   contentPerRow?: ContentBlock[][] = [] as ContentBlock[][];
+  contentPerRowAsFirestore?: DocumentData[][] = [] as DocumentData[][];
 
   fakeContentBlocks: number[][] = [] as number[][];
 
@@ -59,6 +62,7 @@ export class SummaryboxComponent implements OnInit {
     public global: GlobalService,
     public userAuth: UserAuthService,
     public createWindowService: CreateWindowService,
+    private modalManager: ModalManagerService,
   ) {
     // console.log(this.rows$);
   }
@@ -77,6 +81,11 @@ export class SummaryboxComponent implements OnInit {
     //     });
     //   }
   }
+
+  openSortModal(contentRow: DocumentData[]) {
+    this.modalManager.open(contentRow);
+  }
+
   logme(a: any) {
     console.log('logme:', a);
   }
@@ -91,9 +100,11 @@ export class SummaryboxComponent implements OnInit {
   }
 
   getRows() {
+    if(!this.selectedItem || !this.selectedItem.workdoc) return undefined;
     this.rows = [];
     this.contentPerRow = [];
     this.fakeContentBlocks = [];
+    this.contentPerRowAsFirestore = [];
     //this.firestore.firestore
     console.log(this.selectedItem);
     const result = this.firestore.getRowsForWorkdoc(
@@ -105,38 +116,72 @@ export class SummaryboxComponent implements OnInit {
         const _row = row.data() as ContentRow;
         _row.id = row.id;
         this.rows?.push(_row);
-        console.log(`Row: ${_row.id}`);
+        // console.log(`Row: ${_row.id}`);
 
-        this.getContentForRow(row.id);
+        this.firestore.getContentForRow(row.id).then((contentArr) => {
+          // console.log(contentArr.docs);
+          // contentArr.docChanges()
+          // contentArr.forEach((content) => {})
+          let myArr = [] as DocumentData[];
+          contentArr.forEach((content) => {myArr.push({id:content.id, ...content.data()})});
+          this.contentPerRowAsFirestore?.push(myArr);
+          this.getContentForRow(row.id, contentArr);
+        });
       });
     });
   }
 
-  getContentForRow(id: string) {
-    // console.log('Getting content for row', id);
-    this.firestore.getContentForRow(id).then((contentArr) => {
-      let contentInRow: ContentBlock[] = [];
+  rowContainsSpacer(elements:ContentBlock[]){
+    return elements.some((element) => (element as ContentBlock).type == CONTENT_TYPES.SPACER) == false;
+  }
 
-      console.log('row', id, ':', contentInRow);
-      contentArr.forEach((content) => {
-        let cblock: ContentBlock = {
-          id: content.id,
-          ...content.data(),
-        } as ContentBlock;
-        // cblock.id = content.id;
-        contentInRow.push(cblock);
+  openModalForSortingRows(){
+    const rowsInWorkdoc = this.firestore.getRowsForWorkdoc(
+      this.selectedItem?.workdoc!,
+    );
+
+    // get rows in workdoc
+    rowsInWorkdoc.then((rowsQuery) =>{
+      // let rowsWithContent:DocumentData[][] = [];
+      let _rows = [] as DocumentData[];
+      // const _rows:ContentRow[] = [];
+      rowsQuery.forEach((rowQueryData) =>{
+        _rows.push({id:rowQueryData.id, ...rowQueryData.data()}); // add row document for later use
+
+
+        // const _row = rowQueryData.data() as ContentRow;
+        // _rows.push(_row);
+
+        // this.firestore.getContentForRow(rowQueryData.id).then((contentArr) => {
+          // const contentInRow = [] as DocumentData[];
+          // contentArr.forEach((content) => {
+          //   contentInRow.push({id:content.id, ...content.data()});
+          // });
+          // rowsWithContent.push(contentInRow);
+
+        // });
+        // rows.push(rowQueryData);
       });
-      this.contentPerRow?.push(contentInRow);
-      console.log(this.contentPerRow?.length);
-
-      if (contentInRow != undefined) {
-        if (contentInRow.length > 0)
-          this.createWindowService.order = contentInRow.length - 1;
-        else this.createWindowService.order = 0;
-      }
+        this.modalManager.open(_rows, ELEMENT_TYPES.ROW);
+        // this.modalManager.open(rowsQuery);
     });
+  }
 
-    // console.log(this.contentPerRow);
+  getContentForRow(
+    id: string,
+    contentArr: QuerySnapshot<DocumentData, DocumentData>,
+  ) {
+    let contentInRow: ContentBlock[] = [];
+
+    // console.log('row', id, ':', contentInRow);
+    contentArr.forEach((content) => {
+      let cblock: ContentBlock = {
+        id: content.id,
+        ...content.data(),
+      } as ContentBlock;
+      contentInRow.push(cblock);
+    });
+    this.contentPerRow?.push(contentInRow);
   }
 
   select() {
@@ -165,10 +210,15 @@ export class SummaryboxComponent implements OnInit {
   }
 
   beginCreateContent(rowId: string) {
-    console.log(`begin edit in row ${rowId}`);
-    this.createWindowService.showWindow = true;
-    this.createWindowService.rowId = rowId;
-    this.getContentForRow(rowId);
+    this.firestore.getContentForRow(rowId).then((contentArr) => {
+      this.createWindowService.startCreator(rowId, contentArr.size);
+
+      console.log(`begin edit in row ${rowId}`);
+      // this.createWindowService.showWindow = true;
+      // this.createWindowService.rowId = rowId;
+      this.getContentForRow(rowId, contentArr);
+    });
+
     // this.createWindowService.order =
   }
 
@@ -225,7 +275,7 @@ export class SummaryboxComponent implements OnInit {
       linebreaks[index] = newline;
     });
 
-    const newString = linebreaks.join("<br>");
+    const newString = linebreaks.join('<br>');
 
     return newString;
   }

@@ -37,39 +37,50 @@ export class CreateContentWindowComponent implements OnInit {
 
   windowIsOpen: boolean = false;
 
-  imageURLEmitter: EventEmitter<string> = new EventEmitter();
+  // imageURLEmitter: EventEmitter<string> = new EventEmitter();
   valueEmitter: EventEmitter<string> = new EventEmitter();
 
   constructor(
     public createWindowService: CreateWindowService,
     private firestore: FirestoreService,
   ) {
-    if (!this.createWindowService.rowId) {
-      console.log(`Could not get row id. ${this.createWindowService.rowId}`);
+    if (!this.createWindowService.getRowId()) {
+      console.log(`Could not get row id. ${this.createWindowService.getRowId()}`);
       return;
     }
 
-    this.imageURLEmitter.subscribe((url: string) => {
-      // url
-      let content: ContentBlock = {
-        type: CONTENT_TYPES.IMAGE,
-        value: url,
-        row: this.createWindowService.rowId!,
-        order: this.createWindowService.order,
-      } as ContentBlock;
-      this.firestore.addContentBlock(content);
-    });
+
+
+   
+  }
+
+  // subscribeToImageURL() {
+  //   this.imageURLEmitter.subscribe((url: string) => {
+  //     console.log(`contentOrder: ${this.createWindowService.getOrder()}`);
+  //     // url
+  //     let content: ContentBlock = {
+  //       type: CONTENT_TYPES.IMAGE,
+  //       value: url,
+  //       row: this.createWindowService.getRowId(),
+  //       order: this.createWindowService.getOrder(),
+  //     } as ContentBlock;
+  //     this.firestore.addContentBlock(content);
+  //   });
+  // }
+  subscribeToValue() {
 
     this.valueEmitter.subscribe((value: string) => {
+      console.log("Adding content:",`contentType: ${this.selectedOption.toUpperCase()} contentOrder: ${this.createWindowService.getOrder()} contentValue: ${value}`);
       let content: ContentBlock = {
-        type: CONTENT_TYPES.TEXT,
+        type: this.selectedOption,
         value: value,
-        row: this.createWindowService.rowId!,
-        order: this.createWindowService.order,
+        row: this.createWindowService.getRowId(),
+        order: this.createWindowService.getOrder(),
       } as ContentBlock;
       this.firestore.addContentBlock(content);
     });
   }
+
   ngOnInit(): void {
     this.windowIsOpen = true;
   }
@@ -77,9 +88,29 @@ export class CreateContentWindowComponent implements OnInit {
   handleOption(option: string) {
     // console.log(`option:${option}`)
 
-    this.optionSelected = true;
-    this.selectedOption = option;
-    this.windowIsOpen = false;
+    if(option == CONTENT_TYPES.SPACER){
+      console.log("Adding spacer");
+      this.fs_createContent(option, "");
+      this.windowIsOpen = false;
+    } else{
+      this.optionSelected = true;
+      this.selectedOption = option;
+      this.windowIsOpen = false;
+      this.subscribeToValue();
+    }
+
+    
+
+    // if (
+    //   this.selectedOption == this.contentTypes.TEXT ||
+    //   this.selectedOption == this.contentTypes.CODEBLOCK
+    // ) {
+    //   console.log('Subscribing to value')
+    //   this.subscribeToValue();
+    // } else {
+    //   console.log('Subscribing to image')
+    //   this.subscribeToImageURL();
+    // }
 
     // switch (option) {
     //   case CONTENT_TYPES.IMAGE:
@@ -114,5 +145,15 @@ export class CreateContentWindowComponent implements OnInit {
     //   case CONTENT_TYPES.BUTTON:
     //     break;
     // }
+  }
+
+  fs_createContent(contentType:string, contentValue:string){
+    let content: ContentBlock = {
+      type: contentType,
+      value: contentValue,
+      row: this.createWindowService.getRowId(),
+      order: this.createWindowService.getOrder(),
+    } as ContentBlock;
+    this.firestore.addContentBlock(content);
   }
 }

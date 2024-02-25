@@ -19,7 +19,7 @@
 
   <div class="summarycontent">
     <!-- HEADER -->
-    <div class="summaryheader" >
+    <div class="summaryheader">
       <div
         class="headgroup"
         *ngIf="!userAuth.isAdmin || (userAuth.isAdmin && !editMode)"
@@ -123,67 +123,111 @@
       </div>
 
       <hr id="divider" />
+      <div class="sortRowBtn">
+        <div class="sortRowBtnContainer" (click)="openModalForSortingRows()">
+          <span><i>sort rows</i></span>
+          <span
+            class="material-symbols-outlined sortbtnIcon"
+            style="margin-left: 10px"
+          >
+            sort
+          </span>
+        </div>
+      </div>
 
       <!-- REST OF WORK DOCUMENT -->
 
       <div class="workgrid">
-        <div class="_rowContainer" *ngFor="let __row of rows; let i = index">
-          <div class="myrow">
-            <div
-              class="mycontentblock"
-              *ngFor="let _content of contentPerRow![i]"
-            >
-              <app-content
-                [contentBlock]="_content"
-                [contentValue]="_content.value"
-                [contentType]="_content.type"
-                [id]="_content.id"
-              >
-              </app-content>
-            </div>
-            <app-create-button
-              (click)="beginCreateContent(__row.id)"
-              *ngIf="
+        <!-- loop through rows -->
+        @for (__row of rows; track __row; let i = $index) {
+          <div class="_rowContainer">
+            <div class="myrow">
+              <!-- loop through content in row -->
+              @for (_content of contentPerRow![i]; track _content) {
+                <div class="mycontentblock">
+                  <app-content
+                    [contentBlock]="_content"
+                    [contentValue]="_content.value"
+                    [contentType]="_content.type"
+                    [id]="_content.id"
+                  ></app-content>
+                </div>
+              }
+
+              @if (
+                contentPerRow && contentPerRow.length > 0 &&
                 contentPerRow![i] &&
                 contentPerRow![i].length > 0 &&
                 contentPerRow![i].length < 3 &&
+                rowContainsSpacer(contentPerRow![i]) &&
                 userAuth.isAdmin &&
                 global.isEditing
-              "
-              class="admin_createbtn_container"
-            ></app-create-button>
-            <div
-              (click)="beginCreateContent(__row.id)"
-              *ngIf="
+              ) {
+                <div class="rightside admin_createbtn_container">
+                  @if (contentPerRow![i].length > 0) {
+                    <span
+                      class="material-symbols-outlined sortbtn"
+                      style="width: 100%"
+                      (click)="openSortModal(contentPerRow![i])"
+                    >
+                      sort
+                    </span>
+                  }
+
+                  <app-create-button
+                    (click)="beginCreateContent(__row.id)"
+                  ></app-create-button>
+                </div>
+              } @else if (
+                userAuth.isAdmin &&
+                global.isEditing &&
+                rowContainsSpacer(contentPerRow![i]) &&
+                contentPerRow![i].length > 0
+              ) {
+                <span
+                  class="material-symbols-outlined sortbtn sortbtnAbs"
+                  (click)="openSortModal(contentPerRowAsFirestore![i])"
+                >
+                  sort
+                </span>
+              }
+
+              @if (
                 userAuth.isAdmin &&
                 global.isEditing &&
                 (!contentPerRow![i] || contentPerRow![i].length == 0)
-              "
-              class="no-content-spacer"
-            >
-              <span class="material-symbols-outlined"> add </span>
-            </div>
-
-            <app-create-button
-              (click)="addEmptyRow()"
-              *ngIf="
+              ) {
+                <div
+                  (click)="beginCreateContent(__row.id)"
+                  class="no-content-spacer"
+                >
+                  <span class="material-symbols-outlined"> add </span>
+                </div>
+              }
+              @if (
                 userAuth.isAdmin &&
                 global.isEditing &&
                 i == contentPerRow!.length - 1
-              "
-              class="admin_createbtn_containerRow"
-            ></app-create-button>
+              ) {
+                <app-create-button
+                  (click)="addEmptyRow()"
+                  class="admin_createbtn_containerRow"
+                ></app-create-button>
+              }
+            </div>
           </div>
-        </div>
-        <app-create-button
-          (click)="addEmptyRow()"
-          *ngIf="
-            userAuth.isAdmin &&
-            global.isEditing &&
-            (!contentPerRow || contentPerRow.length == 0)
-          "
-          class="admin_createbtn_containerRow"
-        ></app-create-button>
+        }
+
+        @if (
+          userAuth.isAdmin &&
+          global.isEditing &&
+          (!contentPerRow || contentPerRow.length == 0)
+        ) {
+          <app-create-button
+            (click)="addEmptyRow()"
+            class="admin_createbtn_containerRow"
+          ></app-create-button>
+        }
       </div>
     </div>
   </div>

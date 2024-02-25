@@ -6,6 +6,7 @@ import {
   OnInit,
   ViewChild,
   SecurityContext,
+  EventEmitter,
 } from '@angular/core';
 import { CONTENT_TYPES, GlobalService } from 'src/app/services/global.service';
 import { getStorage, ref, getDownloadURL } from '@angular/fire/storage';
@@ -30,8 +31,7 @@ import { CrudService } from 'src/app/services/admin/crud.service';
 import { UserAuthService } from 'src/app/services/auth/user-auth.service';
 import { CreateWindowService } from 'src/app/services/admin/crud/create-window.service';
 import { EditWindowService } from 'src/app/services/admin/crud/edit-window.service';
-
-
+import { ContentModalManagerService } from 'src/app/services/content-modal-manager.service';
 
 const themeGithub = 'assets/github-dark.css';
 const themeAtomOneDark = 'assets/atom-one-dark.css';
@@ -40,13 +40,14 @@ const themeAtomOneDark = 'assets/atom-one-dark.css';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss'],
 })
-export class ContentComponent implements OnInit, AfterViewInit {
-  badContent:boolean = false;
+export class ContentComponent implements OnInit {
+  badContent: boolean = false;
   contentTypes = CONTENT_TYPES;
   @Input() contentValue?: string;
   @Input() contentType?: string;
   @Input() contentBlock?: ContentBlock;
   @Input() element?: ElementRef;
+  @Input() lockRow?: EventEmitter<boolean>;
 
   storage = getStorage();
 
@@ -61,17 +62,17 @@ export class ContentComponent implements OnInit, AfterViewInit {
     private hljsLoader: HighlightLoader,
     public sanitizer: DomSanitizer,
     private clipboard: Clipboard,
-    public crudService:CrudService,
-    public userAuth:UserAuthService,
-    public global:GlobalService,
+    public crudService: CrudService,
+    public userAuth: UserAuthService,
+    public global: GlobalService,
     // public createWindowService:CreateWindowService,
-    public editWindowService:EditWindowService,
+    public editWindowService: EditWindowService,
+    private contentModalService:ContentModalManagerService,
   ) {
     this.hljsLoader.setTheme(this.currentTheme);
   }
 
-  @Input() public allowAdminControls:boolean = true;
-
+  @Input() public allowAdminControls: boolean = true;
 
   currentTheme: string = themeGithub;
   response!: HighlightAutoResult;
@@ -95,9 +96,8 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
   copyTextTooltip: string = 'copy';
 
-
   copy(event: any) {
-    let mytooltip:MatTooltip = event as MatTooltip;
+    let mytooltip: MatTooltip = event as MatTooltip;
     mytooltip.show();
     this.clipboard.copy(this.contentValue!.replaceAll('<br>', '\n'));
 
@@ -105,26 +105,11 @@ export class ContentComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       mytooltip.hide();
       setTimeout(() => {
-        
         this.copyTextTooltip = 'copy';
       }, 500);
     }, 1000);
   }
 
-  ngAfterViewInit(): void {
-    // this.setWidthOfImage(this.imgElement.nativeElement, yourContent);
-    // this.contentURL = this.contentValue!;
-    // this.checkContent();
-    if (!this.init) {
-      const interval = setInterval(() => {
-        if (this.init) {
-          clearInterval(interval);
-          this.setWidthOfImage();
-          this.init = false;
-        }
-      }, 200);
-    } else this.setWidthOfImage();
-  }
   init: boolean = false;
   ngOnInit(): void {
     this.contentURL = this.contentValue!;
@@ -132,7 +117,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
   // @Input() contentId?:string;
 
-  updateContent(val:string){
+  updateContent(val: string) {
     this.badContent = false;
     this.contentURL = val;
     this.contentValue = val;
@@ -158,14 +143,22 @@ export class ContentComponent implements OnInit, AfterViewInit {
       this.safeURL = this.safePipe.transform(this.contentURL, 'resourceUrl');
     }
   }
+
+  isContentPreviewEnabled() {
+    switch (this.contentType) {
+      case CONTENT_TYPES.IMAGE || CONTENT_TYPES.MODEL:
+        return true;
+      default:
+        return false;
+    }
+  }
   getContentTrimmed() {
     return this.contentValue!.trim();
   }
 
-  contentError(error:any){
+  contentError(error: any) {
     this.badContent = true;
     console.log('error:', error);
-
   }
 
   setWidthOfImage() {
@@ -195,9 +188,15 @@ export class ContentComponent implements OnInit, AfterViewInit {
     console.log('setting width, height to:', el.style.width, el.style.height);
   }
 
-  beginEdit(){
+  beginEdit() {
     console.log('begin edit');
     this.editWindowService.selectedContent = this.contentBlock!;
     this.editWindowService.showWindow = true;
+  }
+
+  showPreview(){
+    console.log(`preview for ${this.contentBlock!.id}`)
+    this.contentModalService.setSelectedContent(this.contentBlock!.id);
+    this.contentModalService.open();
   }
 }

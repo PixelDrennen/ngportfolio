@@ -1,3 +1,21 @@
+.previewAvailable {
+  cursor: pointer;
+  
+}
+.previewAvailableIcon{
+  position: absolute;
+  top:5%;
+  right:5%;
+  width:20px;
+  height:20px;
+  background-color: white;
+  border:solid 1px transparent;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 .contentImg {
   //   max-width: 40%;
   width: 100%;
@@ -53,7 +71,7 @@
   // height:100%;
   // overflow: hidden;
   font-size: small;
-  display:flex;
+  display: flex;
 }
 
 .codebox {
@@ -88,31 +106,40 @@
 .contentSpacer {
   width: 100%;
   height: 1px;
-  border-bottom: solid 1px black;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.33);
+  border-radius: 6px;
+  // margin-top: 30px;
+  // margin-bottom: 30px;
+  flex: 1 0 100%;
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  // margin-top:auto;
+  // margin-bottom: auto;
+  
 }
 
-.badContent{
+.badContent {
   font-size: xx-large;
-  color:rgb(198, 58, 58);
-  
+  color: rgb(198, 58, 58);
+
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   flex-direction: column;
 }
-.badContent span{
+.badContent span {
   font-size: 100px;
-  padding:100px;
-  background-color:#5151;
+  padding: 100px;
+  background-color: #5151;
   border: solid 1px transparent;
   border-radius: 10px;
-  width:100%;
-  height:80%;
+  width: 100%;
+  height: 80%;
 }
 
 .contentAdminCover {
@@ -145,8 +172,41 @@
   width: 100%;
   height: 100%;
   position: relative;
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 15px;
+  padding: 0px;
+  flex: 1 0 100%;
+}
+._containerSpacer {
+  // display: block;
+  // position: absolute;
+  width:100%;
+  left: 20%;
+  right: 20%;
+  top:0;
+  bottom:0;
+  // min-height: 60px;
+  padding:auto;
+  padding-left: 30px;
+  padding-right: 30px;
+  // margin-bottom:30px;
+  // margin-top: 30px;
+  padding-bottom:30px;
+  padding-top: 30px;
+}
+
+.sortbtn {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.758);
+  color: white;
+  border: solid 1px transparent;
+  border-radius: 5px;
+}
+.sortbtn:hover {
+  border: solid 1px black;
+  border-radius: 5px;
 }

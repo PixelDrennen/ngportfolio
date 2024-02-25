@@ -1,0 +1,8 @@
+{
+    "[markdown]": {
+        "editor.wordWrap": "off"
+    },
+    "diffEditor.wordWrap": "off",
+    "prettier.bracketSameLine": true,
+    "prettier.useTabs": true
+}

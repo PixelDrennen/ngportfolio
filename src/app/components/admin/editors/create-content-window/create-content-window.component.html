@@ -8,7 +8,7 @@
         <p style="text-align: center; margin: auto; font-weight: bold">
           {{ optionSelected ? "Add " + selectedOption : "Add Content" }}
         </p>
-        <div class="mybtn" (click)="createWindowService.showWindow = false">
+        <div class="mybtn" (click)="createWindowService.closeCreator()">
           <div class="btncontainer">
             <span class="material-symbols-outlined"> close </span>
           </div>
@@ -23,7 +23,7 @@
         ></app-content-option-box>
 
         <div *ngIf="optionSelected" class="contentWindow">
-          <app-image-creator-window [imageURLEmitter]="imageURLEmitter" *ngIf="selectedOption == contentTypes.IMAGE"></app-image-creator-window>
+          <app-image-creator-window [imageURLEmitter]="valueEmitter" *ngIf="selectedOption == contentTypes.IMAGE"></app-image-creator-window>
           <app-text-creator-window [valueEmitter]="valueEmitter" *ngIf="selectedOption == contentTypes.TEXT"></app-text-creator-window>
           <!-- <div *ngIf="selectedOption == contentTypes.TEXT">
             <textarea class="input" type="text"></textarea>

@@ -121,7 +121,19 @@ export class FirestoreService {
     const _doc = docData(doc(_collection, id));
     return _doc;
   }
+  async getDocumentAsFirestoreAsync(col:string, id: string) {
+    const _collection = collection(this.firestore, col);
 
+    const _doc = docData(doc(_collection, id));
+    return _doc;
+  }
+  getDocumentAsFirestore(col:string, id: string) {
+    const _collection = collection(this.firestore, col);
+
+    const _doc = docData(doc(_collection, id));
+    return _doc;
+  }
+  
   getRow(id: string) {
     const _collection = collection(this.firestore, 'contentRows');
     const _query = query(_collection);

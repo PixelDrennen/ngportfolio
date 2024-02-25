@@ -40,7 +40,7 @@ margin:5px;
 
   margin: auto;
   display: flex;
-  justify-content: right;
+  justify-content: center;
   align-items: center;
   padding-right:30px;
   // padding:30px;
@@ -49,8 +49,8 @@ margin:5px;
 .editorBody {
   background-color: rgba(202, 202, 202, 0.712);
   backdrop-filter: blur(3px);
-  width: 20%;
-  height: 50%;
+  width: 80%;
+  height: 80%;
   // padding: 30px;
   border: solid 10px rgb(40, 40, 40);
   border-radius: 10px;

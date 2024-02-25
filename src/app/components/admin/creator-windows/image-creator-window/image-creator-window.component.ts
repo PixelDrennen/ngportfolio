@@ -22,6 +22,7 @@ export class ImageCreatorWindowComponent {
   submit() {
     console.log(this.imageURL.value);
     if (this.isURLInput.value == true) {
+      console.log(`URL output: ${this.imageURL.value}`);
       this.imageURLEmitter.emit(this.imageURL.value);
     } else {
       // upload image to firebase storage and get url

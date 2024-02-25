@@ -1,0 +1,4 @@
+<div class="modal-body">
+    <!-- {{(contentModalService.selectedContent!['id'])}} -->
+    <app-content-as-firestore *ngIf="contentModalService.selectedContent" [content]="contentModalService.selectedContent"></app-content-as-firestore>
+</div>

@@ -1,12 +1,19 @@
-<app-create-content-window *ngIf="createWindowService.showWindow"></app-create-content-window>
-<app-edit-content-window *ngIf="editWindowService.showWindow"></app-edit-content-window>
+<app-create-content-window
+  *ngIf="createWindowService.getShowWindow()"
+></app-create-content-window>
+<app-edit-content-window
+  *ngIf="editWindowService.showWindow"
+></app-edit-content-window>
 <div class="work">
   <h4>My Works</h4>
   <p>
     In the past 5 years, I've worked on a multitude of projects that taught me
-    many skills in new media. Here are my recent works in VR, web, teaching, and more.
+    many skills in new media. Here are my recent works in VR, web, teaching, and
+    more.
   </p>
 
+  <!-- <app-reorder-modal></app-reorder-modal> -->
+  <!-- <button (click)="open()">Open</button> -->
 
   <app-summarybox
     [selected]="selected"
@@ -85,12 +92,11 @@
 
   </div> -->
 
-
-  <div class="createbtn" *ngIf="userAuth.isAdmin && global.isEditing">Add Workdoc</div>
+  <div class="createbtn" *ngIf="userAuth.isAdmin && global.isEditing">
+    Add Workdoc
+  </div>
 
   <div class="workcontainer">
-    
-
     <div class="full-container">
       <div
         class="workbox"

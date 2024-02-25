@@ -25,6 +25,8 @@ import { CreateWindowService } from 'src/app/services/admin/crud/create-window.s
 import { firstValueFrom, tap } from 'rxjs';
 import { DocumentData } from '@angular/fire/firestore';
 import { EditWindowService } from 'src/app/services/admin/crud/edit-window.service';
+import { ReorderFirestoreDocument } from '../../admin/modals/reorder-modal/reorder-modal.component';
+import { ModalManagerService } from 'src/app/services/modal-manager.service';
 
 const themeGithub = 'assets/github-dark.css';
 const themeAtomOneDark = 'assets/atom-one-dark.css';
@@ -52,6 +54,15 @@ export class WorkComponent {
   selectedItem?: Item;
   @ViewChild(SummaryboxComponent) summarybox!: SummaryboxComponent;
 
+  // important for the list to be sorted by order value (asc) so that it shows correctly initially in the list
+  // unorderedList: ReorderFirestoreDocument[] = [
+  //   { id: 'id1', order: 0 },
+  //   { id: 'id2', order: 1 },
+  //   { id: 'id3', order: 2 },
+  //   { id: 'id4', order: 3 },
+  // ];
+ 
+
   constructor(
     public firestore: FirestoreService,
     private hljs: HighlightJS,
@@ -60,6 +71,7 @@ export class WorkComponent {
     public global: GlobalService,
     public createWindowService: CreateWindowService,
     public editWindowService: EditWindowService,
+    public modalManager: ModalManagerService,
   ) {
     this.selected = localStorage.getItem('itemIsSelected') === 'true';
     if (this.selected) this.getItemsOnce();
@@ -103,8 +115,13 @@ export class WorkComponent {
     const _selectedItem = _items.find(
       (item) => item.id == localStorage.getItem('selectedItemId'),
     );
-    if (_selectedItem) { this.select(_selectedItem); console.log(`Item selected: ${_selectedItem.id}`)}
-    else console.log(`Could not find item with id ${localStorage.getItem('selectedItemId')}`);
+    if (_selectedItem) {
+      this.select(_selectedItem);
+      console.log(`Item selected: ${_selectedItem.id}`);
+    } else
+      console.log(
+        `Could not find item with id ${localStorage.getItem('selectedItemId')}`,
+      );
   }
 
   currentTheme: string = themeGithub;
@@ -203,7 +220,7 @@ export class WorkComponent {
     setTimeout(() => {
       (document.querySelector('.summarybox') as HTMLElement).focus();
       if (this.selectedItem) {
-        console.log(`Saving selected item ${this.selectedItem.id}`)
+        console.log(`Saving selected item ${this.selectedItem.id}`);
         localStorage.setItem('selectedItemId', this.selectedItem.id);
         localStorage.setItem('itemIsSelected', this.selected.toString());
         this.summarybox.update();
