@@ -49,7 +49,6 @@ export class SummaryboxComponent implements OnInit {
 
   contentTypes = CONTENT_TYPES;
 
-  // rows?: string[] = [] as string[];
   rows?: ContentRow[] = [] as ContentRow[];
 
   contentPerRow?: ContentBlock[][] = [] as ContentBlock[][];
@@ -64,22 +63,12 @@ export class SummaryboxComponent implements OnInit {
     public createWindowService: CreateWindowService,
     private modalManager: ModalManagerService,
   ) {
-    // console.log(this.rows$);
   }
   ngOnInit(): void {}
 
   update() {
     console.log('updating');
-    // this.rows = this.firestore.selectedWorkDoc?.contentRows;
     this.getRows();
-    // if (this.rows)
-    //   for (let i = 0; i < this.rows.length; i++) {
-    //     console.log(this.rows[i]);
-    //     this.firestore.getRow(this.rows[i]).subscribe((a) => {
-    //       console.log(a);
-    //       this.rows$?.next(a);
-    //     });
-    //   }
   }
 
   openSortModal(contentRow: DocumentData[]) {
@@ -95,7 +84,6 @@ export class SummaryboxComponent implements OnInit {
     cblock.subscribe((a) => {
       console.log(a.value, a.type);
     });
-    // return cblock;
     return '';
   }
 
@@ -112,16 +100,10 @@ export class SummaryboxComponent implements OnInit {
     );
     result.then((a) => {
       a.forEach((row) => {
-        // console.log(row.id);
         const _row = row.data() as ContentRow;
         _row.id = row.id;
         this.rows?.push(_row);
-        // console.log(`Row: ${_row.id}`);
-
         this.firestore.getContentForRow(row.id).then((contentArr) => {
-          // console.log(contentArr.docs);
-          // contentArr.docChanges()
-          // contentArr.forEach((content) => {})
           let myArr = [] as DocumentData[];
           contentArr.forEach((content) => {myArr.push({id:content.id, ...content.data()})});
           this.contentPerRowAsFirestore?.push(myArr);
@@ -142,28 +124,13 @@ export class SummaryboxComponent implements OnInit {
 
     // get rows in workdoc
     rowsInWorkdoc.then((rowsQuery) =>{
-      // let rowsWithContent:DocumentData[][] = [];
       let _rows = [] as DocumentData[];
-      // const _rows:ContentRow[] = [];
       rowsQuery.forEach((rowQueryData) =>{
         _rows.push({id:rowQueryData.id, ...rowQueryData.data()}); // add row document for later use
 
 
-        // const _row = rowQueryData.data() as ContentRow;
-        // _rows.push(_row);
-
-        // this.firestore.getContentForRow(rowQueryData.id).then((contentArr) => {
-          // const contentInRow = [] as DocumentData[];
-          // contentArr.forEach((content) => {
-          //   contentInRow.push({id:content.id, ...content.data()});
-          // });
-          // rowsWithContent.push(contentInRow);
-
-        // });
-        // rows.push(rowQueryData);
       });
         this.modalManager.open(_rows, ELEMENT_TYPES.ROW);
-        // this.modalManager.open(rowsQuery);
     });
   }
 
@@ -173,7 +140,6 @@ export class SummaryboxComponent implements OnInit {
   ) {
     let contentInRow: ContentBlock[] = [];
 
-    // console.log('row', id, ':', contentInRow);
     contentArr.forEach((content) => {
       let cblock: ContentBlock = {
         id: content.id,
@@ -190,12 +156,9 @@ export class SummaryboxComponent implements OnInit {
   }
 
   onKeyUp(event: any) {
-    // console.log("key pressed");
-    // if (event.key == 'Escape') {
     if (this.selected) {
       this.select();
     }
-    // }
   }
   openSocialLink(url: string) {
     window.open(url, '_blank');
@@ -203,10 +166,6 @@ export class SummaryboxComponent implements OnInit {
 
   setWidthOfImage(img: HTMLElement, content: ContentBlock) {
     console.log('setting size for element', img.nodeName);
-    // img.style.width = content.meta.width + '%';
-    // img.style.height = content.meta.height + '%';
-    // if (content.meta.wAuto) img.style.width = 'auto';
-    // if (content.meta.hAuto) img.style.height = 'auto';
   }
 
   beginCreateContent(rowId: string) {
@@ -214,12 +173,9 @@ export class SummaryboxComponent implements OnInit {
       this.createWindowService.startCreator(rowId, contentArr.size);
 
       console.log(`begin edit in row ${rowId}`);
-      // this.createWindowService.showWindow = true;
-      // this.createWindowService.rowId = rowId;
       this.getContentForRow(rowId, contentArr);
     });
 
-    // this.createWindowService.order =
   }
 
   titleInput: FormControl = new FormControl(
