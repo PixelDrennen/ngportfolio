@@ -21,8 +21,11 @@ export class CreateWindowService {
   }
 
   resultEmitter?:EventEmitter<string> = new EventEmitter<string>();
+  acceptedExtensions:string = '.png, .jpg, .jpeg, .psd, .webm, .gif, .webp, .svg, .tiff, .avif';
+  metadata:string = '';
 
   startCreator(rowId?: string, order?: number) {
+    this.acceptedExtensions = '.png, .jpg, .jpeg, .psd, .webm, .gif, .webp, .svg, .tiff, .avif';
     this.showWindow = true;
     this.rowId = rowId;
     this.order = order;

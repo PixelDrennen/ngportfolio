@@ -14,7 +14,7 @@
 </div>
 
 <div class="input-group" *ngIf="isURLInput.value == false">
-    <input (change)="onImageChanged($event)" class="input form-control" aria-label="Select Image" type="file" id="upload" accept=".png, .jpg, .jpeg, .psd, .webm, .gif, .webp, .svg, .tiff, .avif" />
+    <input (change)="onImageChanged($event)" class="input form-control" aria-label="Select Image" type="file" id="upload" [accept]="windowService.acceptedExtensions" />
     <!-- <label class="input input-group-text" for="upload">Select Image</label> -->
 </div>
 
@@ -25,7 +25,7 @@
 
 <div class="input-group">
     <label class="input input-group-text" for="alt">Alt text</label>
-    <input class="input form-control" type="text" id="alt" />
+    <input [formControl]="metadata" class="input form-control" type="text" id="alt" />
 </div>
 
 <button class="input form-control" type="submit" (click)="submit()">Add</button>

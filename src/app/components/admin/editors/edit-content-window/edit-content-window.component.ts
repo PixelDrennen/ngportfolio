@@ -23,6 +23,9 @@ export class EditContentWindowComponent implements OnInit, AfterViewInit {
   contentValueTextArea = new FormControl(
     this.parseToLineBreaks(this.editWindowService.selectedContent?.value),
   );
+  contentMetadataTextArea = new FormControl(
+    this.parseToLineBreaks(this.editWindowService.selectedContent?.metadata),
+  );
 
   windowIsOpen: boolean = false;
 
@@ -100,6 +103,8 @@ export class EditContentWindowComponent implements OnInit, AfterViewInit {
   async updateContent() {
     console.log(`Selected type: ${this.contentTypesDropdown.value}`);
     console.log(`Value: ${this.contentValueTextArea.value}`);
+
+    this.editWindowService.selectedContent!.metadata = this.contentMetadataTextArea.value!;
 
     this.editWindowService.selectedContent!.type =
       this.contentTypesDropdown.value!.toLowerCase();

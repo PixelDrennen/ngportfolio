@@ -51,6 +51,17 @@
             class="form-control"
             [value]="editWindowService.selectedContent?.value"
           />
+          
+        </div>
+        <div class="input-group">
+          <label class="input-group-text">metadata</label>
+          <input
+            type="text"
+            id="contentMetadataTextArea"
+            [formControl]="contentMetadataTextArea"
+            class="form-control"
+            [value]="editWindowService.selectedContent?.metadata"
+          />
         </div>
 
         <button class="input btn btn-primary" (click)="updateContent()">Save</button>

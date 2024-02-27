@@ -45,13 +45,11 @@ export class CreateContentWindowComponent implements OnInit {
     private firestore: FirestoreService,
   ) {
     if (!this.createWindowService.getRowId()) {
-      console.log(`Could not get row id. ${this.createWindowService.getRowId()}`);
+      console.log(
+        `Could not get row id. ${this.createWindowService.getRowId()}`,
+      );
       return;
     }
-
-
-
-   
   }
 
   // subscribeToImageURL() {
@@ -68,14 +66,17 @@ export class CreateContentWindowComponent implements OnInit {
   //   });
   // }
   subscribeToValue() {
-
     this.valueEmitter.subscribe((value: string) => {
-      console.log("Adding content:",`contentType: ${this.selectedOption.toUpperCase()} contentOrder: ${this.createWindowService.getOrder()} contentValue: ${value}`);
+      console.log(
+        'Adding content:',
+        `contentType: ${this.selectedOption.toUpperCase()} contentOrder: ${this.createWindowService.getOrder()} contentValue: ${value}`,
+      );
       let content: ContentBlock = {
         type: this.selectedOption,
         value: value,
         row: this.createWindowService.getRowId(),
         order: this.createWindowService.getOrder(),
+        metadata: this.createWindowService.metadata,
       } as ContentBlock;
       this.firestore.addContentBlock(content);
     });
@@ -88,18 +89,16 @@ export class CreateContentWindowComponent implements OnInit {
   handleOption(option: string) {
     // console.log(`option:${option}`)
 
-    if(option == CONTENT_TYPES.SPACER){
-      console.log("Adding spacer");
-      this.fs_createContent(option, "");
+    if (option == CONTENT_TYPES.SPACER) {
+      console.log('Adding spacer');
+      this.fs_createContent(option, '');
       this.windowIsOpen = false;
-    } else{
+    } else {
       this.optionSelected = true;
       this.selectedOption = option;
       this.windowIsOpen = false;
       this.subscribeToValue();
     }
-
-    
 
     // if (
     //   this.selectedOption == this.contentTypes.TEXT ||
@@ -147,12 +146,14 @@ export class CreateContentWindowComponent implements OnInit {
     // }
   }
 
-  fs_createContent(contentType:string, contentValue:string){
+  fs_createContent(contentType: string, contentValue: string) {
     let content: ContentBlock = {
       type: contentType,
       value: contentValue,
       row: this.createWindowService.getRowId(),
       order: this.createWindowService.getOrder(),
+      metadata:this.createWindowService.metadata,
+
     } as ContentBlock;
     this.firestore.addContentBlock(content);
   }

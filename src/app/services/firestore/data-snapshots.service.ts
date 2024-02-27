@@ -39,6 +39,10 @@ export class DataSnapshotsService {
   // collection of all items
   itemCollection$?: Observable<DocumentData[]>;
 
+  //? > Changes every new item
+  // selected item (only one)
+  selectedItem$?: Observable<DocumentData>;
+
   //? > Changes every new work doc
   // selected workdoc (there will only ever be one displayed)
   selectedWorkdoc$?: Observable<DocumentData>;
@@ -51,13 +55,20 @@ export class DataSnapshotsService {
   // content in rows (array of content arrays)
   rowData$?: RowObject[];
 
-  /*
-  @param none
-  */
+  
+
+
   subscribe_ItemCollection() {
     const q = query(collection(this.firestore.db, 'items'));
     const col = collectionData(q, { idField: 'id' });
     this.itemCollection$ = col;
+  }
+
+  subscribe_SelectedItem(itemId: string) {
+    const q = query(collection(this.firestore.db, 'items'), where('id', '==', itemId));
+    const col = collectionData(q, { idField: 'id' });
+    const selected = col as Observable<DocumentData>;
+    this.selectedItem$ = selected;
   }
 
   subscribe_SelectedWorkdoc(workdocID: string) {

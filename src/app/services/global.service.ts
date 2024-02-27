@@ -15,6 +15,7 @@ export enum CONTENT_TYPES {
   AUDIO='audio',
   BUTTON='button',
   SPACER='spacer',
+  DOWNLOAD='download',
 };
 
 @Injectable({

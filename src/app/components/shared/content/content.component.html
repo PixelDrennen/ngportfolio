@@ -1,14 +1,24 @@
 <!-- <app-edit-button></app-edit-button>
 <app-delete-button></app-delete-button> -->
-<div [class]="(isContentPreviewEnabled() ?'previewAvailable' : '')+ contentType == contentTypes.SPACER ? '_containerSpacer' :'_container'">
-  <div class="previewAvailableIcon" *ngIf="isContentPreviewEnabled()" (click)="showPreview()">
-    <span class="material-symbols-outlined">
-      preview
-      </span>
+<div
+  [class]="
+    (isContentPreviewEnabled() ? 'previewAvailable' : '') + contentType ==
+    contentTypes.SPACER
+      ? '_containerSpacer'
+      : '_container'
+  "
+>
+  <div class="previewIconBackdrop" *ngIf="isContentPreviewEnabled()"></div>
+  <div
+    class="previewAvailableIcon"
+    *ngIf="isContentPreviewEnabled()"
+    (click)="showPreview()"
+  >
+    <span class="material-symbols-outlined"> preview </span>
   </div>
-  <img
-    *ngIf="
-      !badContent &&
+  <!-- <img
+    //*ngIf="
+      /!badContent && !contentBlock?.metadata && 
       contentType == contentTypes.IMAGE &&
       contentValue != undefined
     "
@@ -16,7 +26,13 @@
     style="width: 100%; height: 100%"
     [src]="contentURL"
     (error)="contentError($event)"
-  />
+  /> -->
+  <figure class="figure" *ngIf="!badContent && 
+  contentType == contentTypes.IMAGE &&
+  contentValue != undefined">
+    <img [src]="contentURL" (error)="contentError($event)" class="figure-img img-fluid rounded" alt="...">
+    <figcaption *ngIf="contentBlock?.metadata" class="figure-caption">{{contentBlock?.metadata}}</figcaption>
+  </figure>
   <div
     *ngIf="
       !badContent &&
@@ -40,7 +56,7 @@
   >
     <!-- <p><i>videos not implemented.</i></p> -->
     <iframe
-    class="ratio"
+      class="ratio"
       id="ytplayer"
       type="text/html"
       width="100%"
@@ -80,10 +96,20 @@
     </div>
   </div>
 
-  <div
-    *ngIf="contentType == contentTypes.SPACER"
-    class="contentSpacer"
-  ></div>
+  <div *ngIf="contentType == contentTypes.SPACER" class="contentSpacer"></div>
+
+  <div *ngIf="contentType == contentTypes.DOWNLOAD" class="contentDownload">
+    <div class="input-group mb-3" (click)="openURL(contentValue)">
+      <p class="contentDownloadMetadata" *ngIf="contentBlock?.metadata">
+        {{ contentBlock?.metadata }}
+      </p>
+
+      <div class="downloadEvents" style="user-select: none; cursor: pointer">
+        <span class="input-group-text" id="basic-addon1">Download</span>
+        <span class="input-group-text material-symbols-outlined">download</span>
+      </div>
+    </div>
+  </div>
 
   <div *ngIf="badContent" class="badContent">
     <h5>Content Unavailable</h5>

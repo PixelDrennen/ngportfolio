@@ -15,6 +15,7 @@ import {
   ContentBlock,
   FirestoreService,
 } from 'src/app/services/firebase/firestore.service';
+import { ReadTrackerService } from 'src/app/services/firestore/read-tracker.service';
 
 export interface ReorderFirestoreDocument {
   id: string;
@@ -34,6 +35,7 @@ export class ReorderModalComponent {
     private modalManager: ModalManagerService,
     private orderUpdateService: OrderUpdateService,
     private firestore: FirestoreService,
+    private readTracker:ReadTrackerService,
   ) {
     // this.param.forEach((item) => {
     //   console.log(item.document);
@@ -63,7 +65,8 @@ export class ReorderModalComponent {
     _content.forEach((d) => {
       // console.log(d.data());
       _contentBlocks.push(d.data() as ContentBlock);
-    });
+    this.readTracker.saveRead();
+  });
     return _contentBlocks;
   }
 

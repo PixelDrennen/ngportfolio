@@ -6,7 +6,11 @@ import {
   animate,
 } from '@angular/animations';
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { DocumentData, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
+import {
+  DocumentData,
+  QueryDocumentSnapshot,
+  QuerySnapshot,
+} from '@angular/fire/firestore';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CreateWindowService } from 'src/app/services/admin/crud/create-window.service';
@@ -20,6 +24,7 @@ import {
   ContentRow,
   ContentBlock,
 } from 'src/app/services/firebase/firestore.service';
+import { ReadTrackerService } from 'src/app/services/firestore/read-tracker.service';
 import { CONTENT_TYPES, GlobalService } from 'src/app/services/global.service';
 import { ModalManagerService } from 'src/app/services/modal-manager.service';
 
@@ -62,8 +67,8 @@ export class SummaryboxComponent implements OnInit {
     public userAuth: UserAuthService,
     public createWindowService: CreateWindowService,
     private modalManager: ModalManagerService,
-  ) {
-  }
+    private readTracker:ReadTrackerService,
+  ) {}
   ngOnInit(): void {}
 
   update() {
@@ -88,7 +93,7 @@ export class SummaryboxComponent implements OnInit {
   }
 
   getRows() {
-    if(!this.selectedItem || !this.selectedItem.workdoc) return undefined;
+    if (!this.selectedItem || !this.selectedItem.workdoc) return undefined;
     this.rows = [];
     this.contentPerRow = [];
     this.fakeContentBlocks = [];
@@ -105,32 +110,38 @@ export class SummaryboxComponent implements OnInit {
         this.rows?.push(_row);
         this.firestore.getContentForRow(row.id).then((contentArr) => {
           let myArr = [] as DocumentData[];
-          contentArr.forEach((content) => {myArr.push({id:content.id, ...content.data()})});
+          contentArr.forEach((content) => {
+            myArr.push({ id: content.id, ...content.data() });
+          });
           this.contentPerRowAsFirestore?.push(myArr);
           this.getContentForRow(row.id, contentArr);
+          this.readTracker.saveRead();
         });
       });
     });
   }
 
-  rowContainsSpacer(elements:ContentBlock[]){
-    return elements.some((element) => (element as ContentBlock).type == CONTENT_TYPES.SPACER) == false;
+  rowContainsSpacer(elements: ContentBlock[]) {
+    return (
+      elements.some(
+        (element) => (element as ContentBlock).type == CONTENT_TYPES.SPACER,
+      ) == false
+    );
   }
 
-  openModalForSortingRows(){
+  openModalForSortingRows() {
     const rowsInWorkdoc = this.firestore.getRowsForWorkdoc(
       this.selectedItem?.workdoc!,
     );
 
     // get rows in workdoc
-    rowsInWorkdoc.then((rowsQuery) =>{
+    rowsInWorkdoc.then((rowsQuery) => {
       let _rows = [] as DocumentData[];
-      rowsQuery.forEach((rowQueryData) =>{
-        _rows.push({id:rowQueryData.id, ...rowQueryData.data()}); // add row document for later use
-
-
+      rowsQuery.forEach((rowQueryData) => {
+        _rows.push({ id: rowQueryData.id, ...rowQueryData.data() }); // add row document for later use
+        this.readTracker.saveRead();
       });
-        this.modalManager.open(_rows, ELEMENT_TYPES.ROW);
+      this.modalManager.open(_rows, ELEMENT_TYPES.ROW);
     });
   }
 
@@ -175,7 +186,6 @@ export class SummaryboxComponent implements OnInit {
       console.log(`begin edit in row ${rowId}`);
       this.getContentForRow(rowId, contentArr);
     });
-
   }
 
   titleInput: FormControl = new FormControl(

@@ -1,6 +1,43 @@
+.contentDownload{
+  width:100%;
+  // display: flex;
+  // justify-content: stretch;
+  // flex-basis: content;
+}
+.contentDownload:hover{
+}
+.downloadEvents{
+  border: solid 1px transparent;
+  border-radius: 4px !important;
+  display: flex;
+
+}
+.downloadEvents:hover{
+  border-color: black;
+
+}
+
+.contentDownloadMetadata{
+  padding:5px;
+  text-align: right;
+  vertical-align: middle;
+  margin-top: auto;
+  margin-bottom: auto;
+}
 .previewAvailable {
   cursor: pointer;
-  
+  // z-index: 0;
+}
+.previewIconBackdrop{
+  background-color: white;
+  border:solid 1px transparent;
+  border-radius: 2px;
+  position:absolute;
+  top:5%;
+  right:5%;
+  width:20px;
+  height:20px;
+  z-index: 0;
 }
 .previewAvailableIcon{
   position: absolute;
@@ -8,13 +45,27 @@
   right:5%;
   width:20px;
   height:20px;
-  background-color: white;
+  background-color: rgb(253, 8, 74);
+  background: linear-gradient(
+       142deg,
+       rgba(160, 254, 251, 1) 0%,
+       #494fc1 50%,
+       rgba(253, 8, 74,1) 80%
+    );
   border:solid 1px transparent;
   border-radius: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  color:white;
+  background-clip:text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  // z-index: 1;
+}
+.previewAvailableIcon span{
+  // z-index: 1;
 }
 .contentImg {
   //   max-width: 40%;

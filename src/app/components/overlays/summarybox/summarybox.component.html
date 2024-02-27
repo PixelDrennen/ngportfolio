@@ -144,7 +144,7 @@
             <div class="myrow">
               <!-- loop through content in row -->
               @for (_content of contentPerRow![i]; track _content) {
-                <div class="mycontentblock">
+                <div class="mycontentblock" *ngIf="!_content.deleted">
                   <app-content
                     [contentBlock]="_content"
                     [contentValue]="_content.value"

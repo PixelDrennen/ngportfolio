@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { CreateWindowService } from 'src/app/services/admin/crud/create-window.service';
 import { StorageService } from 'src/app/services/firebase/storage.service';
 import { CONTENT_TYPES } from 'src/app/services/global.service';
 
@@ -9,18 +10,20 @@ import { CONTENT_TYPES } from 'src/app/services/global.service';
   styleUrl: './image-creator-window.component.scss',
 })
 export class ImageCreatorWindowComponent {
-  constructor(private storage: StorageService) {}
+  constructor(private storage: StorageService, public windowService:CreateWindowService) {}
   // contentTypes = CONTENT_TYPES;
   // @Input() selectedOption: string = '';
   @Input() imageURLEmitter: EventEmitter<string> = new EventEmitter();
 
   isURLInput: FormControl = new FormControl(false);
   imageURL: FormControl = new FormControl('');
+  metadata: FormControl = new FormControl('');
   // imageUploadFile: FormControl = new FormControl(null);
   imageUploadFile: File | null = null;
 
   submit() {
     console.log(this.imageURL.value);
+    this.windowService.metadata = this.metadata.value;
     if (this.isURLInput.value == true) {
       console.log(`URL output: ${this.imageURL.value}`);
       this.imageURLEmitter.emit(this.imageURL.value);

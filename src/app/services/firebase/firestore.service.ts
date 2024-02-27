@@ -21,6 +21,8 @@ import { Observable } from 'rxjs';
 import { UserAuthService } from '../auth/user-auth.service';
 import { CollectionReference, where } from 'firebase/firestore';
 import { DocumentData } from '@angular/fire/firestore';
+import { CONTENT_TYPES } from '../global.service';
+import { ReadTrackerService } from '../firestore/read-tracker.service';
 
 export interface Item {
   id: string;
@@ -62,6 +64,8 @@ export interface ContentBlock {
   value: string;
   row: string;
   order: number;
+  metadata:string;
+  deleted?:boolean;
   // meta:{
   //   width:20,
   //   height:20,
@@ -87,7 +91,7 @@ export class FirestoreService {
   selectedWorkDoc?: WorkDoc;
 
   // public items$: Observable<any[]>;
-  constructor() {
+  constructor(private readTracker: ReadTrackerService) {
     const itemCol = collection(this.db, 'items');
     const itemQuery = query(itemCol);
 
@@ -112,6 +116,7 @@ export class FirestoreService {
 
     cDoc.subscribe((a) => {
       this.selectedWorkDoc = a;
+      this.readTracker.saveRead();
     });
   }
 
@@ -119,21 +124,25 @@ export class FirestoreService {
     const _collection = collection(this.db, 'workdocs');
 
     const _doc = docData(doc(_collection, id));
+    this.readTracker.saveRead();
+
     return _doc;
   }
-  async getDocumentAsFirestoreAsync(col:string, id: string) {
+  async getDocumentAsFirestoreAsync(col: string, id: string) {
     const _collection = collection(this.db, col);
 
     const _doc = docData(doc(_collection, id));
+    this.readTracker.saveRead();
     return _doc;
   }
-  getDocumentAsFirestore(col:string, id: string) {
+  getDocumentAsFirestore(col: string, id: string) {
     const _collection = collection(this.db, col);
 
     const _doc = docData(doc(_collection, id));
+    this.readTracker.saveRead();
     return _doc;
   }
-  
+
   getRow(id: string) {
     const _collection = collection(this.db, 'contentRows');
     const _query = query(_collection);
@@ -143,6 +152,7 @@ export class FirestoreService {
     // return _data;
 
     const _doc = docData(doc(_collection, id)) as Observable<ContentRow>;
+    this.readTracker.saveRead();
     return _doc;
   }
 
@@ -179,13 +189,10 @@ export class FirestoreService {
     const _collection = collection(this.db, 'content');
 
     const _doc = docData(doc(_collection, id)) as Observable<ContentBlock>;
-    return _doc;
-    // _doc.subscribe((a) => {
-    //   this.selectedWorkDoc = a;
-    // });
-  }
 
-  public getDocument(url: string) {}
+    this.readTracker.saveRead();
+    return _doc;
+  }
 
   public addContentBlock(content: ContentBlock) {
     const _collection = collection(this.db, 'content');
@@ -193,6 +200,7 @@ export class FirestoreService {
     addDoc(_collection, content)
       .then((a) => {
         console.log(`Document added. \n${a.id}`);
+        // this.readTracker.saveRead();
         location.reload();
       })
       .catch((error) => {
@@ -217,7 +225,7 @@ export class FirestoreService {
     await updateDoc(_doc, data)
       .then(() => {
         console.log('Content updated.');
-        location.reload();
+        // if (content.type != CONTENT_TYPES.TEXT) location.reload();
       })
       .catch((error) => {
         console.log('Could not update content.', error);
@@ -229,13 +237,14 @@ export class FirestoreService {
       console.error('No content id supplied for delete.', content);
       return;
     }
+    content.deleted = true;
     const _collection = collection(this.db, 'content');
     const _doc = doc(_collection, content.id);
 
     await deleteDoc(_doc)
       .then(() => {
         console.log('Content deleted.');
-        location.reload();
+        // location.reload();
       })
       .catch((error) => {
         console.log('Could not delete content.', error);
@@ -276,7 +285,7 @@ export class FirestoreService {
     })
       .then((a) => {
         console.log(`Document added. \n${a.id}`);
-        location.reload();
+        // location.reload();
       })
       .catch((error) => {
         console.log(`Could not add document. \n${error}`);

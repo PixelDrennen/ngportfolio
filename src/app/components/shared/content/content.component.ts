@@ -199,4 +199,10 @@ export class ContentComponent implements OnInit {
     this.contentModalService.setSelectedContent(this.contentBlock!.id);
     this.contentModalService.open();
   }
+
+  openURL(url?:string){
+    if(url){
+      window.open(url);
+    }
+  }
 }
