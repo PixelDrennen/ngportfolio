@@ -23,13 +23,18 @@ import { UserAuthService } from 'src/app/services/auth/user-auth.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { CreateWindowService } from 'src/app/services/admin/crud/create-window.service';
 import { firstValueFrom, tap } from 'rxjs';
-import { DocumentData } from '@angular/fire/firestore';
 import { EditWindowService } from 'src/app/services/admin/crud/edit-window.service';
 import { ReorderFirestoreDocument } from '../../admin/modals/reorder-modal/reorder-modal.component';
 import { ModalManagerService } from 'src/app/services/modal-manager.service';
 
 const themeGithub = 'assets/github-dark.css';
 const themeAtomOneDark = 'assets/atom-one-dark.css';
+import {
+  collection,
+  query,
+  getDocs,
+  orderBy,
+} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-work',
@@ -227,4 +232,20 @@ export class WorkComponent {
       } else console.log('selected item is undefined.');
     }, 500);
   }
+
+
+  // beginCreateContent(rowId: string) {
+    
+  //   // this.createWindowService.startCreator(rowId, workdocCol.);
+  //   this.getWorkDocData();
+    
+  // }
+
+  // async getWorkDocData(){
+  //   const workdocCol = collection(this.firestore.db, 'workdocs');
+  //   const order = orderBy('order', 'asc');
+  //   const _query = query(workdocCol, order);
+  //   const querySnapshot = await getDocs(_query);
+  //   this.createWindowService.startCreator(undefined, querySnapshot.size);
+  // }
 }
