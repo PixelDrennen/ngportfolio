@@ -38,6 +38,7 @@ import { ReorderModalComponent } from './components/admin/modals/reorder-modal/r
 import { CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import { ContentAsFirestoreComponent } from './components/shared/content-as-firestore/content-as-firestore.component';
 import { ContentViewerModalComponent } from './components/modals/content-viewer-modal/content-viewer-modal.component';
+import { VideoCreatorComponent } from './components/admin/creator-windows/video-creator/video-creator.component';
 // import { VideooCreatorWindowComponent } from './components/admin/creator-windows/videoo-creator-window/videoo-creator-window.component';
 // import { HttpClientModule }
 @NgModule({
@@ -64,6 +65,7 @@ import { ContentViewerModalComponent } from './components/modals/content-viewer-
     ReorderModalComponent,
     ContentAsFirestoreComponent,
     ContentViewerModalComponent,
+    VideoCreatorComponent,
     // VideooCreatorWindowComponent,
   ],
   imports: [

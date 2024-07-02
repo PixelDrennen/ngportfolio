@@ -16,13 +16,16 @@ import {
   updateDoc,
   UpdateData,
   deleteDoc,
+  getDoc,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { UserAuthService } from '../auth/user-auth.service';
 import { CollectionReference, where } from 'firebase/firestore';
 import { DocumentData } from '@angular/fire/firestore';
 import { CONTENT_TYPES } from '../global.service';
 import { ReadTrackerService } from '../firestore/read-tracker.service';
+import { ref } from '@angular/fire/database';
+import { HomepageData } from 'src/app/interfaces/page-data-interfaces';
 
 export interface Item {
   id: string;
@@ -184,6 +187,21 @@ export class FirestoreService {
 
     // return _data;
   }
+
+  // async getCopy() {
+  //   const _collection = collection(this.db, 'copy');
+  //   const querySnapshot = await getDocs(_collection);
+  //   return querySnapshot;
+  // }
+  // async getCopyHomepage() {
+  //   const _collection = collection(this.db, 'copy');
+
+  //   const _doc = docData(doc(_collection, 'homepage')) as Observable<HomepageData>;
+
+  //   this.readTracker.saveRead();
+  //   return firstValueFrom(_doc);
+  // }
+
 
   async getContentBlock(id: string) {
     const _collection = collection(this.db, 'content');

@@ -66,7 +66,8 @@ $primaryColor: rgb(253, 8, 74);
 }
 .summarybox .summaryheader {
   display: flex;
-  // justify-content: space-between;
+  justify-content: space-between;
+ 
 }
 .tabline {
   margin-left: 4em;
@@ -82,20 +83,26 @@ $primaryColor: rgb(253, 8, 74);
   margin-right: 0;
   margin-left: auto;
   text-align: center;
+  max-width: 40%;
 }
 .summarybox .collabs {
-  display: flex;
-  clear: both;
-  cursor: pointer;
+  // display: flex;
+  // clear: both;
+  // cursor: pointer;
+  overflow: auto;
+  max-height: 12em;
 }
 
 .summarybox .collab {
   width: 5em !important;
-  height: 5em;
+  height: 5em !important; 
   border: solid 1px transparent;
   border-radius: 100%;
   overflow: hidden;
   margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  float:left;
 }
 
 .summarybody {
@@ -215,6 +222,7 @@ $primaryColor: rgb(253, 8, 74);
   justify-content: stretch;
   align-items: stretch;
   padding: auto;
+  padding:10px;
   // max-height: 30%;
   // border:1px solid rgba(0, 0, 0, 0.388);
 }
@@ -370,17 +378,24 @@ $primaryColor: rgb(253, 8, 74);
     display: block;
   }
   .summarybox .collabs {
-    display: block;
-    clear: both;
+    // display: inline-block;
+    // clear: both;
+    // max-width: 40% !important;
+
+    // display: flex;
+    // flex: 1 1 auto;
+    // overflow: auto;
   }
   .summarybox .collabContainer {
-    display: flex;
-    margin-left: 0;
-    border: none;
-    padding-left: 0;
+    // display: flex;
+    // margin-left: 0;
+    // border: none;
+    // padding-left: 0;
+    // max-width: 40% !important;
   }
   .summarybox .collab {
-    margin-bottom: 10px;
+    // margin-bottom: 10px;
+    // display: block;
   }
 }
 

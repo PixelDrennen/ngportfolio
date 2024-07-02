@@ -54,9 +54,10 @@
     "
     class="contentVideo"
   >
+  <iframe width="560" height="315" [src]="safeURL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     <!-- <p><i>videos not implemented.</i></p> -->
-    <iframe
-      class="ratio"
+    <!-- <iframe
+      class="ratio ratio-16by9"
       id="ytplayer"
       type="text/html"
       width="100%"
@@ -64,7 +65,7 @@
       allowfullscreen
       [src]="safeURL"
       frameborder="0"
-    ></iframe>
+    ></iframe> -->
   </div>
 
   <div

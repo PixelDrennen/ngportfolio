@@ -10,6 +10,7 @@ import {
   query,
   where,
 } from '@angular/fire/firestore';
+import { HomepageData } from 'src/app/interfaces/page-data-interfaces';
 
 export interface RowObject {
   rowId: string;
@@ -55,8 +56,14 @@ export class DataSnapshotsService {
   // content in rows (array of content arrays)
   rowData$?: RowObject[];
 
-  
+  homepageData$?: Observable<DocumentData>;
 
+  
+  subscribe_HomoepageData() {
+    const q = query(collection(this.firestore.db, 'copy'));
+    const col = collectionData(q, { idField: 'homepage' });
+    this.homepageData$ = col;
+  }
 
   subscribe_ItemCollection() {
     const q = query(collection(this.firestore.db, 'items'));
