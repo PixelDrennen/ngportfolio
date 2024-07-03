@@ -73,7 +73,9 @@ $primaryColor: rgb(253, 8, 74);
   margin-left: 4em;
   display: inline-block;
 }
-
+.my-tooltip {
+  white-space: pre-line;
+}
 .summarybox .collabContainer {
   display: block;
   align-items: center;

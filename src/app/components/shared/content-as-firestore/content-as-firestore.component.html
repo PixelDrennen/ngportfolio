@@ -25,6 +25,40 @@
     />
 
 
+    <div
+    *ngIf="
+      !badContent &&
+      content!['type'] == contentTypes.TEXT &&
+      content!['value'] != undefined
+    "
+    class="contentText"
+  >
+    <!-- TODO: content types should have styling attached, so you can use headers etc. -->
+    <p [innerHTML]="sanitizer.bypassSecurityTrustHtml(content!['value']!)">
+      {{ content!['value'] }}
+    </p>
+  </div>
+  <div
+    *ngIf="
+      !badContent &&
+      content!['type'] == contentTypes.VIDEO &&
+      content!['value'] != undefined
+    "
+    class="contentVideo"
+  >
+  <iframe width="560" height="315" [src]="safeURL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <!-- <p><i>videos not implemented.</i></p> -->
+    <!-- <iframe
+      class="ratio ratio-16by9"
+      id="ytplayer"
+      type="text/html"
+      width="100%"
+      height="100%"
+      allowfullscreen
+      [src]="safeURL"
+      frameborder="0"
+    ></iframe> -->
+  </div>
 
     <div
       *ngIf="

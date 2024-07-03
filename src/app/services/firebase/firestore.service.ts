@@ -24,7 +24,7 @@ import { CollectionReference, where } from 'firebase/firestore';
 import { DocumentData } from '@angular/fire/firestore';
 import { CONTENT_TYPES } from '../global.service';
 import { ReadTrackerService } from '../firestore/read-tracker.service';
-import { ref } from '@angular/fire/database';
+import { orderByChild, ref } from '@angular/fire/database';
 import { HomepageData } from 'src/app/interfaces/page-data-interfaces';
 
 export interface Item {
@@ -96,7 +96,8 @@ export class FirestoreService {
   // public items$: Observable<any[]>;
   constructor(private readTracker: ReadTrackerService) {
     const itemCol = collection(this.db, 'items');
-    const itemQuery = query(itemCol);
+    const order = orderBy("order");
+    const itemQuery = query(itemCol, order);
 
     this.itemCol$ = collectionData(itemQuery, { idField: 'id' }) as Observable<
       Item[]
