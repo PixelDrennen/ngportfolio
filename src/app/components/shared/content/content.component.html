@@ -33,6 +33,16 @@
     <img [src]="contentURL" (error)="contentError($event)" class="figure-img img-fluid rounded" alt="...">
     <figcaption *ngIf="contentBlock?.metadata" class="figure-caption">{{contentBlock?.metadata}}</figcaption>
   </figure>
+
+  <figure class="figure" *ngIf="!badContent && 
+  contentType == contentTypes.HYPERLINK &&
+  contentValue != undefined && contentMetadata != undefined">
+  <a target="_blank" [href]="contentMetadata">
+    <img [src]="contentURL" (error)="contentError($event)" class="figure-img img-fluid rounded" alt="...">
+    <figcaption *ngIf="contentBlock?.metadata" class="figure-caption">{{contentBlock?.metadata}}</figcaption>
+  </a>
+  </figure>
+
   <div
     *ngIf="
       !badContent &&

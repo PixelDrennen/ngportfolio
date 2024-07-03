@@ -44,6 +44,7 @@ export class ContentComponent implements OnInit {
   badContent: boolean = false;
   contentTypes = CONTENT_TYPES;
   @Input() contentValue?: string;
+  @Input() contentMetadata?: string;
   @Input() contentType?: string;
   @Input() contentBlock?: ContentBlock;
   @Input() element?: ElementRef;

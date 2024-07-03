@@ -35,7 +35,7 @@ export class ReorderModalComponent {
     private modalManager: ModalManagerService,
     private orderUpdateService: OrderUpdateService,
     private firestore: FirestoreService,
-    private readTracker:ReadTrackerService,
+    private readTracker: ReadTrackerService,
   ) {
     // this.param.forEach((item) => {
     //   console.log(item.document);
@@ -65,8 +65,8 @@ export class ReorderModalComponent {
     _content.forEach((d) => {
       // console.log(d.data());
       _contentBlocks.push(d.data() as ContentBlock);
-    this.readTracker.saveRead();
-  });
+      this.readTracker.saveRead();
+    });
     return _contentBlocks;
   }
 
@@ -93,7 +93,7 @@ export class ReorderModalComponent {
 
   drop(event: any) {
     // if (this._elementType == this.elementTypes.CONTENT)
-      moveItemInArray(this.param, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.param, event.previousIndex, event.currentIndex);
     if (this._elementType == this.elementTypes.ROW)
       moveItemInArray(this.rowData, event.previousIndex, event.currentIndex);
   }
@@ -102,19 +102,19 @@ export class ReorderModalComponent {
     // save list with new indices? ...
     // perhaps each item is an object instead of a string that holds the doc id and the order number, which is updated after based on index
     // if (this._elementType == this.elementTypes.CONTENT) {
-      this.param.forEach((item, index) => {
-        item.order = index;
-        item.elementType = this._elementType;
-        this.firestore
-          .getDocumentAsFirestoreAsync(ELEMENT_TYPES.CONTENT, item.id)
-          .then((_doc) => {
-            item.document = _doc;
-            this.orderUpdateService.onUpdateSubject.next(item);
-          })
-          .catch((error) => {
-            console.log(`Could not get document with id ${item.id}.\n${error}`);
-          });
-      });
+    this.param.forEach((item, index) => {
+      item.order = index;
+      item.elementType = this._elementType;
+      this.firestore
+        .getDocumentAsFirestoreAsync(ELEMENT_TYPES.CONTENT, item.id)
+        .then((_doc) => {
+          item.document = _doc;
+          this.orderUpdateService.onUpdateSubject.next(item);
+        })
+        .catch((error) => {
+          console.log(`Could not get document with id ${item.id}.\n${error}`);
+        });
+    });
     // }
 
     if (this.resultEmitter) this.resultEmitter.emit(this.param);

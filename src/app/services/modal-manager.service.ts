@@ -25,6 +25,7 @@ export class ModalManagerService {
   open(param: any = null, elementType:string = ELEMENT_TYPES.CONTENT) {
     this.modalRef = this.modalService.open(ReorderModalComponent, {
       ariaLabelledBy: 'mytitle',
+      size: 'lg'
     });
 
     let reorderFirestoreDocs: ReorderFirestoreDocument[] = [];

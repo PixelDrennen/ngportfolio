@@ -11,6 +11,21 @@
       [src]="content!['value']"
       (error)="contentError($event)"
     />
+
+    <img
+      *ngIf="
+        !badContent &&
+        (content!['type']) == contentTypes.HYPERLINK &&
+        (content!['value']) != undefined
+      "
+      class="contentImg"
+      style="width: 100%; height: 100%"
+      [src]="content!['value']"
+      (error)="contentError($event)"
+    />
+
+
+
     <div
       *ngIf="
         !badContent &&
