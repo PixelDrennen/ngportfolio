@@ -1,6 +1,7 @@
 $border: 5px;
-$borderRadius: 10px;
-$workboxWidth: 10em;
+$borderRadius: 20px;
+$workboxWidth: 100%;
+$workboxHeight: 20vh;
 
 $primaryColor: rgb(253, 8, 74);
 
@@ -38,20 +39,23 @@ app-summarybox {
   margin: 0;
 }
 .full-container {
-  width: 100%;
-  z-index: 0;
-  height: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  // width: 100%;
+  // z-index: 0;
+  // height: 100%;
+  // margin-left: auto;
+  // margin-right: auto;
+  // width:auto;
+  display: flex;
+  flex-direction: column;
 }
 @media (max-width: 710px) {
 }
 
 .workcontainer {
-  display: flex;
+  // display: flex;
   // flex-shrink: 1;
-  align-items: center;
-  justify-content: center;
+  align-items: center !important;
+  justify-content: center !important;
   position: relative;
   z-index: 0;
   margin-left: auto;
@@ -65,7 +69,7 @@ app-summarybox {
 
 .workbox-border {
   width: $workboxWidth;
-  height: $workboxWidth;
+  height: $workboxHeight;
   margin: auto;
   position: absolute;
   // background: transparent;
@@ -80,7 +84,7 @@ app-summarybox {
 .workbox {
   background-color: transparent;
   width: $workboxWidth;
-  height: $workboxWidth;
+  height: $workboxHeight;
   text-align: center;
   box-sizing: border-box;
   border: solid 1px transparent;
@@ -94,6 +98,8 @@ app-summarybox {
   z-index: 0;
   float: left;
   margin-right: 10px;
+  transition: border-width .1s ease;
+
 }
 @media (max-width: 710px) {
   .workbox {

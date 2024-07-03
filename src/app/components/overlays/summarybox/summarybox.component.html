@@ -75,6 +75,7 @@
             "
           ></div>
         </div>
+        <div class="collabOverlay"></div>
       </div>
     </div>
 
@@ -123,7 +124,8 @@
       </div>
 
       <hr id="divider" />
-      <div class="sortRowBtn">
+      <div class="sortRowBtn" *ngIf="userAuth.isAdmin &&
+                global.isEditing">
         <div class="sortRowBtnContainer" (click)="openModalForSortingRows()">
           <span><i>sort rows</i></span>
           <span
