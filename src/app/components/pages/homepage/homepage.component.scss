@@ -7,7 +7,18 @@
   font-weight: 400;
   min-width: 800px;
 }
+.pageheader{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.pageheader h1{
+  margin-bottom: 0;
+}
+.pageheader span{
+  margin-top: -10px;
 
+}
 .worksBtn {
   width: 90%;
   margin-left: auto;

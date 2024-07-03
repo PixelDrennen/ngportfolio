@@ -1,5 +1,4 @@
-<!-- <app-edit-button></app-edit-button>
-<app-delete-button></app-delete-button> -->
+
 <div [class]="content!['type'] == contentTypes.SPACER ? '_containerSpacer' :'_container'">
     <img
       *ngIf="
@@ -73,6 +72,20 @@
         ></pre>
       </div>
     </div>
+
+    
+  <div *ngIf="content!['type'] == contentTypes.DOWNLOAD" class="contentDownload">
+    <div class="input-group mb-3" (click)="openURL(content!['value'])">
+      <!-- <p class="contentDownloadMetadata" *ngIf="content!['metadata']">
+        {{ content!['metadata'] }}
+      </p> -->
+
+      <div class="downloadEvents" style="user-select: none; cursor: pointer">
+        <span class="input-group-text" id="basic-addon1">{{ content!['metadata'] }}</span>
+        <span class="input-group-text material-symbols-outlined">download</span>
+      </div>
+    </div>
+  </div>
   
     <div
       *ngIf="content!['type'] == contentTypes.SPACER"

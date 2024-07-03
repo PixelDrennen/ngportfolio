@@ -10,6 +10,8 @@ import { CrudService } from 'src/app/services/admin/crud.service';
 import { EditWindowService } from 'src/app/services/admin/crud/edit-window.service';
 import { UserAuthService } from 'src/app/services/auth/user-auth.service';
 import { CONTENT_TYPES, GlobalService } from 'src/app/services/global.service';
+import { Observable } from 'rxjs';
+import { FirestoreService } from 'src/app/services/firebase/firestore.service';
 const themeGithub = 'assets/github-dark.css';
 const themeAtomOneDark = 'assets/atom-one-dark.css';
 @Component({
@@ -45,14 +47,21 @@ export class ContentAsFirestoreComponent implements OnInit {
     public global:GlobalService,
     // public createWindowService:CreateWindowService,
     public editWindowService:EditWindowService,
+    private firestore:FirestoreService
   ) {
     this.hljsLoader.setTheme(this.currentTheme);
   }
 
 
+  openURL(url?:string){
+    if(url){
+      window.open(url);
+    }
+  }
 
-
+  @Input() id?:string;
   @Input() content?:DocumentData;
+  // @Input() content$?:Observable<DocumentData|undefined>;
   currentTheme: string = themeGithub;
   response!: HighlightAutoResult;
   onHighlight(e: HighlightAutoResult) {
@@ -96,20 +105,27 @@ export class ContentAsFirestoreComponent implements OnInit {
     this.content!['value'] = val;
   }
   checkContent() {
-    console.log('checking content for', this.content!['type']);
-    if (this.content!['type'] == this.contentTypes.IMAGE) {
-      if (this.content!['value'].startsWith('gs://')) {
-        // obtain firebase link from firebase storage
-        const gsRef = ref(this.storage, this.content!['value']);
-        getDownloadURL(gsRef).then((url) => {
-          this.contentURL = url;
-          console.log('url:', url);
-          this.init = true;
 
-          // this.setWidthOfImage();
-        });
+    this.firestore.getDocumentAsFirestore('content',this.id!).subscribe(a =>{
+      this.content = a;
+
+      console.log('content:', this.content)
+      console.log('checking content for', this.content!['type']);
+      if (this.content!['type'] == this.contentTypes.IMAGE) {
+        if (this.content!['value'].startsWith('gs://')) {
+          // obtain firebase link from firebase storage
+          const gsRef = ref(this.storage, this.content!['value']);
+          getDownloadURL(gsRef).then((url) => {
+            this.contentURL = url;
+            console.log('url:', url);
+            this.init = true;
+  
+            // this.setWidthOfImage();
+          });
+        }
       }
-    }
+    });
+
 
     if (this.content!['type'] == this.contentTypes.VIDEO) {
       this.safeURL = this.safePipe.transform(this.contentURL, 'resourceUrl');

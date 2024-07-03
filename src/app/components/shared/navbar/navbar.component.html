@@ -1,14 +1,32 @@
 <p id="navbar">
   <!-- <b *ngIf="routeUrl == 'blog'"><span class="navItem">Blog</span></b> -->
   <!-- <span *ngIf="routeUrl != 'blog'" class="navItem">Blog</span> -->
-  <b *ngIf="routeUrl == 'home'"><span class="navItem" (click)="navigate('home')">Home</span></b>
-  <span *ngIf="routeUrl != 'home'" class="navItem" (click)="navigate('home')">Home</span>
-  <b *ngIf="routeUrl == 'work'"><span class="navItem" (click)="navigate('work')">Work</span></b>
-  <span *ngIf="routeUrl != 'work'" class="navItem" (click)="navigate('work')">Work</span>
+  <b *ngIf="routeUrl == 'home'"
+    ><span class="navItem" (click)="navigate('home')">Home</span></b
+  >
+  <span *ngIf="routeUrl != 'home'" class="navItem" (click)="navigate('home')"
+    >Home</span
+  >
+  <b *ngIf="routeUrl == 'work'"
+    ><span class="navItem" (click)="navigate('work')">Work</span></b
+  >
+  <span *ngIf="routeUrl != 'work'" class="navItem" (click)="navigate('work')"
+    >Work</span
+  >
   <!-- <b *ngIf="routeUrl == 'snippets'"><span class="navItem">Snippets</span></b> -->
   <!-- <span *ngIf="routeUrl != 'snippets'" class="navItem">Snippets</span> -->
   <!-- <b *ngIf="routeUrl == 'contact'"><span class="navItem">Contact Me</span></b> -->
   <!-- <span *ngIf="routeUrl != 'contact'" class="navItem">Contact Me</span> -->
-  <span class="navItem"><a style="text-decoration: none;" href="mailto:drennendooms@gmail.com">drennendooms&#64;gmail.com</a></span>
-  <span class="navItem"><a style="text-decoration: none;" href="tel:+18125493871">(812) 549-3871</a></span>
+  <span class="contact-container">
+    <a href="mailto:drennendooms@gmail.com"
+      >drennendooms&#64;gmail.com</a
+    >
+    <a href="tel:+18125493871">(812) 549-3871</a>
+  </span>
+
+  <app-content-as-firestore
+    class="resume"
+    [content]="resumeDoc$"
+    [id]="resumeID"
+  ></app-content-as-firestore>
 </p>

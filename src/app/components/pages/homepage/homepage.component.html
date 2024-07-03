@@ -1,22 +1,27 @@
 <img href="https://docs.google.com/d2ff0c7d-6793-4d88-8cf3-b8a4f30acdef" />
 <div class="homepage">
+  <span class="pageheader">
     <h1>Drennen Dooms</h1>
-    <span>{{data?.subtext}}</span>
+    <span class="lead">{{ data?.subtext }}</span>
+  </span>
 
-    <div class="justify-content-between d-flex" >
-      <div>
-        <p>
-          {{ data?.biography }}
-        </p>
-        <hr id="heavydivider" />
-      </div>
-      <img id="profileimg" src="assets/me_squared.png" />
+  <div class="justify-content-between d-flex">
+    <div>
+      <p>
+        {{ data?.biography }}
+      </p>
+      <hr id="heavydivider" />
     </div>
+    <img id="profileimg" src="assets/me_squared.png" />
+  </div>
 
-	<div class="worksBtn" (click)="navigate('work')">
-		<h2>See my works<span class="material-symbols-outlined">
-		keyboard_double_arrow_down
-		</span></h2></div>
+  <div class="worksBtn" (click)="navigate('work')">
+    <h2>
+      See my works<span class="material-symbols-outlined">
+        keyboard_double_arrow_down
+      </span>
+    </h2>
+  </div>
 
   <!-- <div *ngFor="let item of dataSnapshots.itemCollection$|async">{{item['id']}}</div> -->
 
